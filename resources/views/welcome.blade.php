@@ -1,223 +1,1853 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Telkom Akses Sukabumi - Monitoring Data Valins Service & GPON</title>
+    <meta name="description" content="Platform komando operasional otomatisasi audit fisik ODP/ODC, monitoring telemetri redaman optik OLT GPON real-time PT Telkom Akses Witel Sukabumi.">
 
-        @fonts
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
-        <!-- Styles / Scripts -->
-        @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-            @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @else
-            <style>
-                /*! tailwindcss v4.0.7 | MIT License | https://tailwindcss.com */ @layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-translate-x:0;--tw-translate-y:0;--tw-translate-z:0;--tw-rotate-x:initial;--tw-rotate-y:initial;--tw-rotate-z:initial;--tw-skew-x:initial;--tw-skew-y:initial;--tw-space-x-reverse:0;--tw-border-style:solid;--tw-leading:initial;--tw-font-weight:initial;--tw-tracking:initial;--tw-shadow:0 0 #0000;--tw-shadow-color:initial;--tw-shadow-alpha:100%;--tw-inset-shadow:0 0 #0000;--tw-inset-shadow-color:initial;--tw-inset-shadow-alpha:100%;--tw-ring-color:initial;--tw-ring-shadow:0 0 #0000;--tw-inset-ring-color:initial;--tw-inset-ring-shadow:0 0 #0000;--tw-ring-inset:initial;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-offset-shadow:0 0 #0000;--tw-blur:initial;--tw-brightness:initial;--tw-contrast:initial;--tw-grayscale:initial;--tw-hue-rotate:initial;--tw-invert:initial;--tw-opacity:initial;--tw-saturate:initial;--tw-sepia:initial;--tw-drop-shadow:initial;--tw-drop-shadow-color:initial;--tw-drop-shadow-alpha:100%;--tw-drop-shadow-size:initial;--tw-duration:initial;--tw-ease:initial;--tw-content:""}}}@layer theme{:root,:host{--font-sans:"Instrument Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";--font-serif:ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;--font-mono:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;--color-red-50:oklch(97.1% .013 17.38);--color-red-100:oklch(93.6% .032 17.717);--color-red-200:oklch(88.5% .062 18.334);--color-red-300:oklch(80.8% .114 19.571);--color-red-400:oklch(70.4% .191 22.216);--color-red-500:oklch(63.7% .237 25.331);--color-red-600:oklch(57.7% .245 27.325);--color-red-700:oklch(50.5% .213 27.518);--color-red-800:oklch(44.4% .177 26.899);--color-red-900:oklch(39.6% .141 25.723);--color-red-950:oklch(25.8% .092 26.042);--color-orange-50:oklch(98% .016 73.684);--color-orange-100:oklch(95.4% .038 75.164);--color-orange-200:oklch(90.1% .076 70.697);--color-orange-300:oklch(83.7% .128 66.29);--color-orange-400:oklch(75% .183 55.934);--color-orange-500:oklch(70.5% .213 47.604);--color-orange-600:oklch(64.6% .222 41.116);--color-orange-700:oklch(55.3% .195 38.402);--color-orange-800:oklch(47% .157 37.304);--color-orange-900:oklch(40.8% .123 38.172);--color-orange-950:oklch(26.6% .079 36.259);--color-amber-50:oklch(98.7% .022 95.277);--color-amber-100:oklch(96.2% .059 95.617);--color-amber-200:oklch(92.4% .12 95.746);--color-amber-300:oklch(87.9% .169 91.605);--color-amber-400:oklch(82.8% .189 84.429);--color-amber-500:oklch(76.9% .188 70.08);--color-amber-600:oklch(66.6% .179 58.318);--color-amber-700:oklch(55.5% .163 48.998);--color-amber-800:oklch(47.3% .137 46.201);--color-amber-900:oklch(41.4% .112 45.904);--color-amber-950:oklch(27.9% .077 45.635);--color-yellow-50:oklch(98.7% .026 102.212);--color-yellow-100:oklch(97.3% .071 103.193);--color-yellow-200:oklch(94.5% .129 101.54);--color-yellow-300:oklch(90.5% .182 98.111);--color-yellow-400:oklch(85.2% .199 91.936);--color-yellow-500:oklch(79.5% .184 86.047);--color-yellow-600:oklch(68.1% .162 75.834);--color-yellow-700:oklch(55.4% .135 66.442);--color-yellow-800:oklch(47.6% .114 61.907);--color-yellow-900:oklch(42.1% .095 57.708);--color-yellow-950:oklch(28.6% .066 53.813);--color-lime-50:oklch(98.6% .031 120.757);--color-lime-100:oklch(96.7% .067 122.328);--color-lime-200:oklch(93.8% .127 124.321);--color-lime-300:oklch(89.7% .196 126.665);--color-lime-400:oklch(84.1% .238 128.85);--color-lime-500:oklch(76.8% .233 130.85);--color-lime-600:oklch(64.8% .2 131.684);--color-lime-700:oklch(53.2% .157 131.589);--color-lime-800:oklch(45.3% .124 130.933);--color-lime-900:oklch(40.5% .101 131.063);--color-lime-950:oklch(27.4% .072 132.109);--color-green-50:oklch(98.2% .018 155.826);--color-green-100:oklch(96.2% .044 156.743);--color-green-200:oklch(92.5% .084 155.995);--color-green-300:oklch(87.1% .15 154.449);--color-green-400:oklch(79.2% .209 151.711);--color-green-500:oklch(72.3% .219 149.579);--color-green-600:oklch(62.7% .194 149.214);--color-green-700:oklch(52.7% .154 150.069);--color-green-800:oklch(44.8% .119 151.328);--color-green-900:oklch(39.3% .095 152.535);--color-green-950:oklch(26.6% .065 152.934);--color-emerald-50:oklch(97.9% .021 166.113);--color-emerald-100:oklch(95% .052 163.051);--color-emerald-200:oklch(90.5% .093 164.15);--color-emerald-300:oklch(84.5% .143 164.978);--color-emerald-400:oklch(76.5% .177 163.223);--color-emerald-500:oklch(69.6% .17 162.48);--color-emerald-600:oklch(59.6% .145 163.225);--color-emerald-700:oklch(50.8% .118 165.612);--color-emerald-800:oklch(43.2% .095 166.913);--color-emerald-900:oklch(37.8% .077 168.94);--color-emerald-950:oklch(26.2% .051 172.552);--color-teal-50:oklch(98.4% .014 180.72);--color-teal-100:oklch(95.3% .051 180.801);--color-teal-200:oklch(91% .096 180.426);--color-teal-300:oklch(85.5% .138 181.071);--color-teal-400:oklch(77.7% .152 181.912);--color-teal-500:oklch(70.4% .14 182.503);--color-teal-600:oklch(60% .118 184.704);--color-teal-700:oklch(51.1% .096 186.391);--color-teal-800:oklch(43.7% .078 188.216);--color-teal-900:oklch(38.6% .063 188.416);--color-teal-950:oklch(27.7% .046 192.524);--color-cyan-50:oklch(98.4% .019 200.873);--color-cyan-100:oklch(95.6% .045 203.388);--color-cyan-200:oklch(91.7% .08 205.041);--color-cyan-300:oklch(86.5% .127 207.078);--color-cyan-400:oklch(78.9% .154 211.53);--color-cyan-500:oklch(71.5% .143 215.221);--color-cyan-600:oklch(60.9% .126 221.723);--color-cyan-700:oklch(52% .105 223.128);--color-cyan-800:oklch(45% .085 224.283);--color-cyan-900:oklch(39.8% .07 227.392);--color-cyan-950:oklch(30.2% .056 229.695);--color-sky-50:oklch(97.7% .013 236.62);--color-sky-100:oklch(95.1% .026 236.824);--color-sky-200:oklch(90.1% .058 230.902);--color-sky-300:oklch(82.8% .111 230.318);--color-sky-400:oklch(74.6% .16 232.661);--color-sky-500:oklch(68.5% .169 237.323);--color-sky-600:oklch(58.8% .158 241.966);--color-sky-700:oklch(50% .134 242.749);--color-sky-800:oklch(44.3% .11 240.79);--color-sky-900:oklch(39.1% .09 240.876);--color-sky-950:oklch(29.3% .066 243.157);--color-blue-50:oklch(97% .014 254.604);--color-blue-100:oklch(93.2% .032 255.585);--color-blue-200:oklch(88.2% .059 254.128);--color-blue-300:oklch(80.9% .105 251.813);--color-blue-400:oklch(70.7% .165 254.624);--color-blue-500:oklch(62.3% .214 259.815);--color-blue-600:oklch(54.6% .245 262.881);--color-blue-700:oklch(48.8% .243 264.376);--color-blue-800:oklch(42.4% .199 265.638);--color-blue-900:oklch(37.9% .146 265.522);--color-blue-950:oklch(28.2% .091 267.935);--color-indigo-50:oklch(96.2% .018 272.314);--color-indigo-100:oklch(93% .034 272.788);--color-indigo-200:oklch(87% .065 274.039);--color-indigo-300:oklch(78.5% .115 274.713);--color-indigo-400:oklch(67.3% .182 276.935);--color-indigo-500:oklch(58.5% .233 277.117);--color-indigo-600:oklch(51.1% .262 276.966);--color-indigo-700:oklch(45.7% .24 277.023);--color-indigo-800:oklch(39.8% .195 277.366);--color-indigo-900:oklch(35.9% .144 278.697);--color-indigo-950:oklch(25.7% .09 281.288);--color-violet-50:oklch(96.9% .016 293.756);--color-violet-100:oklch(94.3% .029 294.588);--color-violet-200:oklch(89.4% .057 293.283);--color-violet-300:oklch(81.1% .111 293.571);--color-violet-400:oklch(70.2% .183 293.541);--color-violet-500:oklch(60.6% .25 292.717);--color-violet-600:oklch(54.1% .281 293.009);--color-violet-700:oklch(49.1% .27 292.581);--color-violet-800:oklch(43.2% .232 292.759);--color-violet-900:oklch(38% .189 293.745);--color-violet-950:oklch(28.3% .141 291.089);--color-purple-50:oklch(97.7% .014 308.299);--color-purple-100:oklch(94.6% .033 307.174);--color-purple-200:oklch(90.2% .063 306.703);--color-purple-300:oklch(82.7% .119 306.383);--color-purple-400:oklch(71.4% .203 305.504);--color-purple-500:oklch(62.7% .265 303.9);--color-purple-600:oklch(55.8% .288 302.321);--color-purple-700:oklch(49.6% .265 301.924);--color-purple-800:oklch(43.8% .218 303.724);--color-purple-900:oklch(38.1% .176 304.987);--color-purple-950:oklch(29.1% .149 302.717);--color-fuchsia-50:oklch(97.7% .017 320.058);--color-fuchsia-100:oklch(95.2% .037 318.852);--color-fuchsia-200:oklch(90.3% .076 319.62);--color-fuchsia-300:oklch(83.3% .145 321.434);--color-fuchsia-400:oklch(74% .238 322.16);--color-fuchsia-500:oklch(66.7% .295 322.15);--color-fuchsia-600:oklch(59.1% .293 322.896);--color-fuchsia-700:oklch(51.8% .253 323.949);--color-fuchsia-800:oklch(45.2% .211 324.591);--color-fuchsia-900:oklch(40.1% .17 325.612);--color-fuchsia-950:oklch(29.3% .136 325.661);--color-pink-50:oklch(97.1% .014 343.198);--color-pink-100:oklch(94.8% .028 342.258);--color-pink-200:oklch(89.9% .061 343.231);--color-pink-300:oklch(82.3% .12 346.018);--color-pink-400:oklch(71.8% .202 349.761);--color-pink-500:oklch(65.6% .241 354.308);--color-pink-600:oklch(59.2% .249 .584);--color-pink-700:oklch(52.5% .223 3.958);--color-pink-800:oklch(45.9% .187 3.815);--color-pink-900:oklch(40.8% .153 2.432);--color-pink-950:oklch(28.4% .109 3.907);--color-rose-50:oklch(96.9% .015 12.422);--color-rose-100:oklch(94.1% .03 12.58);--color-rose-200:oklch(89.2% .058 10.001);--color-rose-300:oklch(81% .117 11.638);--color-rose-400:oklch(71.2% .194 13.428);--color-rose-500:oklch(64.5% .246 16.439);--color-rose-600:oklch(58.6% .253 17.585);--color-rose-700:oklch(51.4% .222 16.935);--color-rose-800:oklch(45.5% .188 13.697);--color-rose-900:oklch(41% .159 10.272);--color-rose-950:oklch(27.1% .105 12.094);--color-slate-50:oklch(98.4% .003 247.858);--color-slate-100:oklch(96.8% .007 247.896);--color-slate-200:oklch(92.9% .013 255.508);--color-slate-300:oklch(86.9% .022 252.894);--color-slate-400:oklch(70.4% .04 256.788);--color-slate-500:oklch(55.4% .046 257.417);--color-slate-600:oklch(44.6% .043 257.281);--color-slate-700:oklch(37.2% .044 257.287);--color-slate-800:oklch(27.9% .041 260.031);--color-slate-900:oklch(20.8% .042 265.755);--color-slate-950:oklch(12.9% .042 264.695);--color-gray-50:oklch(98.5% .002 247.839);--color-gray-100:oklch(96.7% .003 264.542);--color-gray-200:oklch(92.8% .006 264.531);--color-gray-300:oklch(87.2% .01 258.338);--color-gray-400:oklch(70.7% .022 261.325);--color-gray-500:oklch(55.1% .027 264.364);--color-gray-600:oklch(44.6% .03 256.802);--color-gray-700:oklch(37.3% .034 259.733);--color-gray-800:oklch(27.8% .033 256.848);--color-gray-900:oklch(21% .034 264.665);--color-gray-950:oklch(13% .028 261.692);--color-zinc-50:oklch(98.5% 0 0);--color-zinc-100:oklch(96.7% .001 286.375);--color-zinc-200:oklch(92% .004 286.32);--color-zinc-300:oklch(87.1% .006 286.286);--color-zinc-400:oklch(70.5% .015 286.067);--color-zinc-500:oklch(55.2% .016 285.938);--color-zinc-600:oklch(44.2% .017 285.786);--color-zinc-700:oklch(37% .013 285.805);--color-zinc-800:oklch(27.4% .006 286.033);--color-zinc-900:oklch(21% .006 285.885);--color-zinc-950:oklch(14.1% .005 285.823);--color-neutral-50:oklch(98.5% 0 0);--color-neutral-100:oklch(97% 0 0);--color-neutral-200:oklch(92.2% 0 0);--color-neutral-300:oklch(87% 0 0);--color-neutral-400:oklch(70.8% 0 0);--color-neutral-500:oklch(55.6% 0 0);--color-neutral-600:oklch(43.9% 0 0);--color-neutral-700:oklch(37.1% 0 0);--color-neutral-800:oklch(26.9% 0 0);--color-neutral-900:oklch(20.5% 0 0);--color-neutral-950:oklch(14.5% 0 0);--color-stone-50:oklch(98.5% .001 106.423);--color-stone-100:oklch(97% .001 106.424);--color-stone-200:oklch(92.3% .003 48.717);--color-stone-300:oklch(86.9% .005 56.366);--color-stone-400:oklch(70.9% .01 56.259);--color-stone-500:oklch(55.3% .013 58.071);--color-stone-600:oklch(44.4% .011 73.639);--color-stone-700:oklch(37.4% .01 67.558);--color-stone-800:oklch(26.8% .007 34.298);--color-stone-900:oklch(21.6% .006 56.043);--color-stone-950:oklch(14.7% .004 49.25);--color-black:#000;--color-white:#fff;--spacing:.25rem;--breakpoint-sm:40rem;--breakpoint-md:48rem;--breakpoint-lg:64rem;--breakpoint-xl:80rem;--breakpoint-2xl:96rem;--container-3xs:16rem;--container-2xs:18rem;--container-xs:20rem;--container-sm:24rem;--container-md:28rem;--container-lg:32rem;--container-xl:36rem;--container-2xl:42rem;--container-3xl:48rem;--container-4xl:56rem;--container-5xl:64rem;--container-6xl:72rem;--container-7xl:80rem;--text-xs:.75rem;--text-xs--line-height:calc(1 / .75);--text-sm:.875rem;--text-sm--line-height:calc(1.25 / .875);--text-base:1rem;--text-base--line-height: 1.5 ;--text-lg:1.125rem;--text-lg--line-height:calc(1.75 / 1.125);--text-xl:1.25rem;--text-xl--line-height:calc(1.75 / 1.25);--text-2xl:1.5rem;--text-2xl--line-height:calc(2 / 1.5);--text-3xl:1.875rem;--text-3xl--line-height: 1.2 ;--text-4xl:2.25rem;--text-4xl--line-height:calc(2.5 / 2.25);--text-5xl:3rem;--text-5xl--line-height:1;--text-6xl:3.75rem;--text-6xl--line-height:1;--text-7xl:4.5rem;--text-7xl--line-height:1;--text-8xl:6rem;--text-8xl--line-height:1;--text-9xl:8rem;--text-9xl--line-height:1;--font-weight-thin:100;--font-weight-extralight:200;--font-weight-light:300;--font-weight-normal:400;--font-weight-medium:500;--font-weight-semibold:600;--font-weight-bold:700;--font-weight-extrabold:800;--font-weight-black:900;--tracking-tighter:-.05em;--tracking-tight:-.025em;--tracking-normal:0em;--tracking-wide:.025em;--tracking-wider:.05em;--tracking-widest:.1em;--leading-tight:1.25;--leading-snug:1.375;--leading-normal:1.5;--leading-relaxed:1.625;--leading-loose:2;--radius-xs:.125rem;--radius-sm:.25rem;--radius-md:.375rem;--radius-lg:.5rem;--radius-xl:.75rem;--radius-2xl:1rem;--radius-3xl:1.5rem;--radius-4xl:2rem;--shadow-2xs:0 1px #0000000d;--shadow-xs:0 1px 2px 0 #0000000d;--shadow-sm:0 1px 3px 0 #0000001a, 0 1px 2px -1px #0000001a;--shadow-md:0 4px 6px -1px #0000001a, 0 2px 4px -2px #0000001a;--shadow-lg:0 10px 15px -3px #0000001a, 0 4px 6px -4px #0000001a;--shadow-xl:0 20px 25px -5px #0000001a, 0 8px 10px -6px #0000001a;--shadow-2xl:0 25px 50px -12px #00000040;--inset-shadow-2xs:inset 0 1px #0000000d;--inset-shadow-xs:inset 0 1px 1px #0000000d;--inset-shadow-sm:inset 0 2px 4px #0000000d;--drop-shadow-xs:0 1px 1px #0000000d;--drop-shadow-sm:0 1px 2px #00000026;--drop-shadow-md:0 3px 3px #0000001f;--drop-shadow-lg:0 4px 4px #00000026;--drop-shadow-xl:0 9px 7px #0000001a;--drop-shadow-2xl:0 25px 25px #00000026;--ease-in:cubic-bezier(.4, 0, 1, 1);--ease-out:cubic-bezier(0, 0, .2, 1);--ease-in-out:cubic-bezier(.4, 0, .2, 1);--animate-spin:spin 1s linear infinite;--animate-ping:ping 1s cubic-bezier(0, 0, .2, 1) infinite;--animate-pulse:pulse 2s cubic-bezier(.4, 0, .6, 1) infinite;--animate-bounce:bounce 1s infinite;--blur-xs:4px;--blur-sm:8px;--blur-md:12px;--blur-lg:16px;--blur-xl:24px;--blur-2xl:40px;--blur-3xl:64px;--perspective-dramatic:100px;--perspective-near:300px;--perspective-normal:500px;--perspective-midrange:800px;--perspective-distant:1200px;--aspect-video:16 / 9;--default-transition-duration:.15s;--default-transition-timing-function:cubic-bezier(.4, 0, .2, 1);--default-font-family:var(--font-sans);--default-mono-font-family:var(--font-mono)}}@layer base{*,:after,:before,::backdrop{box-sizing:border-box;border:0 solid;margin:0;padding:0}::file-selector-button{box-sizing:border-box;border:0 solid;margin:0;padding:0}html,:host{-webkit-text-size-adjust:100%;tab-size:4;line-height:1.5;font-family:var(--default-font-family,ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");font-feature-settings:var(--default-font-feature-settings,normal);font-variation-settings:var(--default-font-variation-settings,normal);-webkit-tap-highlight-color:transparent}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;-webkit-text-decoration:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,samp,pre{font-family:var(--default-mono-font-family,ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);font-feature-settings:var(--default-mono-font-feature-settings,normal);font-variation-settings:var(--default-mono-font-variation-settings,normal);font-size:1em}small{font-size:80%}sub,sup{vertical-align:baseline;font-size:75%;line-height:0;position:relative}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}:-moz-focusring{outline:auto}progress{vertical-align:baseline}summary{display:list-item}ol,ul,menu{list-style:none}img,svg,video,canvas,audio,iframe,embed,object{vertical-align:middle;display:block}img,video{max-width:100%;height:auto}button,input,select,optgroup,textarea{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}::file-selector-button{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}:where(select:is([multiple],[size])) optgroup{font-weight:bolder}:where(select:is([multiple],[size])) optgroup option{padding-inline-start:20px}::file-selector-button{margin-inline-end:4px}::placeholder{opacity:1}@supports (not ((-webkit-appearance:-apple-pay-button))) or (contain-intrinsic-size:1px){::placeholder{color:currentColor}@supports (color:color-mix(in lab,red,red)){::placeholder{color:color-mix(in oklab,currentcolor 50%,transparent)}}}textarea{resize:vertical}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-date-and-time-value{min-height:1lh;text-align:inherit}::-webkit-datetime-edit{display:inline-flex}::-webkit-datetime-edit-fields-wrapper{padding:0}::-webkit-datetime-edit{padding-block:0}::-webkit-datetime-edit-year-field{padding-block:0}::-webkit-datetime-edit-month-field{padding-block:0}::-webkit-datetime-edit-day-field{padding-block:0}::-webkit-datetime-edit-hour-field{padding-block:0}::-webkit-datetime-edit-minute-field{padding-block:0}::-webkit-datetime-edit-second-field{padding-block:0}::-webkit-datetime-edit-millisecond-field{padding-block:0}::-webkit-datetime-edit-meridiem-field{padding-block:0}::-webkit-calendar-picker-indicator{line-height:1}:-moz-ui-invalid{box-shadow:none}button,input:where([type=button],[type=reset],[type=submit]){appearance:button}::file-selector-button{appearance:button}::-webkit-inner-spin-button{height:auto}::-webkit-outer-spin-button{height:auto}[hidden]:where(:not([hidden=until-found])){display:none!important}}@layer components;@layer utilities{.absolute{position:absolute}.fixed{position:fixed}.relative{position:relative}.static{position:static}.inset-0{inset:calc(var(--spacing) * 0)}.start{inset-inline-start:var(--spacing)}.top-0{top:calc(var(--spacing) * 0)}.right-0{right:calc(var(--spacing) * 0)}.container{width:100%}@media(min-width:40rem){.container{max-width:40rem}}@media(min-width:48rem){.container{max-width:48rem}}@media(min-width:64rem){.container{max-width:64rem}}@media(min-width:80rem){.container{max-width:80rem}}@media(min-width:96rem){.container{max-width:96rem}}.mx-auto{margin-inline:auto}.-mt-\[6\.6rem\]{margin-top:-6.6rem}.-mt-px{margin-top:-1px}.mt-2{margin-top:calc(var(--spacing) * 2)}.mt-4{margin-top:calc(var(--spacing) * 4)}.mt-6{margin-top:calc(var(--spacing) * 6)}.mt-8{margin-top:calc(var(--spacing) * 8)}.mr-2{margin-right:calc(var(--spacing) * 2)}.-mb-px{margin-bottom:-1px}.mb-1{margin-bottom:calc(var(--spacing) * 1)}.mb-2{margin-bottom:calc(var(--spacing) * 2)}.mb-4{margin-bottom:calc(var(--spacing) * 4)}.mb-6{margin-bottom:calc(var(--spacing) * 6)}.-ml-8{margin-left:calc(var(--spacing) * -8)}.-ml-px{margin-left:-1px}.ml-1{margin-left:calc(var(--spacing) * 1)}.ml-2{margin-left:calc(var(--spacing) * 2)}.ml-4{margin-left:calc(var(--spacing) * 4)}.ml-12{margin-left:calc(var(--spacing) * 12)}.contents{display:contents}.flex{display:flex}.grid{display:grid}.hidden{display:none}.inline-block{display:inline-block}.inline-flex{display:inline-flex}.table{display:table}.aspect-\[335\/364\]{aspect-ratio:335/364}.h-1{height:calc(var(--spacing) * 1)}.h-1\.5{height:calc(var(--spacing) * 1.5)}.h-2{height:calc(var(--spacing) * 2)}.h-2\.5{height:calc(var(--spacing) * 2.5)}.h-3{height:calc(var(--spacing) * 3)}.h-3\.5{height:calc(var(--spacing) * 3.5)}.h-5{height:calc(var(--spacing) * 5)}.h-8{height:calc(var(--spacing) * 8)}.h-14{height:calc(var(--spacing) * 14)}.h-14\.5{height:calc(var(--spacing) * 14.5)}.h-16{height:calc(var(--spacing) * 16)}.min-h-screen{min-height:100vh}.w-1{width:calc(var(--spacing) * 1)}.w-1\.5{width:calc(var(--spacing) * 1.5)}.w-2{width:calc(var(--spacing) * 2)}.w-2\.5{width:calc(var(--spacing) * 2.5)}.w-3{width:calc(var(--spacing) * 3)}.w-3\.5{width:calc(var(--spacing) * 3.5)}.w-5{width:calc(var(--spacing) * 5)}.w-8{width:calc(var(--spacing) * 8)}.w-\[438px\]{width:438px}.w-auto{width:auto}.w-full{width:100%}.max-w-6xl{max-width:var(--container-6xl)}.max-w-\[335px\]{max-width:335px}.max-w-none{max-width:none}.max-w-xl{max-width:var(--container-xl)}.flex-1{flex:1}.shrink-0{flex-shrink:0}.translate-y-0{--tw-translate-y:calc(var(--spacing) * 0);translate:var(--tw-translate-x) var(--tw-translate-y)}.transform{transform:var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,)}.cursor-default{cursor:default}.cursor-not-allowed{cursor:not-allowed}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-col-reverse{flex-direction:column-reverse}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}.justify-end{justify-content:flex-end}.justify-items-center{justify-items:center}.gap-2{gap:calc(var(--spacing) * 2)}.gap-3{gap:calc(var(--spacing) * 3)}.gap-4{gap:calc(var(--spacing) * 4)}:where(.space-x-1>:not(:last-child)){--tw-space-x-reverse:0;margin-inline-start:calc(calc(var(--spacing) * 1) * var(--tw-space-x-reverse));margin-inline-end:calc(calc(var(--spacing) * 1) * calc(1 - var(--tw-space-x-reverse)))}.overflow-hidden{overflow:hidden}.rounded-full{border-radius:3.40282e38px}.rounded-md{border-radius:var(--radius-md)}.rounded-sm{border-radius:var(--radius-sm)}.rounded-t-lg{border-top-left-radius:var(--radius-lg);border-top-right-radius:var(--radius-lg)}.rounded-l-md{border-top-left-radius:var(--radius-md);border-bottom-left-radius:var(--radius-md)}.rounded-r-md{border-top-right-radius:var(--radius-md);border-bottom-right-radius:var(--radius-md)}.rounded-br-lg{border-bottom-right-radius:var(--radius-lg)}.rounded-bl-lg{border-bottom-left-radius:var(--radius-lg)}.border{border-style:var(--tw-border-style);border-width:1px}.border-t{border-top-style:var(--tw-border-style);border-top-width:1px}.border-r{border-right-style:var(--tw-border-style);border-right-width:1px}.border-\[\#19140035\]{border-color:#19140035}.border-\[\#e3e3e0\]{border-color:#e3e3e0}.border-black{border-color:var(--color-black)}.border-gray-200{border-color:var(--color-gray-200)}.border-gray-300{border-color:var(--color-gray-300)}.border-gray-400{border-color:var(--color-gray-400)}.border-transparent{border-color:#0000}.bg-\[\#1b1b18\]{background-color:#1b1b18}.bg-\[\#FDFDFC\]{background-color:#fdfdfc}.bg-\[\#dbdbd7\]{background-color:#dbdbd7}.bg-\[\#fff2f2\]{background-color:#fff2f2}.bg-gray-100{background-color:var(--color-gray-100)}.bg-gray-200{background-color:var(--color-gray-200)}.bg-white{background-color:var(--color-white)}.p-6{padding:calc(var(--spacing) * 6)}.px-2{padding-inline:calc(var(--spacing) * 2)}.px-4{padding-inline:calc(var(--spacing) * 4)}.px-5{padding-inline:calc(var(--spacing) * 5)}.px-6{padding-inline:calc(var(--spacing) * 6)}.py-1{padding-block:calc(var(--spacing) * 1)}.py-1\.5{padding-block:calc(var(--spacing) * 1.5)}.py-2{padding-block:calc(var(--spacing) * 2)}.py-4{padding-block:calc(var(--spacing) * 4)}.pt-8{padding-top:calc(var(--spacing) * 8)}.pb-6{padding-bottom:calc(var(--spacing) * 6)}.pb-12{padding-bottom:calc(var(--spacing) * 12)}.text-center{text-align:center}.text-lg{font-size:var(--text-lg);line-height:var(--tw-leading,var(--text-lg--line-height))}.text-sm{font-size:var(--text-sm);line-height:var(--tw-leading,var(--text-sm--line-height))}.text-\[13px\]{font-size:13px}.leading-5{--tw-leading:calc(var(--spacing) * 5);line-height:calc(var(--spacing) * 5)}.leading-7{--tw-leading:calc(var(--spacing) * 7);line-height:calc(var(--spacing) * 7)}.leading-\[20px\]{--tw-leading:20px;line-height:20px}.leading-normal{--tw-leading:var(--leading-normal);line-height:var(--leading-normal)}.font-medium{--tw-font-weight:var(--font-weight-medium);font-weight:var(--font-weight-medium)}.font-semibold{--tw-font-weight:var(--font-weight-semibold);font-weight:var(--font-weight-semibold)}.tracking-wider{--tw-tracking:var(--tracking-wider);letter-spacing:var(--tracking-wider)}.text-\[\#1B1B18\],.text-\[\#1b1b18\]{color:#1b1b18}.text-\[\#706f6c\]{color:#706f6c}.text-\[\#F3BEC7\]{color:#f3bec7}.text-\[\#F8B803\]{color:#f8b803}.text-\[\#F53003\],.text-\[\#f53003\]{color:#f53003}.text-gray-200{color:var(--color-gray-200)}.text-gray-300{color:var(--color-gray-300)}.text-gray-400{color:var(--color-gray-400)}.text-gray-500{color:var(--color-gray-500)}.text-gray-600{color:var(--color-gray-600)}.text-gray-700{color:var(--color-gray-700)}.text-gray-800{color:var(--color-gray-800)}.text-gray-900{color:var(--color-gray-900)}.text-white{color:var(--color-white)}.uppercase{text-transform:uppercase}.underline{text-decoration-line:underline}.underline-offset-4{text-underline-offset:4px}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-100{opacity:1}.mix-blend-color{mix-blend-mode:color}.mix-blend-darken{mix-blend-mode:darken}.mix-blend-hard-light{mix-blend-mode:hard-light}.mix-blend-multiply{mix-blend-mode:multiply}.shadow{--tw-shadow:0 1px 3px 0 var(--tw-shadow-color,#0000001a), 0 1px 2px -1px var(--tw-shadow-color,#0000001a);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.shadow-\[0px_0px_1px_0px_rgba\(0\,0\,0\,0\.03\)\,0px_1px_2px_0px_rgba\(0\,0\,0\,0\.06\)\]{--tw-shadow:0px 0px 1px 0px var(--tw-shadow-color,#00000008), 0px 1px 2px 0px var(--tw-shadow-color,#0000000f);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.shadow-\[inset_0px_0px_0px_1px_rgba\(26\,26\,0\,0\.16\)\]{--tw-shadow:inset 0px 0px 0px 1px var(--tw-shadow-color,#1a1a0029);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 3px 0 var(--tw-shadow-color,#0000001a), 0 1px 2px -1px var(--tw-shadow-color,#0000001a);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.ring-gray-300{--tw-ring-color:var(--color-gray-300)}.filter{filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}.transition{transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke,--tw-gradient-from,--tw-gradient-via,--tw-gradient-to,opacity,box-shadow,transform,translate,scale,rotate,filter,-webkit-backdrop-filter,backdrop-filter,display,content-visibility,overlay,pointer-events;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}.transition-all{transition-property:all;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}.transition-opacity{transition-property:opacity;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}.delay-200{transition-delay:.2s}.delay-300{transition-delay:.3s}.delay-400{transition-delay:.4s}.duration-150{--tw-duration:.15s;transition-duration:.15s}.duration-750{--tw-duration:.75s;transition-duration:.75s}.ease-in-out{--tw-ease:var(--ease-in-out);transition-timing-function:var(--ease-in-out)}.\[--stroke-color\:\#1B1B18\]{--stroke-color:#1b1b18}.not-has-\[nav\]\:hidden:not(:has(:is(nav))){display:none}.before\:absolute:before{content:var(--tw-content);position:absolute}.before\:top-0:before{content:var(--tw-content);top:calc(var(--spacing) * 0)}.before\:top-1\/2:before{content:var(--tw-content);top:50%}.before\:bottom-0:before{content:var(--tw-content);bottom:calc(var(--spacing) * 0)}.before\:bottom-1\/2:before{content:var(--tw-content);bottom:50%}.before\:left-\[0\.4rem\]:before{content:var(--tw-content);left:.4rem}.before\:border-l:before{content:var(--tw-content);border-left-style:var(--tw-border-style);border-left-width:1px}.before\:border-\[\#e3e3e0\]:before{content:var(--tw-content);border-color:#e3e3e0}@media(hover:hover){.hover\:border-\[\#1915014a\]:hover{border-color:#1915014a}.hover\:border-\[\#19140035\]:hover{border-color:#19140035}.hover\:border-black:hover{border-color:var(--color-black)}.hover\:bg-black:hover{background-color:var(--color-black)}.hover\:bg-gray-100:hover{background-color:var(--color-gray-100)}.hover\:text-gray-400:hover{color:var(--color-gray-400)}.hover\:text-gray-700:hover{color:var(--color-gray-700)}}.focus\:border-blue-300:focus{border-color:var(--color-blue-300)}.focus\:ring:focus{--tw-ring-shadow:var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color,currentcolor);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.focus\:outline-none:focus{--tw-outline-style:none;outline-style:none}.active\:bg-gray-100:active{background-color:var(--color-gray-100)}.active\:text-gray-500:active{color:var(--color-gray-500)}.active\:text-gray-700:active{color:var(--color-gray-700)}.active\:text-gray-800:active{color:var(--color-gray-800)}@media(min-width:40rem){.sm\:flex{display:flex}.sm\:hidden{display:none}.sm\:flex-1{flex:1}.sm\:items-center{align-items:center}.sm\:justify-between{justify-content:space-between}.sm\:justify-start{justify-content:flex-start}.sm\:gap-2{gap:calc(var(--spacing) * 2)}.sm\:px-6{padding-inline:calc(var(--spacing) * 6)}.sm\:pt-0{padding-top:calc(var(--spacing) * 0)}}@media(min-width:64rem){.lg\:mt-10{margin-top:calc(var(--spacing) * 10)}.lg\:mb-0{margin-bottom:calc(var(--spacing) * 0)}.lg\:mb-6{margin-bottom:calc(var(--spacing) * 6)}.lg\:-ml-px{margin-left:-1px}.lg\:ml-0{margin-left:calc(var(--spacing) * 0)}.lg\:block{display:block}.lg\:aspect-auto{aspect-ratio:auto}.lg\:w-\[438px\]{width:438px}.lg\:max-w-4xl{max-width:var(--container-4xl)}.lg\:grow{flex-grow:1}.lg\:flex-row{flex-direction:row}.lg\:justify-center{justify-content:center}.lg\:rounded-t-none{border-top-left-radius:0;border-top-right-radius:0}.lg\:rounded-tl-lg{border-top-left-radius:var(--radius-lg)}.lg\:rounded-r-lg{border-top-right-radius:var(--radius-lg);border-bottom-right-radius:var(--radius-lg)}.lg\:rounded-br-none{border-bottom-right-radius:0}.lg\:p-8{padding:calc(var(--spacing) * 8)}.lg\:p-20{padding:calc(var(--spacing) * 20)}.lg\:px-8{padding-inline:calc(var(--spacing) * 8)}.lg\:pb-10{padding-bottom:calc(var(--spacing) * 10)}}.rtl\:flex-row-reverse:where(:dir(rtl),[dir=rtl],[dir=rtl] *){flex-direction:row-reverse}@media(prefers-color-scheme:dark){.dark\:border-\[\#3E3E3A\]{border-color:#3e3e3a}.dark\:border-\[\#eeeeec\]{border-color:#eeeeec}.dark\:border-gray-600{border-color:var(--color-gray-600)}.dark\:bg-\[\#0a0a0a\]{background-color:#0a0a0a}.dark\:bg-\[\#1D0002\]{background-color:#1d0002}.dark\:bg-\[\#3E3E3A\]{background-color:#3e3e3a}.dark\:bg-\[\#161615\]{background-color:#161615}.dark\:bg-\[\#eeeeec\]{background-color:#eeeeec}.dark\:bg-gray-700{background-color:var(--color-gray-700)}.dark\:bg-gray-800{background-color:var(--color-gray-800)}.dark\:bg-gray-900{background-color:var(--color-gray-900)}.dark\:text-\[\#1C1C1A\]{color:#1c1c1a}.dark\:text-\[\#4B0600\]{color:#4b0600}.dark\:text-\[\#391800\]{color:#391800}.dark\:text-\[\#733000\]{color:#733000}.dark\:text-\[\#A1A09A\]{color:#a1a09a}.dark\:text-\[\#EDEDEC\]{color:#ededec}.dark\:text-\[\#F61500\]{color:#f61500}.dark\:text-\[\#FF4433\]{color:#f43}.dark\:text-black{color:var(--color-black)}.dark\:text-gray-200{color:var(--color-gray-200)}.dark\:text-gray-300{color:var(--color-gray-300)}.dark\:text-gray-400{color:var(--color-gray-400)}.dark\:text-gray-600{color:var(--color-gray-600)}.dark\:mix-blend-hard-light{mix-blend-mode:hard-light}.dark\:mix-blend-normal{mix-blend-mode:normal}.dark\:shadow-\[inset_0px_0px_0px_1px_\#fffaed2d\]{--tw-shadow:inset 0px 0px 0px 1px var(--tw-shadow-color,#fffaed2d);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.dark\:\[--stroke-color\:\#FF750F\]{--stroke-color:#ff750f}.dark\:before\:border-\[\#3E3E3A\]:before{content:var(--tw-content);border-color:#3e3e3a}@media(hover:hover){.dark\:hover\:border-\[\#3E3E3A\]:hover{border-color:#3e3e3a}.dark\:hover\:border-\[\#62605b\]:hover{border-color:#62605b}.dark\:hover\:border-white:hover{border-color:var(--color-white)}.dark\:hover\:bg-gray-900:hover{background-color:var(--color-gray-900)}.dark\:hover\:bg-white:hover{background-color:var(--color-white)}.dark\:hover\:text-gray-200:hover{color:var(--color-gray-200)}.dark\:hover\:text-gray-300:hover{color:var(--color-gray-300)}}.dark\:focus\:border-blue-700:focus{border-color:var(--color-blue-700)}.dark\:focus\:border-blue-800:focus{border-color:var(--color-blue-800)}.dark\:active\:bg-gray-700:active{background-color:var(--color-gray-700)}.dark\:active\:text-gray-300:active{color:var(--color-gray-300)}}@starting-style{.starting\:opacity-0{opacity:0}}@media(prefers-reduced-motion:no-preference){@starting-style{.motion-safe\:starting\:-translate-x-\[26px\]{--tw-translate-x: -26px ;translate:var(--tw-translate-x) var(--tw-translate-y)}}@starting-style{.motion-safe\:starting\:-translate-x-\[51px\]{--tw-translate-x: -51px ;translate:var(--tw-translate-x) var(--tw-translate-y)}}@starting-style{.motion-safe\:starting\:-translate-x-\[78px\]{--tw-translate-x: -78px ;translate:var(--tw-translate-x) var(--tw-translate-y)}}@starting-style{.motion-safe\:starting\:-translate-x-\[102px\]{--tw-translate-x: -102px ;translate:var(--tw-translate-x) var(--tw-translate-y)}}@starting-style{.motion-safe\:starting\:translate-y-6{--tw-translate-y:calc(var(--spacing) * 6);translate:var(--tw-translate-x) var(--tw-translate-y)}}}}@property --tw-translate-x{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-y{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-z{syntax:"*";inherits:false;initial-value:0}@property --tw-rotate-x{syntax:"*";inherits:false}@property --tw-rotate-y{syntax:"*";inherits:false}@property --tw-rotate-z{syntax:"*";inherits:false}@property --tw-skew-x{syntax:"*";inherits:false}@property --tw-skew-y{syntax:"*";inherits:false}@property --tw-space-x-reverse{syntax:"*";inherits:false;initial-value:0}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-leading{syntax:"*";inherits:false}@property --tw-font-weight{syntax:"*";inherits:false}@property --tw-tracking{syntax:"*";inherits:false}@property --tw-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-shadow-color{syntax:"*";inherits:false}@property --tw-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-inset-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-inset-shadow-color{syntax:"*";inherits:false}@property --tw-inset-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-ring-color{syntax:"*";inherits:false}@property --tw-ring-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-inset-ring-color{syntax:"*";inherits:false}@property --tw-inset-ring-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-ring-inset{syntax:"*";inherits:false}@property --tw-ring-offset-width{syntax:"<length>";inherits:false;initial-value:0}@property --tw-ring-offset-color{syntax:"*";inherits:false;initial-value:#fff}@property --tw-ring-offset-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-blur{syntax:"*";inherits:false}@property --tw-brightness{syntax:"*";inherits:false}@property --tw-contrast{syntax:"*";inherits:false}@property --tw-grayscale{syntax:"*";inherits:false}@property --tw-hue-rotate{syntax:"*";inherits:false}@property --tw-invert{syntax:"*";inherits:false}@property --tw-opacity{syntax:"*";inherits:false}@property --tw-saturate{syntax:"*";inherits:false}@property --tw-sepia{syntax:"*";inherits:false}@property --tw-drop-shadow{syntax:"*";inherits:false}@property --tw-drop-shadow-color{syntax:"*";inherits:false}@property --tw-drop-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-drop-shadow-size{syntax:"*";inherits:false}@property --tw-duration{syntax:"*";inherits:false}@property --tw-ease{syntax:"*";inherits:false}@property --tw-content{syntax:"*";inherits:false;initial-value:""}@keyframes spin{to{transform:rotate(360deg)}}@keyframes ping{75%,to{opacity:0;transform:scale(2)}}@keyframes pulse{50%{opacity:.5}}@keyframes bounce{0%,to{animation-timing-function:cubic-bezier(.8,0,1,1);transform:translateY(-25%)}50%{animation-timing-function:cubic-bezier(0,0,.2,1);transform:none}}
-            </style>
-        @endif
-    </head>
-    <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-        <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
-            @if (Route::has('login'))
-                <nav class="flex items-center justify-end gap-4">
+    <!-- Fonts: Inter, JetBrains Mono, Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <!-- Preload Critical Images -->
+    <link rel="preload" as="image" href="{{ asset('images/telkom-akses-official-transparent.png') }}" fetchpriority="high">
+    <link rel="preload" as="image" href="{{ asset('images/landing/telkom-sukabumi-office.jpg') }}" fetchpriority="high">
+
+    <!-- Leaflet.js Interactive Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Tailwind CSS via Vite & Standalone Fallback -->
+    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @endif
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        telkom: {
+                            red: '#bc0007',
+                            'red-dark': '#960005',
+                            'red-light': '#ffe5e2',
+                            'red-soft': '#fff5f4'
+                        },
+                        tech: {
+                            blue: '#00628d',
+                            'blue-dark': '#004c6e',
+                            'blue-light': '#e8f4fc',
+                            slate: '#0b1c30'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        headline: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --telkom-red: #bc0007;
+            --telkom-red-dark: #960005;
+        }
+
+        html {
+            scrollbar-gutter: stable;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9ff;
+            color: #0b1c30;
+        }
+
+        .font-headline {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .font-telemetry {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Glassmorphism custom blur */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Pulse glow animation */
+        @keyframes softPulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 0.4; }
+        }
+        .soft-pulse {
+            animation: softPulse 4s ease-in-out infinite;
+        }
+
+        /* Natural Partner Logo Interaction: Smooth, fluid, no clipping/overflow bug */
+        .partner-logo-item {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.35rem 0.5rem;
+            opacity: 0.85;
+            cursor: pointer;
+            overflow: visible;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            will-change: transform, opacity;
+            transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease;
+        }
+        .partner-logo-item:hover {
+            transform: translate3d(0, -4px, 0) scale(1.06);
+            opacity: 1;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+        }
+        .partner-logo-item:active {
+            transform: translate3d(0, -1px, 0) scale(1.01);
+            transition: transform 0.1s ease;
+        }
+        .partner-logo-item img {
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.04));
+        }
+
+        /* Official Instagram Brand Theme & Hover Interaction */
+        .btn-instagram-bg {
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        }
+        .btn-instagram:hover {
+            border-color: transparent !important;
+            box-shadow: 0 4px 14px -1px rgba(214, 36, 159, 0.45), 0 2px 6px -1px rgba(253, 89, 73, 0.3) !important;
+        }
+
+        /* ================= HEADER INTERACTIVE POLISH ================= */
+        /* Dynamic Nav Link Styling - Frameless with Glowing Animated Underline */
+        .nav-link-item {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.55rem 0.8rem;
+            font-size: 0.865rem;
+            font-weight: 600;
+            color: #475569; /* text-slate-600 */
+            background-color: transparent !important;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            transition: color 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.22s ease;
+            cursor: pointer;
+            text-decoration: none;
+            user-select: none;
+            letter-spacing: -0.01em;
+        }
+        /* Dynamic Smooth Interactive Underline Indicator */
+        .nav-link-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0px;
+            left: 0.8rem;
+            right: 0.8rem;
+            height: 2.5px;
+            background: linear-gradient(90deg, #e0000a 0%, #bc0007 50%, #960005 100%);
+            border-radius: 9999px;
+            transform: scaleX(0);
+            transform-origin: center;
+            opacity: 0;
+            /* Smooth closing transition when cursor leaves: graceful ease-out, not too fast */
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.35s ease, box-shadow 0.30s ease;
+            pointer-events: none;
+        }
+
+        /* Hover State: Red line immediately emerges, closes smoothly on leave */
+        .nav-link-item:hover {
+            color: #bc0007;
+            transform: translateY(-1.5px);
+            text-shadow: 0 0 12px rgba(188, 0, 7, 0.18);
+        }
+        .nav-link-item:hover::after {
+            transform: scaleX(1);
+            opacity: 1;
+            box-shadow: 0 2px 8px rgba(188, 0, 7, 0.45), 0 0 10px rgba(224, 0, 10, 0.25);
+            /* Immediate, responsive emergence upon hover */
+            transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, box-shadow 0.24s ease;
+        }
+
+        /* Click State: Tactile press feedback */
+        .nav-link-item:active {
+            transform: translateY(0.5px) scale(0.97);
+            transition-duration: 0.08s;
+        }
+
+        /* Active State: Clicked/current menu line remains permanently open and visible */
+        .nav-link-item.active {
+            color: #bc0007;
+            font-weight: 700;
+            text-shadow: 0 0 16px rgba(188, 0, 7, 0.22);
+        }
+        .nav-link-item.active::after,
+        .nav-link-item.active:hover::after {
+            transform: scaleX(1) !important;
+            opacity: 1 !important;
+            box-shadow: 0 2px 8px rgba(188, 0, 7, 0.5), 0 0 12px rgba(224, 0, 10, 0.3) !important;
+        }
+
+        /* Action Button: Masuk (Secondary Bordered) */
+        .btn-header-login {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 1.15rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #1e293b; /* slate-800 */
+            background-color: #ffffff;
+            border: 1.5px solid #cbd5e1; /* slate-300 */
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            text-decoration: none;
+            user-select: none;
+        }
+        .btn-header-login:hover {
+            color: #bc0007;
+            border-color: #fca5a5; /* red-300 */
+            background-color: #fff8f8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px -2px rgba(188, 0, 7, 0.15), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .btn-header-login:active {
+            transform: translateY(0.5px) scale(0.96);
+            background-color: #fee2e2;
+            border-color: #f87171;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition-duration: 0.08s;
+        }
+        .btn-header-login .btn-login-icon {
+            color: #64748b;
+            transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), color 0.22s ease;
+        }
+        .btn-header-login:hover .btn-login-icon {
+            color: #bc0007;
+            transform: translateX(3px);
+        }
+        .btn-header-login:active .btn-login-icon {
+            transform: translateX(1px);
+        }
+
+        /* Action Button: Daftar Akun (Primary High Impact) */
+        .btn-header-register {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 1.25rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ffffff !important;
+            background: linear-gradient(135deg, #d30009 0%, #bc0007 50%, #9e0006 100%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 8px -1px rgba(188, 0, 7, 0.4), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            text-decoration: none;
+            user-select: none;
+            overflow: hidden;
+        }
+        .btn-header-register::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transition: left 0.5s ease-in-out;
+            pointer-events: none;
+        }
+        .btn-header-register:hover {
+            background: linear-gradient(135deg, #e3000a 0%, #c90008 50%, #a60006 100%);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 24px -3px rgba(188, 0, 7, 0.55), 0 4px 10px -2px rgba(188, 0, 7, 0.35);
+        }
+        .btn-header-register:hover::before {
+            left: 100%;
+        }
+        .btn-header-register:active {
+            transform: translateY(0.5px) scale(0.96);
+            box-shadow: 0 2px 6px rgba(188, 0, 7, 0.45);
+            transition-duration: 0.08s;
+        }
+        .btn-header-register .btn-register-icon {
+            color: #ffffff;
+            transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .btn-header-register:hover .btn-register-icon {
+            transform: scale(1.2) rotate(-5deg);
+        }
+        .btn-header-register:active .btn-register-icon {
+            transform: scale(0.95);
+        }
+
+        /* Action Button: Dashboard (Authenticated) */
+        .btn-header-dashboard {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 1.25rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ffffff !important;
+            background: linear-gradient(135deg, #bc0007 0%, #960005 100%);
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 6px -1px rgba(188, 0, 7, 0.35);
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            text-decoration: none;
+            user-select: none;
+        }
+        .btn-header-dashboard:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 20px -3px rgba(188, 0, 7, 0.5);
+        }
+        .btn-header-dashboard:active {
+            transform: translateY(0.5px) scale(0.96);
+            transition-duration: 0.08s;
+        }
+        .btn-header-dashboard .btn-dashboard-icon {
+            transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .btn-header-dashboard:hover .btn-dashboard-icon {
+            transform: scale(1.15) rotate(10deg);
+        }
+
+        /* ================= LIVE STATS STRIP & COUNTER POLISH ================= */
+        .stat-count-value {
+            font-variant-numeric: tabular-nums;
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+        }
+        .stat-count-value.counter-stabilized {
+            animation: counterLockPulse 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes counterLockPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+            100% { transform: scale(1); }
+        }
+
+        /* Leaflet Map Corporate Telecom Customization */
+        .leaflet-container {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            background-color: #f1f5f9;
+        }
+        .leaflet-popup-content-wrapper {
+            border-radius: 14px !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08) !important;
+            border: 1px solid #e2e8f0 !important;
+            padding: 4px !important;
+        }
+        .leaflet-popup-content {
+            margin: 10px 12px !important;
+            line-height: 1.45 !important;
+        }
+        .leaflet-popup-tip {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+        }
+        .leaflet-control-zoom {
+            border: 1px solid #cbd5e1 !important;
+            border-radius: 10px !important;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+        }
+        .leaflet-control-zoom a {
+            color: #1e293b !important;
+            background-color: #ffffff !important;
+            transition: all 0.2s ease !important;
+        }
+        .leaflet-control-zoom a:hover {
+            background-color: #f8fafc !important;
+            color: #bc0007 !important;
+        }
+        .telkom-marker-wrapper {
+            background: transparent !important;
+            border: none !important;
+        }
+    </style>
+</head>
+<body class="bg-[#f8f9ff] text-[#0b1c30] antialiased selection:bg-[#bc0007] selection:text-white min-h-screen flex flex-col">
+
+    <!-- ================= TOP OPERATIONAL ALERT / TELEMETRY TICKER ================= -->
+    <div class="bg-[#bc0007] border-b border-[#960005] text-xs py-2 px-4 sm:px-6 lg:px-8 xl:px-12 shadow-xs text-white">
+        <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4">
+            <div class="flex items-center gap-2.5 overflow-hidden text-ellipsis whitespace-nowrap">
+                <span class="text-[12px] sm:text-[12.5px] font-medium text-white flex items-center gap-1.5 tracking-wide">
+                    <span class="material-symbols-outlined text-[15px] text-red-100">sensors</span>
+                    <span>Monitoring Real-time All STO Witel Sukabumi</span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= STICKY MAIN NAVIGATION BAR ================= -->
+    <header class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-all duration-300 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+        <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 h-18 sm:h-20 flex items-center justify-between gap-4">
+            
+            <!-- Brand Logo & Identity -->
+            <a href="{{ url('/') }}" class="inline-flex items-center focus:outline-none group active:scale-95 transition-transform duration-200">
+                <img src="{{ asset('images/telkom-akses-official-transparent.png') }}" 
+                     alt="Logo Resmi PT Telkom Akses" 
+                     width="165"
+                     height="42"
+                     class="h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.03]"
+                     onerror="this.src='{{ asset('images/telkom-akses-official-clean.png') }}'">
+            </a>
+
+            <!-- Desktop Nav Links (Frameless Floating Aesthetic) -->
+            <nav class="hidden lg:flex items-center gap-2 xl:gap-3.5" aria-label="Navigasi Utama">
+                <a href="#fitur" class="nav-link-item active">
+                    Pilar Operasional
+                </a>
+                <a href="#telemetri" class="nav-link-item">
+                    Validasi &amp; Rekonsiliasi
+                </a>
+                <a href="#arsitektur" class="nav-link-item">
+                    Arsitektur Jaringan
+                </a>
+                <a href="#valins" class="nav-link-item">
+                    Integrasi VALINS
+                </a>
+            </nav>
+
+            <!-- Auth Action Buttons & Mobile Hamburger -->
+            <div class="flex items-center gap-2.5 sm:gap-3">
+                @if (Route::has('login'))
                     @auth
-                        <a
-                            href="{{ url('/dashboard') }}"
-                            class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal"
-                        >
-                            Dashboard
-                        </a>
+                        <!-- Authenticated User Dropdown / Dashboard Button -->
+                        <div class="flex items-center gap-3">
+                            <span class="hidden md:flex flex-col text-right">
+                                <span class="text-xs font-bold text-slate-900 leading-tight">{{ Auth::user()->name }}</span>
+                                <span class="text-[10px] text-slate-500 font-mono leading-none">Petugas Terautentikasi</span>
+                            </span>
+                            <a href="{{ route('dashboard') }}" 
+                               class="btn-header-dashboard group">
+                                <span class="material-symbols-outlined text-[18px] btn-dashboard-icon">dashboard</span>
+                                <span>Buka Dashboard</span>
+                            </a>
+                        </div>
                     @else
-                        <a
-                            href="{{ route('login') }}"
-                            class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal"
-                        >
-                            Log in
+                        <!-- Guest Auth Buttons -->
+                        <a href="{{ route('login') }}" 
+                           class="btn-header-login group"
+                           title="Masuk ke Akun">
+                            <span class="material-symbols-outlined text-[18px] btn-login-icon">login</span>
+                            <span>Masuk</span>
                         </a>
 
                         @if (Route::has('register'))
-                            <a
-                                href="{{ route('register') }}"
-                                class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
-                                Register
+                            <a href="{{ route('register') }}" 
+                               class="btn-header-register group"
+                               title="Pendaftaran Akun Baru">
+                                <span class="material-symbols-outlined text-[18px] btn-register-icon">how_to_reg</span>
+                                <span class="hidden sm:inline">Daftar Akun</span>
+                                <span class="sm:hidden">Daftar</span>
                             </a>
                         @endif
                     @endauth
-                </nav>
-            @endif
-        </header>
-        <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
-            <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
-                <div class="text-[13px] leading-[20px] flex-1 p-6 pb-6 lg:p-20 lg:pb-10 bg-white dark:bg-[#161615] dark:text-[#EDEDEC] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] rounded-bl-lg rounded-br-lg lg:rounded-tl-lg lg:rounded-br-none">
-                    <h1 class="mb-1 font-medium">Let's get started</h1>
-                    <p class="mb-2 text-[#706f6c] dark:text-[#A1A09A]">With so many options available to you,<br /> we suggest you start with the following:</p>
-                    <ul class="flex flex-col mb-4 lg:mb-6">
-                        <li class="flex items-center gap-4 py-2 relative before:border-l before:border-[#e3e3e0] dark:before:border-[#3E3E3A] before:top-1/2 before:bottom-0 before:left-[0.4rem] before:absolute">
-                            <span class="relative py-1 bg-white dark:bg-[#161615]">
-                                <span class="flex items-center justify-center rounded-full bg-[#FDFDFC] dark:bg-[#161615] shadow-[0px_0px_1px_0px_rgba(0,0,0,0.03),0px_1px_2px_0px_rgba(0,0,0,0.06)] w-3.5 h-3.5 border dark:border-[#3E3E3A] border-[#e3e3e0]">
-                                    <span class="rounded-full bg-[#dbdbd7] dark:bg-[#3E3E3A] w-1.5 h-1.5"></span>
-                                </span>
-                            </span>
-                            <span>
-                                Read the
-                                <a href="https://laravel.com/docs" target="_blank" class="inline-flex items-center space-x-1 font-medium underline underline-offset-4 text-[#f53003] dark:text-[#FF4433] ml-1">
-                                    <span>Documentation</span>
-                                    <svg
-                                        width="10"
-                                        height="11"
-                                        viewBox="0 0 10 11"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="w-2.5 h-2.5"
-                                    >
-                                        <path
-                                            d="M7.70833 6.95834V2.79167H3.54167M2.5 8L7.5 3.00001"
-                                            stroke="currentColor"
-                                            stroke-linecap="square"
-                                        />
+                @endif
+
+                <!-- Mobile Hamburger Button -->
+                <button type="button" 
+                        onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" 
+                        class="lg:hidden p-2.5 rounded-xl text-slate-600 hover:text-[#bc0007] hover:bg-red-50/80 active:scale-90 transition-all duration-200 focus:outline-none border border-transparent hover:border-red-200/60"
+                        aria-label="Toggle Navigation">
+                    <span class="material-symbols-outlined text-2xl">menu</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Collapsible Menu (Frameless Floating Aesthetic) -->
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-200 bg-white/95 backdrop-blur-md px-4 pt-3 pb-5 space-y-1 shadow-lg">
+            <a href="#fitur" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="mobile-nav-link block px-3 py-2.5 text-sm font-semibold text-slate-700 hover:text-[#bc0007] border-l-2 border-transparent hover:border-[#bc0007] active:scale-[0.98] transition-all duration-200">
+                Pilar Operasional
+            </a>
+            <a href="#telemetri" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="mobile-nav-link block px-3 py-2.5 text-sm font-semibold text-slate-700 hover:text-[#bc0007] border-l-2 border-transparent hover:border-[#bc0007] active:scale-[0.98] transition-all duration-200">
+                Validasi &amp; Rekonsiliasi
+            </a>
+            <a href="#arsitektur" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="mobile-nav-link block px-3 py-2.5 text-sm font-semibold text-slate-700 hover:text-[#bc0007] border-l-2 border-transparent hover:border-[#bc0007] active:scale-[0.98] transition-all duration-200">
+                Arsitektur Jaringan
+            </a>
+            <a href="#valins" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="mobile-nav-link block px-3 py-2.5 text-sm font-semibold text-slate-700 hover:text-[#bc0007] border-l-2 border-transparent hover:border-[#bc0007] active:scale-[0.98] transition-all duration-200">
+                Integrasi VALINS
+            </a>
+            <a href="#bantuan" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="mobile-nav-link block px-3 py-2.5 text-sm font-semibold text-slate-700 hover:text-[#bc0007] border-l-2 border-transparent hover:border-[#bc0007] active:scale-[0.98] transition-all duration-200">
+                Bantuan &amp; NOC Sukabumi
+            </a>
+        </div>
+    </header>
+
+    <!-- ================= MAIN HERO SECTION ================= -->
+    <main class="flex-grow">
+        <section class="relative w-full pt-8 pb-16 sm:pt-10 sm:pb-20 lg:pt-14 lg:pb-24 overflow-hidden">
+            <!-- Decorative Ambient Glows -->
+            <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-red-100/50 blur-3xl pointer-events-none"></div>
+            <div class="absolute top-1/3 -right-24 w-96 h-96 rounded-full bg-sky-100/60 blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-20 left-1/3 w-80 h-80 rounded-full bg-indigo-50/50 blur-3xl pointer-events-none"></div>
+
+            <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 xl:gap-14 items-center">
+                    
+                    <!-- Left Column: Pill Badge, Main Headline, Description, & CTA Actions -->
+                    <div class="lg:col-span-7 flex flex-col items-start">
+                        
+                        <!-- Top Pill Badge (Sistem Komando Terpadu) -->
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100/90 border border-slate-200/90 text-slate-700 text-xs font-semibold shadow-2xs mb-4 sm:mb-5">
+                            <span class="material-symbols-outlined text-[#bc0007] text-[16px] sm:text-[17px] leading-none shrink-0 select-none">public</span>
+                            <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-700">SISTEM MONITORING TERPADU &bull; WITEL SUKABUMI</span>
+                        </div>
+
+                        <!-- Main Headline -->
+                        <h1 class="font-headline text-3xl sm:text-4xl lg:text-[42px] xl:text-5xl font-extrabold tracking-tight text-[#0b1c30] leading-[1.18] sm:leading-[1.15]">
+                            Transformasi Digital Monitoring Jaringan 
+                            <span class="text-[#bc0007]">GPON</span> 
+                            &amp; Validasi Data 
+                            <span class="text-[#00628d]">VALINS</span> Terpadu
+                        </h1>
+
+                        <!-- Description -->
+                        <p class="mt-4 sm:mt-5 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
+                            Platform komando operasional otomatisasi audit fisik ODP/ODC, monitoring telemetri redaman optik OLT GPON real-time, sinkronisasi spasial GIS rute feeder, dan rekonsiliasi inventori UIM PT Telkom Akses Sukabumi.
+                        </p>
+
+                        <!-- Action CTA Buttons -->
+                    </div>
+
+                    <!-- Right Column: NOC Room Visual Showcase & Overlaid Live Telemetry Cards -->
+                    <div class="lg:col-span-5 relative w-full max-w-lg lg:max-w-none mx-auto pt-2 pb-16 sm:pb-20 lg:pb-12">
+                        
+                        <!-- Main Visual Showcase Frame: Kantor Telkom Akses Witel Sukabumi -->
+                        <div class="relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl border border-slate-200/80 bg-slate-900 group">
+                            <!-- Location Identifier Badge -->
+                            <img src="{{ asset('images/landing/telkom-sukabumi-office.jpg') }}" 
+                                 alt="Kantor PT Telkom Indonesia Witel Sukabumi - Jl. R. E. Martadinata No.24" 
+                                 width="768"
+                                 height="1024"
+                                 class="w-full h-[290px] sm:h-[340px] md:h-[370px] lg:h-[400px] xl:h-[420px] object-cover object-[center_30%] transition-transform duration-700 group-hover:scale-105"
+                                 onerror="this.onerror=null; this.src='{{ asset('images/landing/noc-monitoring-room.jpg') }}'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-950/15 to-transparent pointer-events-none"></div>
+                        </div>
+
+                        <!-- Floating Card 1: Audit & Validasi VALINS Fisik (QR Code) -->
+                        <div class="relative mt-4 sm:mt-0 sm:absolute sm:bottom-6 sm:-left-6 lg:bottom-8 lg:-left-6 xl:-left-8 bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 shadow-2xl border border-slate-200/90 w-full sm:w-auto sm:min-w-[320px] sm:max-w-[360px] z-20 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+                            <div class="flex items-center justify-between gap-3 mb-2.5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-9 h-9 rounded-xl bg-sky-50 text-[#00628d] border border-sky-100/90 flex items-center justify-center shrink-0 shadow-2xs">
+                                        <span class="material-symbols-outlined text-[20px]">qr_code_scanner</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-[#00628d] block leading-none mb-1">VALIDASI ASET FISIK</span>
+                                        <h4 class="text-xs sm:text-[13px] font-bold text-slate-900 leading-tight">Audit &amp; Validasi Data Valins Fisik</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="text-[11px] sm:text-[11.5px] text-slate-600 leading-relaxed my-2.5">
+                                Sinkronisasi data QR Code ODP lapangan dengan sistem UIM &amp; pembaruan kondisi data perangkat.
+                            </p>
+
+                            <div class="pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-600">
+                                <span class="material-symbols-outlined text-emerald-600 text-[17px]">check_circle</span>
+                            </div>
+                        </div>
+
+                        <!-- Floating Card 2: Petugas Verifikator Aktif -->
+                        <div class="relative mt-3 sm:mt-0 sm:absolute sm:-bottom-8 sm:right-2 lg:-bottom-8 lg:right-0 xl:-right-4 bg-white/95 backdrop-blur-md rounded-2xl p-3 sm:p-3.5 shadow-2xl border border-slate-200/90 flex items-center gap-3 sm:gap-3.5 w-full sm:w-auto sm:max-w-[340px] z-20 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+                            <img src="{{ asset('images/landing/technician-avatar.jpg') }}" 
+                                 alt="Petugas Verifikator Aktif" 
+                                 class="w-12 h-12 rounded-xl object-cover border border-slate-200 shadow-2xs shrink-0"
+                                 onerror="this.src='https://ui-avatars.com/api/?name=Budi+Setiawan&background=bc0007&color=fff'">
+                            <div class="min-w-0 flex-1">
+                                <h4 class="text-xs sm:text-[13px] font-bold text-slate-900 leading-tight truncate">Petugas Verifikator Aktif</h4>
+                                <p class="text-[11px] text-slate-500 font-medium leading-tight mt-0.5 truncate">Regu Daman SMI-Kota &bull; Unit Patroli 03</p>
+                                <div class="flex items-center gap-1.5 text-[11px] text-slate-600 font-mono mt-1">
+                                    <span class="material-symbols-outlined text-[13px] text-[#bc0007]">qr_code_scanner</span>
+                                    <span class="truncate">Audit & <strong class="text-slate-800 font-semibold">Validasi Valins</strong> <span class="text-slate-400 text-[10px]">Fisik</span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= LIVE TELEMETRY STATS STRIP ================= -->
+        <section class="relative w-full bg-gradient-to-b from-[#f8f9ff] via-white to-[#f8f9ff] border-y border-slate-200/80 py-10 sm:py-12 lg:py-14 px-4 sm:px-6 lg:px-8 xl:px-12 shadow-xs overflow-hidden" id="live-stats-strip">
+            <!-- Subtle Ambient Background Accents -->
+            <div class="absolute -top-20 left-1/4 w-96 h-36 bg-red-100/35 blur-3xl rounded-full pointer-events-none"></div>
+            <div class="absolute -bottom-20 right-1/4 w-96 h-36 bg-sky-100/35 blur-3xl rounded-full pointer-events-none"></div>
+
+            <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto relative z-10">
+                
+                <!-- Section Header (Telemetri & Kapasitas Fisik) -->
+                <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-8 sm:mb-10">
+                    <div>
+                        <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#bc0007] block mb-1">Telemetri &amp; Kapasitas Fisik</span>
+                        <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-[#0b1c30] tracking-tight">
+                            Parameter Inti Jaringan Fiber Witel Sukabumi
+                        </h2>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-500 max-w-md lg:text-right leading-relaxed">
+                        Statistik dihitung secara otomatis melalui kueri UIM API dan polling modul NMS OLT setiap 60 detik.
+                    </p>
+                </div>
+
+                <!-- 4 Modular Telemetry Cards Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+                    
+                    <!-- Card 1: Titik ODP Termonitor -->
+                    <div class="stat-counter-card group relative bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 hover:border-red-200 shadow-2xs hover:shadow-xl hover:shadow-red-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-[13px] font-semibold text-slate-600">Titik ODP Termonitor</span>
+                                <div class="w-8 h-8 rounded-lg bg-sky-50 text-[#bc0007] border border-sky-100/80 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#bc0007] group-hover:text-white transition-all duration-300">
+                                    <span class="material-symbols-outlined text-[18px]">alt_route</span>
+                                </div>
+                            </div>
+                            <div class="my-2.5 flex items-baseline">
+                                <span class="font-telemetry text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight stat-count-value"
+                                      data-target="8420"
+                                      data-format="integer">8,420</span>
+                            </div>
+                            <p class="text-xs text-slate-500 font-medium leading-relaxed">Cakupan 23 Sektor Kecamatan Sukabumi</p>
+                        </div>
+                        
+                        <!-- Segmented Progress Bar (5 Blocks) -->
+                        <div class="grid grid-cols-5 gap-1.5 mt-5 pt-1">
+                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
+                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
+                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
+                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
+                            <div class="h-2 rounded-xs bg-[#bc0007]"></div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Active PON Ports -->
+                    <div class="stat-counter-card group relative bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 hover:border-sky-200 shadow-2xs hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-[13px] font-semibold text-slate-600">Active PON Ports</span>
+                                <div class="w-8 h-8 rounded-lg bg-sky-50 text-[#00628d] border border-sky-100/80 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#00628d] group-hover:text-white transition-all duration-300">
+                                    <span class="material-symbols-outlined text-[18px]">router</span>
+                                </div>
+                            </div>
+                            <div class="my-2.5 flex items-baseline gap-1.5">
+                                <span class="font-telemetry text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight stat-count-value"
+                                      data-target="384"
+                                      data-format="integer">384</span>
+                                <span class="font-sans text-xs sm:text-sm font-semibold text-slate-500">Port</span>
+                            </div>
+                            <p class="text-xs text-slate-500 font-medium leading-relaxed">24 Chassis OLT MA5800 &amp; C300</p>
+                        </div>
+
+                        <!-- Segmented Progress Bar (5 Blocks) -->
+                        <div class="grid grid-cols-5 gap-1.5 mt-5 pt-1">
+                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
+                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
+                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
+                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
+                            <div class="h-2 rounded-xs bg-[#00628d]"></div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: SLA Ketersediaan Optik -->
+                    <div class="stat-counter-card group relative bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 hover:border-emerald-200 shadow-2xs hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-[13px] font-semibold text-slate-600">SLA Ketersediaan Optik</span>
+                                <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100/80 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300">
+                                    <span class="material-symbols-outlined text-[18px]">verified</span>
+                                </div>
+                            </div>
+                            <div class="my-2.5 flex items-baseline">
+                                <span class="font-telemetry text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight stat-count-value"
+                                      data-target="99.98"
+                                      data-decimals="2"
+                                      data-format="decimal">99.98</span><span class="font-telemetry text-2xl sm:text-3xl font-extrabold text-slate-900 ml-0.5">%</span>
+                            </div>
+                            <p class="text-xs font-semibold text-emerald-600 leading-relaxed">Diatas Target Regional (99.85%)</p>
+                        </div>
+
+                        <!-- Segmented Progress Bar (5 Blocks) -->
+                        <div class="grid grid-cols-5 gap-1.5 mt-5 pt-1">
+                            <div class="h-2 rounded-xs bg-emerald-200/80"></div>
+                            <div class="h-2 rounded-xs bg-emerald-200/80"></div>
+                            <div class="h-2 rounded-xs bg-emerald-200/80"></div>
+                            <div class="h-2 rounded-xs bg-emerald-200/80"></div>
+                            <div class="h-2 rounded-xs bg-emerald-600"></div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Mean Time to Repair -->
+                    <div class="stat-counter-card group relative bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 hover:border-rose-200 shadow-2xs hover:shadow-xl hover:shadow-rose-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-[13px] font-semibold text-slate-600">Mean Time to Repair</span>
+                                <div class="w-8 h-8 rounded-lg bg-red-50 text-[#bc0007] border border-red-100/80 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#bc0007] group-hover:text-white transition-all duration-300">
+                                    <span class="material-symbols-outlined text-[18px]">fmd_good</span>
+                                </div>
+                            </div>
+                            <div class="my-2.5 flex items-baseline gap-1.5">
+                                <span class="font-telemetry text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight stat-count-value"
+                                      data-target="1.74"
+                                      data-decimals="2"
+                                      data-format="decimal">1.74</span>
+                                <span class="font-sans text-xs sm:text-sm font-semibold text-slate-500">Jam</span>
+                            </div>
+                            <p class="text-xs text-slate-500 font-medium leading-relaxed">Restorasi Kabel Putus / Macrobend</p>
+                        </div>
+
+                        <!-- Segmented Progress Bar (5 Blocks) -->
+                        <div class="grid grid-cols-5 gap-1.5 mt-5 pt-1">
+                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
+                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
+                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
+                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
+                            <div class="h-2 rounded-xs bg-[#bc0007]"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 4 PILAR OPERASIONAL SECTION ================= -->
+        <section class="w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 lg:py-24 bg-[#f8f9ff]" id="fitur">
+            <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto flex flex-col gap-12">
+                
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="w-8 h-1 bg-[#bc0007] rounded-full"></span>
+                            <span class="text-xs uppercase tracking-wider text-[#bc0007] font-bold">Modul Inti Platform Monitoring</span>
+                        </div>
+                        <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0b1c30]">
+                            4 Pilar Operasional Infrastruktur Optik Sukabumi
+                        </h2>
+                    </div>
+                    <p class="text-sm text-slate-600 max-w-md leading-relaxed">
+                        Dirancang untuk menjamin akurasi fisik ke sistem, mendeteksi redaman abnormal seketika, dan mempercepat tindakan korektif tim patroli lapangan.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Pilar 1 -->
+                    <div class="bg-white p-6 sm:p-7 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="flex flex-col gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center text-[#bc0007] group-hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-2xl">signal_cellular_alt</span>
+                            </div>
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-[#bc0007]">Telemetri Real-Time</span>
+                            <h3 class="font-headline text-lg font-bold text-slate-900 group-hover:text-[#bc0007] transition-colors">
+                                Monitoring GPON & Redaman OLT
+                            </h3>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                Monitoring daya pancar/terima optik Tx/Rx per slot PON secara kontinu. Deteksi dini potensi degradasi kualitas, macrobending kabel, dan peringatan instan kabel fiber putus.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
+                            <span>Loss Threshold: -24 dBm</span>
+                            <span class="material-symbols-outlined text-[#00628d] text-base">check_circle</span>
+                        </div>
+                    </div>
+
+                    <!-- Pilar 2 -->
+                    <div class="bg-white p-6 sm:p-7 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="flex flex-col gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center text-[#00628d] group-hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-2xl">qr_code_scanner</span>
+                            </div>
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-[#00628d]">Validasi Aset Fisik</span>
+                            <h3 class="font-headline text-lg font-bold text-slate-900 group-hover:text-[#00628d] transition-colors">
+                                Audit & Validasi Data Valins Fisik
+                            </h3>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                Sinkronisasi data QR Code ODP lapangan dengan sistem database UIM. Identifikasi otomatis port ODP bodong, dropcore tidak terdaftar, dan pembaruan visual kondisi perangkat.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
+                            <span>Kesesuaian: 98.6% Valid</span>
+                            <span class="material-symbols-outlined text-[#00628d] text-base">check_circle</span>
+                        </div>
+                    </div>
+
+                    <!-- Pilar 3 -->
+                    <div class="bg-white p-6 sm:p-7 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="flex flex-col gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-700 group-hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-2xl">map</span>
+                            </div>
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-indigo-700">Geospasial Presisi</span>
+                            <h3 class="font-headline text-lg font-bold text-slate-900 group-hover:text-indigo-700 transition-colors">
+                                Peta Topologi GIS Spasial Fiber
+                            </h3>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                Visualisasi rute kabel Feeder, Distribution, dan Closure FDT/ODC berbasis titik koordinat GPS presisi tinggi Sukabumi untuk navigasi cepat regu perbaikan darurat.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
+                            <span>Akurasi GPS &lt; 2.5m</span>
+                            <span class="material-symbols-outlined text-[#00628d] text-base">check_circle</span>
+                        </div>
+                    </div>
+
+                    <!-- Pilar 4 -->
+                    <div class="bg-white p-6 sm:p-7 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="flex flex-col gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center text-[#bc0007] group-hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-2xl">troubleshoot</span>
+                            </div>
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-[#bc0007]">Automasi Korektif</span>
+                            <h3 class="font-headline text-lg font-bold text-slate-900 group-hover:text-[#bc0007] transition-colors">
+                                Analisis OTDR & Notifikasi Bot
+                            </h3>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                Analisis kurva trace OTDR cerdas untuk pinpoint jarak putus serat optik. Penerbitan Surat Perintah Kerja (SPK) otomatis ke grup Telegram regu patroli Sukabumi.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
+                            <span>Eskalasi Bot: &lt; 30 Detik</span>
+                            <span class="material-symbols-outlined text-[#00628d] text-base">check_circle</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= LIVE DIAGNOSTICS & TELEMETRY PREVIEW ================= -->
+        <section class="w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 lg:py-24 bg-white border-y border-slate-200/80" id="telemetri">
+            <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto flex flex-col gap-10">
+                
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1.5">
+                            <svg class="w-4 h-4 text-[#bc0007] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-600">INTEGRITAS &amp; SINKRONISASI DATA JARINGAN</span>
+                        </div>
+                        <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-[#0b1c30] tracking-tight">
+                            Status Validasi Data VALINS & Audit Lapangan Telkom Akses Witel Sukabumi
+                        </h2>
+                        <p class="text-xs sm:text-sm text-slate-500 mt-1.5 flex items-center gap-1.5 font-medium">
+                            <svg class="w-3.5 h-3.5 text-[#bc0007] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span>Kantor Witel Sukabumi: Jl. R. E. Martadinata No.24, Gunungparang, Kec. Cikole, Kota Sukabumi</span>
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="px-3.5 py-1.5 bg-slate-50 rounded-xl text-slate-700 font-mono text-xs border border-slate-200 flex items-center gap-2 shadow-2xs">
+                            <svg class="w-3.5 h-3.5 text-[#bc0007] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            <span>Refreshed: Realtime (5s)</span>
+                        </span>
+                        <a href="{{ route('login') }}" 
+                           class="px-4 py-2 rounded-xl bg-[#bc0007] hover:bg-[#960005] text-white text-xs font-bold uppercase tracking-wider shadow-sm flex items-center gap-1.5 transition-all">
+                            <span class="material-symbols-outlined text-base">refresh</span>
+                            <span>Buka Konsol Penuh</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                    
+                    <!-- Table Section (2 Cols) -->
+                    <div class="lg:col-span-2 bg-[#f8f9ff] rounded-2xl shadow-sm overflow-hidden flex flex-col border border-slate-200">
+                        
+                        <!-- Table Sub-header -->
+                        <div class="px-5 py-3.5 bg-white border-b border-slate-200 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-[#bc0007] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                </svg>
+                                <h3 class="text-sm font-bold text-slate-900 tracking-tight">Daftar Rekonsiliasi VALINS & Status Layanan (ODP Tidak Sama)</h3>
+                            </div>
+                        </div>
+
+                        <!-- Data Table -->
+                        <div class="overflow-x-auto w-full">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-100/70 text-slate-600 font-mono text-[11px] uppercase tracking-wider border-b border-slate-200">
+                                        <th class="py-3.5 px-4 font-bold text-left">WITEL</th>
+                                        <th class="py-3.5 px-4 font-bold text-left">STO</th>
+                                        <th class="py-3.5 px-4 font-bold text-left">ODP NAME</th>
+                                        <th class="py-3.5 px-4 font-bold text-left">NODE ID</th>
+                                        <th class="py-3.5 px-4 font-bold text-center">STATUS</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200/70 text-xs font-medium text-slate-700">
+                                    <tr class="hover:bg-white/80 transition-colors">
+                                        <td class="py-3.5 px-4 font-mono font-bold text-slate-900">SUKABUMI</td>
+                                        <td class="py-3.5 px-4 font-mono font-semibold text-slate-800">CBD</td>
+                                        <td class="py-3.5 px-4 font-mono font-bold text-slate-800">ODP-CBD-FAR/9</td>
+                                        <td class="py-3.5 px-4 font-mono text-slate-600">GPON02-D3-CBD-4</td>
+                                        <td class="py-3.5 px-4 text-center">
+                                            <span class="inline-flex items-center justify-center px-3 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-300/80 shadow-2xs">
+                                                ASTINET
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="hover:bg-white/80 transition-colors">
+                                        <td class="py-3.5 px-4 font-mono font-bold text-slate-900">SUKABUMI</td>
+                                        <td class="py-3.5 px-4 font-mono font-semibold text-slate-800">CMO</td>
+                                        <td class="py-3.5 px-4 font-mono font-bold text-slate-800">OTB-CMO-FAB/1</td>
+                                        <td class="py-3.5 px-4 font-mono text-slate-600">GPON00-D3-CMO-3</td>
+                                        <td class="py-3.5 px-4 text-center">
+                                            <span class="inline-flex items-center justify-center px-3 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 shadow-2xs">
+                                                OTB
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="bg-rose-50/40 hover:bg-rose-50/70 transition-colors">
+                                        <td class="py-3.5 px-4 font-mono font-bold text-rose-700">SUKABUMI</td>
+                                        <td class="py-3.5 px-4 font-mono font-semibold text-slate-900">PLR</td>
+                                        <td class="py-3.5 px-4 font-mono font-bold text-slate-800">ODP-PLR-FAD/125</td>
+                                        <td class="py-3.5 px-4 font-mono text-slate-600">GPON01-D3-PLR-2</td>
+                                        <td class="py-3.5 px-4 text-center">
+                                            <span class="inline-flex items-center justify-center px-3 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200 shadow-2xs">
+                                                Disconnected
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="hover:bg-white/80 transition-colors">
+                                        <td class="py-3.5 px-4 font-mono font-bold text-slate-900">SUKABUMI</td>
+                                        <td class="py-3.5 px-4 font-mono font-semibold text-slate-800">SKB</td>
+                                        <td class="py-3.5 px-4 font-mono font-bold text-slate-800">ODP-SKB-FCE/8</td>
+                                        <td class="py-3.5 px-4 font-mono text-slate-600">GPON01-D3-SKB-4</td>
+                                        <td class="py-3.5 px-4 text-center">
+                                            <span class="inline-flex items-center justify-center px-3 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-2xs">
+                                                DONE OLO
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Footer Table -->
+                        <div class="p-4 bg-white border-t border-slate-200 text-slate-600 text-xs flex flex-col sm:flex-row items-center justify-between gap-2">
+                            <span>Menampilkan 4 dari 384 entri pemetaan ODP &amp; status layanan di Witel Sukabumi</span>
+                            <a href="{{ route('login') }}" class="text-[#bc0007] font-bold uppercase tracking-wider hover:underline flex items-center gap-1">
+                                <span>LIHAT SELURUH DATA VALINS</span>
+                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Side Card: Audit Lapangan ODP Preview with Interactive Map -->
+                    <div class="bg-[#f8f9ff] p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between gap-5">
+                        <div class="flex flex-col gap-4">
+                            <!-- Card Header -->
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-[#bc0007] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
-                                </a>
+                                    <h3 class="text-sm font-bold text-slate-900 tracking-tight">Titik Koordinat & Lokasi Terkini</h3>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Map Canvas Container -->
+                            <div class="relative w-full h-56 sm:h-60 rounded-xl overflow-hidden border border-slate-200 shadow-inner bg-slate-100" style="isolation: isolate;">
+                                <div id="interactive-audit-map" class="w-full h-full z-0">
+                                    <!-- Fallback interactive iframe if JS/CDN is loading or offline -->
+                                    <iframe 
+                                        class="w-full h-full border-0" 
+                                        src="https://www.openstreetmap.org/export/embed.html?bbox=106.9240%2C-6.9235%2C106.9330%2C-6.9175&amp;layer=mapnik&amp;marker=-6.92059%2C106.92868"
+                                        title="Peta Audit Lapangan Telkom Sukabumi"
+                                        loading="lazy">
+                                    </iframe>
+                                </div>
+
+                                <!-- Floating Semi-Transparent Coordinate Badge -->
+                                <div class="absolute bottom-2.5 left-2.5 z-20 pointer-events-none">
+                                    <span class="bg-slate-900/80 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-lg font-mono shadow-md inline-flex items-center gap-1.5 border border-white/10">
+                                        <svg class="w-3.5 h-3.5 text-red-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                        <span>Koordinat: -6.9206, 106.9287</span>
+                                    </span>
+                                </div>
+
+                                <!-- Recenter Button -->
+                                <div class="absolute top-2.5 right-2.5 z-20">
+                                    <button type="button" 
+                                            id="btn-recenter-audit-map" 
+                                            title="Fokuskan kembali ke STO Sukabumi" 
+                                            class="bg-white/90 hover:bg-white backdrop-blur-sm text-slate-700 hover:text-red-600 text-[11px] font-semibold px-2.5 py-1 rounded-md shadow-sm border border-slate-200 transition-all flex items-center gap-1 cursor-pointer">
+                                        <svg class="w-3 h-3 text-red-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                            <circle cx="12" cy="12" r="3"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 2v3m0 14v3M2 12h3m14 0h3"/>
+                                        </svg>
+                                        <span>Pusatkan Lokasi</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Validator Info -->
+                        <div class="border border-slate-100 rounded-xl p-3 bg-slate-50/50 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <img src="{{ asset('images/landing/technician-avatar.jpg') }}" 
+                                     alt="Lead Field Validator Lapangan" 
+                                     class="w-10 h-10 rounded-full object-cover border border-slate-200 shrink-0"
+                                     onerror="this.src='https://ui-avatars.com/api/?name=Tim+Daman&background=bc0007&color=fff'">
+                                <div>
+                                    <span class="text-xs font-bold text-slate-900 block leading-tight">Tim Daman Sukabumi</span>
+                                    <span class="text-[11px] text-slate-500 font-mono">Lead Field Validator</span>
+                                </div>
+                            </div>
+                            <span class="text-[11px] text-slate-500 font-medium bg-white px-2.5 py-1 rounded-md border border-slate-200 shadow-2xs">
+                                25m lalu
                             </span>
-                        </li>
-                        <li class="flex items-center gap-4 py-2 relative before:border-l before:border-[#e3e3e0] dark:before:border-[#3E3E3A] before:bottom-1/2 before:top-0 before:left-[0.4rem] before:absolute">
-                            <span class="relative py-1 bg-white dark:bg-[#161615]">
-                                <span class="flex items-center justify-center rounded-full bg-[#FDFDFC] dark:bg-[#161615] shadow-[0px_0px_1px_0px_rgba(0,0,0,0.03),0px_1px_2px_0px_rgba(0,0,0,0.06)] w-3.5 h-3.5 border dark:border-[#3E3E3A] border-[#e3e3e0]">
-                                    <span class="rounded-full bg-[#dbdbd7] dark:bg-[#3E3E3A] w-1.5 h-1.5"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= END-TO-END FIBER ARCHITECTURE ================= -->
+        <section class="w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 lg:py-24 bg-[#f8f9ff]" id="arsitektur">
+            <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto flex flex-col gap-12">
+                
+                <div class="text-center max-w-2xl mx-auto flex flex-col gap-3">
+                    <span class="text-xs uppercase tracking-wider text-[#bc0007] font-bold">Arsitektur Jalur Optik GPON</span>
+                    <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0b1c30]">
+                        Dari Sentral Telepon Otomat (STO) Hingga Rumah Pelanggan
+                    </h2>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Peta transmisi optik fisik standar Telkom Akses dengan titik kendali validasi VALINS serta toleransi redaman per segmen.
+                    </p>
+                </div>
+
+                <!-- 4 Stages Process Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Stage 1 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 relative flex flex-col justify-between hover:shadow-md transition-shadow">
+                        <div class="flex flex-col gap-3">
+                            <div class="flex items-center justify-between">
+                                <span class="w-9 h-9 rounded-xl bg-[#bc0007] text-white flex items-center justify-center font-mono text-sm font-bold shadow-xs">
+                                    01
                                 </span>
+                            </div>
+                            <h4 class="font-headline text-base font-bold text-slate-900 mt-2">
+                                STO & Optical Line Terminal (OLT)
+                            </h4>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                Perangkat aktif utama OLT ZTE C300 & Huawei MA5800. Titik awal injeksi daya optik laser 1490nm (Downstream) dan 1310nm (Upstream).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Stage 2 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 relative flex flex-col justify-between hover:shadow-md transition-shadow">
+                        <div class="flex flex-col gap-3">
+                            <div class="flex items-center justify-between">
+                                <span class="w-9 h-9 rounded-xl bg-[#00628d] text-white flex items-center justify-center font-mono text-sm font-bold shadow-xs">
+                                    02
+                                </span>
+                            </div>
+                            <h4 class="font-headline text-base font-bold text-slate-900 mt-2">
+                                Optical Distribution Cabinet (ODC)
+                            </h4>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                Kabinet distribusi outdoor dengan passive optical splitter 1:4. Menyalurkan core kabel backbone ke masing-masing klaster permukiman.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Stage 3 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 relative flex flex-col justify-between hover:shadow-md transition-shadow">
+                        <div class="flex flex-col gap-3">
+                            <div class="flex items-center justify-between">
+                                <span class="w-9 h-9 rounded-xl bg-slate-800 text-white flex items-center justify-center font-mono text-sm font-bold shadow-xs">
+                                    03
+                                </span>
+                            </div>
+                            <h4 class="font-headline text-base font-bold text-slate-900 mt-2">
+                                Optical Distribution Point (ODP)
+                            </h4>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                Kotak distribusi tiang atau pedestal (Splitter 1:8 / 1:16). Titik fokus audit tag QR Code VALINS untuk validasi fisik dan port availability.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Stage 4 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 relative flex flex-col justify-between hover:shadow-md transition-shadow">
+                        <div class="flex flex-col gap-3">
+                            <div class="flex items-center justify-between">
+                                <span class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-mono text-sm font-bold shadow-xs">
+                                    04
+                                </span>
+                            </div>
+                            <h4 class="font-headline text-base font-bold text-slate-900 mt-2">
+                                Optical Network Terminal (ONT)
+                            </h4>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                Modem optik di tempat pelanggan IndiHome maupun Enterprise Astinet. Menerima sinyal data, voice VoIP, dan IPTV tanpa dispersi abnormal.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VALINS & FIELD OPERATION VALUE SECTION ================= -->
+        <section class="w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 lg:py-24 bg-white border-y border-slate-200/80" id="valins">
+            <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+                
+                <!-- Left Content -->
+                <div class="flex-1 flex flex-col gap-6">
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="w-8 h-1 bg-[#bc0007] rounded-full"></span>
+                            <span class="text-xs uppercase tracking-wider text-[#bc0007] font-bold">Efisiensi & Akurasi Operasi</span>
+                        </div>
+                        <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0b1c30]">
+                            Mengapa data Valins Service & GPON sangat penting untuk Witel Sukabumi?
+                        </h2>
+                    </div>
+
+                    <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                        Sebelum implementasi data Valins terpadu, deviasi data antara catatan inventori logis UIM dan kenyataan kabel lapangan di wilayah Sukabumi mencapai 18%. Platform ini memangkas selisih secara otomatis dan mempercepat waktu perbaikan gangguan.
+                    </p>
+
+                    <div class="flex flex-col gap-4 mt-2">
+                        
+                        <!-- Value Item 1 -->
+                        <div class="flex items-start gap-4 bg-[#f8f9ff] p-4 sm:p-5 rounded-xl border border-slate-200/80 shadow-2xs">
+                            <div class="p-2 rounded-lg bg-red-100 text-[#bc0007] mt-0.5 shrink-0">
+                                <span class="material-symbols-outlined text-xl">verified</span>
+                            </div>
+                            <div>
+                                <h5 class="font-headline text-sm sm:text-base font-bold text-slate-900">
+                                    Eliminasi Deviasi Data hingga 98.6%
+                                </h5>
+                                <p class="text-xs sm:text-sm text-slate-600 mt-1">
+                                    Pencocokan barcode QR instan menjamin nomor port dan pelanggan tersimpan presisi di database pusat tanpa entri manual yang rentan salah.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Value Item 2 -->
+                        <div class="flex items-start gap-4 bg-[#f8f9ff] p-4 sm:p-5 rounded-xl border border-slate-200/80 shadow-2xs">
+                            <div class="p-2 rounded-lg bg-sky-100 text-[#00628d] mt-0.5 shrink-0">
+                                <span class="material-symbols-outlined text-xl">send</span>
+                            </div>
+                            <div>
+                                <h5 class="font-headline text-sm sm:text-base font-bold text-slate-900">
+                                    Peringatan Instan Bot Telegram NOC 24/7
+                                </h5>
+                                <p class="text-xs sm:text-sm text-slate-600 mt-1">
+                                    Jika terdeteksi fiber cut atau lonjakan redaman di atas ambang -24 dBm, notifikasi koordinat GPS langsung diteruskan ke regu teknisi patroli Sukabumi.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Value Item 3 -->
+                        <div class="flex items-start gap-4 bg-[#f8f9ff] p-4 sm:p-5 rounded-xl border border-slate-200/80 shadow-2xs">
+                            <div class="p-2 rounded-lg bg-indigo-100 text-indigo-700 mt-0.5 shrink-0">
+                                <span class="material-symbols-outlined text-xl">download_for_offline</span>
+                            </div>
+                            <div>
+                                <h5 class="font-headline text-sm sm:text-base font-bold text-slate-900">
+                                    Ekspor BAST Mitra 1-Klik (PDF & XLSX)
+                                </h5>
+                                <p class="text-xs sm:text-sm text-slate-600 mt-1">
+                                    Penyusunan Berita Acara Serah Terima (BAST) hasil uji petik fisik mitra kontraktor Telkom Akses siap cetak format PDF dan XLSX standar Telkom Group.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Right Visual: Field Technician -->
+                <div class="w-full lg:w-5/12 flex flex-col gap-4">
+                    <div class="relative rounded-2xl overflow-hidden shadow-xl bg-slate-900 border border-slate-200/50">
+                        <img src="{{ asset('images/landing/technician-field-odp.jpg') }}" 
+                             alt="Teknisi Telkom Akses Validasi ODP Lapangan Sukabumi" 
+                             class="w-full h-84 object-cover opacity-90 transition-transform duration-500 hover:scale-105"
+                             onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuC3DQrSSxGuGfzIMGigebrPyVZcrELgDg-M9xovm9e1vgt0q4x5w-I6WCAIPPWsBcZ-5elNDM0eUc3aUpOkc9uFspUwVvsOe_DEicwcQMpStYoNyMEuB7DuXwhAly4HSUyu-qIFBU8M72Enx4CJ-5p5XARcFQuYDe3R8jAm5ahnIkLKdFeCNkBoP5Ri3dbUTb1CNoPOjRRQvgB2fD479KkVo4z6Y9aHzqZ-oT62cIza2WWVKjhj0Eni'">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent"></div>
+                        
+                        <div class="absolute bottom-4 left-4 right-4 bg-slate-900/85 backdrop-blur-md p-3.5 rounded-xl text-white border border-white/10">
+                            <div class="flex items-center justify-between text-xs mb-1">
+                                <span class="text-red-300 font-bold">Regu Teknisi Lapangan</span>
+                            </div>
+                            <p class="text-xs text-slate-300">
+                                Audit berkala fisik ODP di kawasan Cikole, Baros, Citamiang, dan Jalur Lingkar Selatan Sukabumi.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Supporting Mini Security Card -->
+                    <div class="bg-[#f8f9ff] p-4 rounded-xl border border-slate-200 shadow-2xs flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[#bc0007] text-2xl">lock</span>
+                            <div>
+                                <span class="text-xs sm:text-sm font-bold text-slate-900 block">Keamanan Standar Telkom SSO</span>
+                                <span class="text-[11px] text-slate-500">Enkripsi TLS 1.3 & Audit Log Forensik</span>
+                            </div>
+                        </div>
+                        <span class="material-symbols-outlined text-[#00628d] text-xl">verified_user</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= FULL-WIDTH CTA BANNER (MORDANT RED 19) ================= -->
+        <section class="w-full bg-[#AE0C00] rounded-none shadow-none mb-0" id="konsol">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-16">
+                <!-- Split 2 Kolom Layout (Kiri Informasi, Kanan Tombol Aksi) -->
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+                    <!-- Kolom Kiri (Judul & Deskripsi) -->
+                    <div class="lg:max-w-2xl">
+                        <h2 class="text-2xl md:text-4xl font-bold text-white tracking-tight leading-tight">
+                            Tingkatkan Integritas Data Jaringan Fiber Optik Sukabumi Sekarang
+                        </h2>
+                        <p class="text-white/90 text-sm md:text-base mt-3 leading-relaxed">
+                            Akses konsol monitoring diperuntukkan bagi Network Engineer, Validator Data VALINS, Asisten Manager Pemeliharaan, dan Teknisi Lapangan PT Telkom Akses Witel Sukabumi.
+                        </p>
+                    </div>
+
+                    <!-- Kolom Kanan (Area Tombol Aksi) -->
+                    <div class="flex flex-col sm:flex-row lg:flex-col xl:flex-row items-stretch sm:items-center gap-3.5 shrink-0">
+                        @auth
+                            <a href="{{ route('dashboard') }}" 
+                               class="bg-white text-[#AE0C00] hover:bg-neutral-100 font-semibold px-6 py-3.5 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm">
+                                <span class="material-symbols-outlined text-[19px]">dashboard</span>
+                                <span>Buka Dashboard Saya</span>
+                            </a>
+                        @else
+                            <a href="{{ route('login') }}" 
+                               class="bg-white text-[#AE0C00] hover:bg-neutral-100 font-semibold px-6 py-3.5 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm">
+                                <span class="material-symbols-outlined text-[19px]">login</span>
+                                <span>Masuk Akun Sekarang</span>
+                            </a>
+                        @endauth
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Persistent Telkom Akses Operations Footer (Hidden on Mobile / Inspect < lg) -->
+    <footer class="hidden lg:block w-full bg-white border-t border-slate-200/80 shadow-xs mt-0 pt-7 sm:pt-8.5 pb-4 sm:pb-5 text-left" id="bantuan">
+        <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10">
+                
+                <!-- Column 1: Brand & Profil + Kontak Bantuan NOC (lg:col-span-5, xl:col-span-5) -->
+                <div class="lg:col-span-5 xl:col-span-5 flex flex-col gap-6">
+                    <!-- Brand & Profil -->
+                    <div class="flex flex-col">
+                        <div class="flex items-center mb-4">
+                            <img src="{{ asset('images/telkom-akses-official-transparent.png') }}" 
+                                 alt="Logo Resmi PT Telkom Akses" 
+                                 class="h-11 sm:h-12 md:h-13 w-auto object-contain shrink-0"
+                                 onerror="this.src='{{ asset('images/telkom-akses-official-clean.png') }}'">
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed max-w-md">
+                            Sistem Informasi Manajemen Data VALINS & Monitoring GPON OLT Terpadu Kawasan Sukabumi. Platform resmi operasional jaringan optik dan integrasi topologi ODC/ODP regional.
+                        </p>
+                        <div class="flex flex-wrap items-center gap-2.5 mt-4">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 text-sky-800 text-[11px] font-semibold border border-slate-200">
+                                <span class="material-symbols-outlined text-[15px] text-sky-600">verified</span>
+                                BUMN Terpercaya
                             </span>
-                            <span>
-                                Watch video tutorials at
-                                <a href="https://laracasts.com" target="_blank" class="inline-flex items-center space-x-1 font-medium underline underline-offset-4 text-[#f53003] dark:text-[#FF4433] ml-1">
-                                    <span>Laracasts</span>
-                                    <svg
-                                        width="10"
-                                        height="11"
-                                        viewBox="0 0 10 11"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="w-2.5 h-2.5"
-                                    >
-                                        <path
-                                            d="M7.70833 6.95834V2.79167H3.54167M2.5 8L7.5 3.00001"
-                                            stroke="currentColor"
-                                            stroke-linecap="square"
-                                        />
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-50 text-[#bc0007] text-[11px] font-semibold border border-red-200/60">
+                                <span class="material-symbols-outlined text-[15px]">security</span>
+                                ISO 27001 Certified
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Kontak Bantuan NOC (Tepat di Bawah Brand & Profil - Vertikal Rapi Tanpa Garis Pembatas) -->
+                    <div class="flex flex-col pt-1">
+                        <div class="flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-slate-900 mb-3">
+                            <span>KONTAK BANTUAN NOC</span>
+                        </div>
+                        <div class="flex flex-col gap-2.5 max-w-md">
+                            <!-- Hotline Fixed Line -->
+                            <a href="tel:0266221100" class="group flex items-center gap-3 p-2.5 rounded-2xl bg-slate-50/80 hover:bg-red-50/60 border border-slate-100 hover:border-red-200 transition-all duration-200 shadow-2xs">
+                                <div class="w-9 h-9 rounded-xl bg-red-100 text-[#bc0007] flex items-center justify-center shrink-0 border border-red-200/60 group-hover:scale-105 transition-transform">
+                                    <span class="material-symbols-outlined text-[19px]">call</span>
+                                </div>
+                                <div class="flex flex-col min-w-0">
+                                    <span class="text-[11px] font-bold text-slate-900 group-hover:text-[#bc0007] transition-colors leading-tight">Hotline Fixed Line</span>
+                                    <span class="font-telemetry text-[11px] text-slate-600 mt-0.5 font-semibold tracking-wide truncate">(0266) 221100 / ext. 408</span>
+                                </div>
+                            </a>
+
+                            <!-- WhatsApp Dispatcher NOC -->
+                            <a href="https://wa.me/6281120098800" target="_blank" class="group flex items-center gap-3 p-2.5 rounded-2xl bg-slate-50/80 hover:bg-emerald-50/60 border border-slate-100 hover:border-emerald-200 transition-all duration-200 shadow-2xs">
+                                <div class="w-9 h-9 rounded-xl bg-emerald-100 text-[#25D366] flex items-center justify-center shrink-0 border border-emerald-200/60 group-hover:scale-105 transition-transform">
+                                    <svg class="w-4.5 h-4.5" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
                                     </svg>
-                                </a>
-                            </span>
-                        </li>
-                    </ul>
-                    <ul class="flex gap-3 text-sm leading-normal">
+                                </div>
+                                <div class="flex flex-col min-w-0">
+                                    <span class="text-[11px] font-bold text-slate-900 group-hover:text-emerald-700 transition-colors leading-tight">WhatsApp Dispatcher</span>
+                                    <span class="font-telemetry text-[11px] text-slate-600 mt-0.5 font-semibold tracking-wide truncate">+62 811-2009-8800</span>
+                                </div>
+                            </a>
+
+                            <!-- Email Kedinasan -->
+                            <a href="mailto:noc.sukabumi@telkomakses.co.id" class="group flex items-center gap-3 p-2.5 rounded-2xl bg-slate-50/80 hover:bg-sky-50/60 border border-slate-100 hover:border-sky-200 transition-all duration-200 shadow-2xs">
+                                <div class="w-9 h-9 rounded-xl bg-sky-100 text-[#0284C7] flex items-center justify-center shrink-0 border border-sky-200/60 group-hover:scale-105 transition-transform">
+                                    <span class="material-symbols-outlined text-[19px]">mail</span>
+                                </div>
+                                <div class="flex flex-col min-w-0">
+                                    <span class="text-[11px] font-bold text-slate-900 group-hover:text-sky-700 transition-colors leading-tight">Email Kedinasan</span>
+                                    <span class="font-telemetry text-[11px] text-slate-600 mt-0.5 truncate font-semibold">noc.sukabumi@telkomakses.co.id</span>
+                                </div>
+                            </a>                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 2: Navigasi Portal (lg:col-span-2, xl:col-span-2) -->
+                <div class="lg:col-span-2 xl:col-span-2 flex flex-col">
+                    <div class="flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-slate-900 mb-4">
+                        <span>NAVIGASI PORTAL</span>
+                    </div>
+                    <ul class="flex flex-col gap-3 text-xs text-slate-600">
                         <li>
-                            <a href="https://cloud.laravel.com" target="_blank" class="inline-block dark:bg-[#eeeeec] dark:border-[#eeeeec] dark:text-[#1C1C1A] dark:hover:bg-white dark:hover:border-white hover:bg-black hover:border-black px-5 py-1.5 bg-[#1b1b18] rounded-sm border border-black text-white text-sm leading-normal">
-                                Deploy now
+                            <a href="{{ route('login') }}" class="group flex items-center gap-2 text-slate-600 hover:text-[#bc0007] transition-colors duration-200">
+                                <span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-[#bc0007] group-hover:translate-x-1 transition-all duration-200 shrink-0">arrow_forward</span>
+                                <span class="font-medium group-hover:translate-x-0.5 transition-transform duration-200">Masuk Akun</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('register') }}" class="group flex items-center gap-2 text-slate-600 hover:text-[#bc0007] transition-colors duration-200">
+                                <span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-[#bc0007] group-hover:translate-x-1 transition-all duration-200 shrink-0">arrow_forward</span>
+                                <span class="font-medium group-hover:translate-x-0.5 transition-transform duration-200">Registrasi Akun</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('login') }}" class="group flex items-center gap-2 text-slate-600 hover:text-[#bc0007] transition-colors duration-200">
+                                <span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-[#bc0007] group-hover:translate-x-1 transition-all duration-200 shrink-0">arrow_forward</span>
+                                <span class="font-medium group-hover:translate-x-0.5 transition-transform duration-200">Validasi Data Valins</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('login') }}" class="group flex items-center gap-2 text-slate-600 hover:text-[#bc0007] transition-colors duration-200">
+                                <span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-[#bc0007] group-hover:translate-x-1 transition-all duration-200 shrink-0">arrow_forward</span>
+                                <span class="font-medium group-hover:translate-x-0.5 transition-transform duration-200">Monitoring &amp; Rekonsiliasi</span>
+                            </a>
+                        </li>
+                        <li>
+                             <a href="{{ url('contact-us') }}" class="group flex items-center gap-2 text-slate-600 hover:text-[#bc0007] transition-colors duration-200">
+                                <span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-[#bc0007] group-hover:translate-x-1 transition-all duration-200 shrink-0">arrow_forward</span>
+                                    <span class="font-medium group-hover:translate-x-0.5 transition-transform duration-200">Hubungi Kami</span>
                             </a>
                         </li>
                     </ul>
+                </div>
 
-                    <p class="mt-6 lg:mt-10 text-[#706f6c] dark:text-[#A1A09A]">
-                        v{{ app()->version() }}
-                        <a href="https://github.com/laravel/framework/blob/13.x/CHANGELOG.md" target="_blank" class="inline-flex items-center space-x-1 font-medium underline underline-offset-4 text-[#f53003] dark:text-[#FF4433] ml-1">
-                            <span>View changelog</span>
-                            <svg
-                                width="10"
-                                height="11"
-                                viewBox="0 0 10 11"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="w-2.5 h-2.5"
-                            >
-                                <path
-                                    d="M7.70833 6.95834V2.79167H3.54167M2.5 8L7.5 3.00001"
-                                    stroke="currentColor"
-                                    stroke-linecap="square"
-                                />
+                <!-- Column 3: Informasi / Tentang Perusahaan (lg:col-span-2, xl:col-span-2) -->
+                <div class="lg:col-span-2 xl:col-span-2 flex flex-col">
+                    <div class="flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-slate-900 mb-4">
+                        <span>TENTANG KAMI</span>
+                    </div>
+                    <ul class="flex flex-col gap-3 text-xs text-slate-600">
+                        <li>
+                           <a href="{{ route('privacy.policy') }}" class="group flex items-center gap-2 text-slate-600 hover:text-[#bc0007] transition-colors duration-200">
+                                <span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-[#bc0007] group-hover:translate-x-1 transition-all duration-200 shrink-0">arrow_forward</span>
+                                <span class="font-medium group-hover:translate-x-0.5 transition-transform duration-200">Tentang Kami</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('privacy.policy') }}" class="group flex items-center gap-2 text-slate-600 hover:text-[#bc0007] transition-colors duration-200">
+                                <span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-[#bc0007] group-hover:translate-x-1 transition-all duration-200 shrink-0">arrow_forward</span>
+                                <span class="font-medium group-hover:translate-x-0.5 transition-transform duration-200">Kebijakan Privasi</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('terms.conditions') }}" class="group flex items-center gap-2 text-slate-600 hover:text-[#bc0007] transition-colors duration-200">
+                                <span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-[#bc0007] group-hover:translate-x-1 transition-all duration-200 shrink-0">arrow_forward</span>
+                                <span class="font-medium group-hover:translate-x-0.5 transition-transform duration-200">Syarat & Ketentuan</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('login') }}" class="group flex items-center gap-2 text-slate-600 hover:text-[#bc0007] transition-colors duration-200">
+                                <span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-[#bc0007] group-hover:translate-x-1 transition-all duration-200 shrink-0">arrow_forward</span>
+                                <span class="font-medium group-hover:translate-x-0.5 transition-transform duration-200">Arsitektur Jaringan GPON</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Area Distribusi STO (lg:col-span-3, xl:col-span-3) -->
+                <div class="lg:col-span-3 xl:col-span-3 flex flex-col">
+                    <div class="flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-slate-900 mb-4">
+                        <span>AREA DISTRIBUSI STO</span>
+                    </div>
+                    <div class="flex flex-col gap-2 font-telemetry text-xs">
+                        <div class="bg-slate-50/90 px-3.5 py-2.5 rounded-xl flex items-center justify-between border border-slate-100 hover:bg-white hover:border-slate-200 hover:shadow-2xs transition-all duration-200 group">
+                            <span class="font-semibold text-slate-800 text-[11px] truncate group-hover:text-slate-950">STO SKB - Sukabumi Kota</span>
+                            <span class="inline-flex items-center gap-1.5 text-[11px] text-emerald-600 font-bold shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Online</span>
+                        </div>
+                        <div class="bg-slate-50/90 px-3.5 py-2.5 rounded-xl flex items-center justify-between border border-slate-100 hover:bg-white hover:border-slate-200 hover:shadow-2xs transition-all duration-200 group">
+                            <span class="font-semibold text-slate-800 text-[11px] truncate group-hover:text-slate-950">STO CCR - Cicurug</span>
+                            <span class="inline-flex items-center gap-1.5 text-[11px] text-emerald-600 font-bold shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Online</span>
+                        </div>
+                        <div class="bg-slate-50/90 px-3.5 py-2.5 rounded-xl flex items-center justify-between border border-slate-100 hover:bg-white hover:border-slate-200 hover:shadow-2xs transition-all duration-200 group">
+                            <span class="font-semibold text-slate-800 text-[11px] truncate group-hover:text-slate-950">STO CBD - Cibadak</span>
+                            <span class="inline-flex items-center gap-1.5 text-[11px] text-emerald-600 font-bold shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Online</span>
+                        </div>
+                        <div class="bg-slate-50/90 px-3.5 py-2.5 rounded-xl flex items-center justify-between border border-slate-100 hover:bg-white hover:border-slate-200 hover:shadow-2xs transition-all duration-200 group">
+                            <span class="font-semibold text-slate-800 text-[11px] truncate group-hover:text-slate-950">STO PLR - Pelabuhanratu</span>
+                            <span class="inline-flex items-center gap-1.5 text-[11px] text-emerald-600 font-bold shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Online</span>
+                        </div>
+                        <div class="bg-slate-50/90 px-3.5 py-2.5 rounded-xl flex items-center justify-between border border-slate-100 hover:bg-white hover:border-slate-200 hover:shadow-2xs transition-all duration-200 group">
+                            <span class="font-semibold text-slate-800 text-[11px] truncate group-hover:text-slate-950">STO SGN - Sagaranten</span>
+                            <span class="inline-flex items-center gap-1.5 text-[11px] text-emerald-600 font-bold shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Online</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Single Clean Divider -->
+            <div class="border-t border-slate-200/80 my-6 sm:my-7"></div>
+
+            <!-- Footer Bottom Area: 2 Dedicated Distinct Rows -->
+            <div class="flex flex-col gap-5 sm:gap-5.5">
+                
+                <!-- Row 1: Logo Mitra Kerja (Lembaga Pendukung - Berlatar Transparan, Tanpa Bingkai Kotak) -->
+                <div class="flex flex-col items-center gap-3 sm:gap-3.5">
+                    <!-- Label: Supported By -->
+                    <div class="flex items-center justify-center gap-3">
+                        <div class="h-px w-8 sm:w-14 bg-gradient-to-r from-transparent to-slate-300/80"></div>
+                        <span class="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400 select-none">
+                            Supported By
+                        </span>
+                        <div class="h-px w-8 sm:w-14 bg-gradient-to-l from-transparent to-slate-300/80"></div>
+                    </div>
+
+                    <!-- Logos Container -->
+                    <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-9 md:gap-12 py-2.5 sm:py-3 overflow-visible">
+                        <!-- 1. Kementerian BUMN / Garuda Pancasila -->
+                        <a href="https://www.bumn.go.id/" target="_blank" rel="noopener noreferrer" 
+                           class="partner-logo-item focus:outline-none" 
+                           title="Kementerian Badan Usaha Milik Negara (BUMN) Republik Indonesia">
+                            <img src="{{ asset('images/partners/bumn.png') }}" 
+                                 alt="Logo Kementerian BUMN" 
+                                 class="h-7 sm:h-8 md:h-8.5 w-auto object-contain">
+                        </a>
+
+                        <!-- 2. PT Telkom Indonesia (Persero) Tbk -->
+                        <a href="https://www.telkom.co.id/" target="_blank" rel="noopener noreferrer" 
+                           class="partner-logo-item focus:outline-none" 
+                           title="PT Telkom Indonesia (Persero) Tbk - the world in your hand">
+                            <img src="{{ asset('images/partners/telkom-indonesia.png') }}" 
+                                 alt="Logo Telkom Indonesia" 
+                                 class="h-6 sm:h-7 md:h-7.5 w-auto object-contain">
+                        </a>
+
+                        <!-- 3. Kementerian Komunikasi dan Digital RI (KOMDIGI) -->
+                        <a href="https://www.komdigi.go.id/" target="_blank" rel="noopener noreferrer" 
+                           class="partner-logo-item focus:outline-none" 
+                           title="Kementerian Komunikasi dan Digital Republik Indonesia (KOMDIGI)">
+                            <img src="{{ asset('images/partners/komdigi.png') }}" 
+                                 alt="Logo KOMDIGI" 
+                                 class="h-8 sm:h-9 md:h-10 w-auto object-contain">
+                        </a>
+
+                        <!-- 4. PT Bank Syariah Indonesia Tbk (BSI) -->
+                        <a href="https://www.bankbsi.co.id/" target="_blank" rel="noopener noreferrer" 
+                           class="partner-logo-item focus:outline-none" 
+                           title="PT Bank Syariah Indonesia Tbk (BSI)">
+                            <img src="{{ asset('images/partners/bsi.png') }}" 
+                                 alt="Logo Bank Syariah Indonesia" 
+                                 class="h-6 sm:h-7 md:h-7.5 w-auto object-contain">
+                        </a>
+
+                        <!-- 5. Telkom University -->
+                        <a href="https://telkomuniversity.ac.id/" target="_blank" rel="noopener noreferrer" 
+                           class="partner-logo-item focus:outline-none" 
+                           title="Telkom University (Tel-U)">
+                            <img src="{{ asset('images/partners/telkom-university.png') }}" 
+                                 alt="Logo Telkom University" 
+                                 class="h-6 sm:h-7 md:h-7.5 w-auto object-contain">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Row 2: Copyright & Social Media Icons (Social Media di atas Copyright pada Mobile) -->
+                <div class="flex flex-col-reverse sm:flex-row items-center justify-between gap-3.5 sm:gap-4 text-[11px] text-slate-500 pt-3.5 sm:pt-4 border-t border-slate-100/80">
+                    
+                    <!-- Left: Copyright & Regional Authority -->
+                    <p class="text-center sm:text-left leading-relaxed">
+                        <span class="font-medium text-slate-700">© {{ date('Y') }} PT Telkom Akses Witel Sukabumi.</span>
+                        <span class="text-slate-300 hidden sm:inline">•</span>
+                        <span class="text-slate-500">Sub-Direktorat Operasi Jaringan Regional Jawa Barat</span>
+                    </p>
+
+                    <!-- Right: Official Social Media Icons -->
+                    <div class="flex items-center gap-2">
+                        <!-- 1. INSTAGRAM -->
+                        <a href="https://www.instagram.com/telkomaksesindonesia/" target="_blank" rel="noopener noreferrer" 
+                           class="btn-instagram relative overflow-hidden w-9 h-9 rounded-xl bg-slate-50 text-slate-600 hover:text-white border border-slate-200/80 hover:border-transparent flex items-center justify-center transition-all duration-300 shadow-2xs hover:-translate-y-1 active:scale-95 group" 
+                           title="Instagram Resmi Telkom Akses (@telkomaksesindonesia)">
+                            <span class="btn-instagram-bg absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 relative z-10" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                             </svg>
                         </a>
-                    </p>
-                </div>
-                <div class="bg-[#fff2f2] dark:bg-[#1D0002] relative lg:-ml-px -mb-px lg:mb-0 rounded-t-lg lg:rounded-t-none lg:rounded-r-lg aspect-[335/364] lg:aspect-auto w-full lg:w-[438px] shrink-0 overflow-hidden">
-                    {{-- Laravel Logo --}}
-                    <svg class="w-full text-[#F53003] dark:text-[#F61500] transition-all translate-y-0 opacity-100 max-w-none duration-750 starting:opacity-0 motion-safe:starting:translate-y-6" viewBox="0 0 438 104" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.2036 -3H0V102.197H49.5189V86.7187H17.2036V-3Z" fill="currentColor" />
-                        <path d="M110.256 41.6337C108.061 38.1275 104.945 35.3731 100.905 33.3681C96.8667 31.3647 92.8016 30.3618 88.7131 30.3618C83.4247 30.3618 78.5885 31.3389 74.201 33.2923C69.8111 35.2456 66.0474 37.928 62.9059 41.3333C59.7643 44.7401 57.3198 48.6726 55.5754 53.1293C53.8287 57.589 52.9572 62.274 52.9572 67.1813C52.9572 72.1925 53.8287 76.8995 55.5754 81.3069C57.3191 85.7173 59.7636 89.6241 62.9059 93.0293C66.0474 96.4361 69.8119 99.1155 74.201 101.069C78.5885 103.022 83.4247 103.999 88.7131 103.999C92.8016 103.999 96.8667 102.997 100.905 100.994C104.945 98.9911 108.061 96.2359 110.256 92.7282V102.195H126.563V32.1642H110.256V41.6337ZM108.76 75.7472C107.762 78.4531 106.366 80.8078 104.572 82.8112C102.776 84.8161 100.606 86.4183 98.0637 87.6206C95.5202 88.823 92.7004 89.4238 89.6103 89.4238C86.5178 89.4238 83.7252 88.823 81.2324 87.6206C78.7388 86.4183 76.5949 84.8161 74.7998 82.8112C73.004 80.8078 71.6319 78.4531 70.6856 75.7472C69.7356 73.0421 69.2644 70.1868 69.2644 67.1821C69.2644 64.1758 69.7356 61.3205 70.6856 58.6154C71.6319 55.9102 73.004 53.5571 74.7998 51.5522C76.5949 49.5495 78.738 47.9451 81.2324 46.7427C83.7252 45.5404 86.5178 44.9396 89.6103 44.9396C92.7012 44.9396 95.5202 45.5404 98.0637 46.7427C100.606 47.9451 102.776 49.5487 104.572 51.5522C106.367 53.5571 107.762 55.9102 108.76 58.6154C109.756 61.3205 110.256 64.1758 110.256 67.1821C110.256 70.1868 109.756 73.0421 108.76 75.7472Z" fill="currentColor" />
-                        <path d="M242.805 41.6337C240.611 38.1275 237.494 35.3731 233.455 33.3681C229.416 31.3647 225.351 30.3618 221.262 30.3618C215.974 30.3618 211.138 31.3389 206.75 33.2923C202.36 35.2456 198.597 37.928 195.455 41.3333C192.314 44.7401 189.869 48.6726 188.125 53.1293C186.378 57.589 185.507 62.274 185.507 67.1813C185.507 72.1925 186.378 76.8995 188.125 81.3069C189.868 85.7173 192.313 89.6241 195.455 93.0293C198.597 96.4361 202.361 99.1155 206.75 101.069C211.138 103.022 215.974 103.999 221.262 103.999C225.351 103.999 229.416 102.997 233.455 100.994C237.494 98.9911 240.611 96.2359 242.805 92.7282V102.195H259.112V32.1642H242.805V41.6337ZM241.31 75.7472C240.312 78.4531 238.916 80.8078 237.122 82.8112C235.326 84.8161 233.156 86.4183 230.614 87.6206C228.07 88.823 225.251 89.4238 222.16 89.4238C219.068 89.4238 216.275 88.823 213.782 87.6206C211.289 86.4183 209.145 84.8161 207.35 82.8112C205.554 80.8078 204.182 78.4531 203.236 75.7472C202.286 73.0421 201.814 70.1868 201.814 67.1821C201.814 64.1758 202.286 61.3205 203.236 58.6154C204.182 55.9102 205.554 53.5571 207.35 51.5522C209.145 49.5495 211.288 47.9451 213.782 46.7427C216.275 45.5404 219.068 44.9396 222.16 44.9396C225.251 44.9396 228.07 45.5404 230.614 46.7427C233.156 47.9451 235.326 49.5487 237.122 51.5522C238.917 53.5571 240.312 55.9102 241.31 58.6154C242.306 61.3205 242.806 64.1758 242.806 67.1821C242.805 70.1868 242.305 73.0421 241.31 75.7472Z" fill="currentColor" />
-                        <path d="M438 -3H421.694V102.197H438V-3Z" fill="currentColor" />
-                        <path d="M139.43 102.197H155.735V48.2834H183.712V32.1665H139.43V102.197Z" fill="currentColor" />
-                        <path d="M324.49 32.1665L303.995 85.794L283.498 32.1665H266.983L293.748 102.197H314.242L341.006 32.1665H324.49Z" fill="currentColor" />
-                        <path d="M376.571 30.3656C356.603 30.3656 340.797 46.8497 340.797 67.1828C340.797 89.6597 356.094 104 378.661 104C391.29 104 399.354 99.1488 409.206 88.5848L398.189 80.0226C398.183 80.031 389.874 90.9895 377.468 90.9895C363.048 90.9895 356.977 79.3111 356.977 73.269H411.075C413.917 50.1328 398.775 30.3656 376.571 30.3656ZM357.02 61.0967C357.145 59.7487 359.023 43.3761 376.442 43.3761C393.861 43.3761 395.978 59.7464 396.099 61.0967H357.02Z" fill="currentColor" />
-                    </svg>
 
-                    {{-- 13 --}}
-                    <svg class="w-[438px] max-w-none relative -mt-[6.6rem] -ml-8 lg:ml-0 [--stroke-color:#1B1B18] dark:[--stroke-color:#FF750F]" viewBox="0 0 440 392" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g class="mix-blend-darken dark:mix-blend-normal transition-all delay-300 opacity-100 duration-750 starting:opacity-0 text-[#1B1B18] dark:text-black">
-                            <mask id="path-1-mask" maskUnits="userSpaceOnUse" x="-0.328613" y="103" width="338" height="299" fill="black">
-                                <rect fill="white" x="-0.328613" y="103" width="338" height="299"/>
-                                <path d="M234.936 400.8C204.136 400.8 178.936 392.4 159.336 375.6C140.136 358.8 130.536 337 130.536 310.2H200.736C200.736 318.2 203.736 324.8 209.736 330C215.736 335.2 223.736 337.8 233.736 337.8C243.336 337.8 251.136 335 257.136 329.4C263.536 323.8 266.736 316.6 266.736 307.8C266.736 299.8 263.936 293.2 258.336 288C252.736 282.8 245.536 280.2 236.736 280.2H199.536V218.4H236.736C243.536 218.4 249.336 216 254.136 211.2C258.936 206.4 261.336 200.4 261.336 193.2C261.336 184.8 258.736 178.2 253.536 173.4C248.336 168.6 241.736 166.2 233.736 166.2C226.536 166.2 220.336 168.4 215.136 172.8C210.336 177.2 207.936 182.8 207.936 189.6H141.336C141.336 164.8 150.136 144.6 167.736 129C185.336 113 207.936 105 235.536 105C263.136 105 285.536 112.2 302.736 126.6C320.336 141 329.136 160 329.136 183.6C329.136 200.8 324.536 214.8 315.336 225.6C306.136 236 294.336 243.2 279.936 247.2C297.136 252 310.736 260.2 320.736 271.8C331.136 283.4 336.336 298 336.336 315.6C336.336 340.4 326.936 360.8 308.136 376.8C289.336 392.8 264.936 400.8 234.936 400.8Z"/>
-                                <path d="M26.8714 167.6H1.67139V105.2H94.6714V400.2H26.8714V167.6Z"/>
-                            </mask>
-                            <path d="M234.936 400.8C204.136 400.8 178.936 392.4 159.336 375.6C140.136 358.8 130.536 337 130.536 310.2H200.736C200.736 318.2 203.736 324.8 209.736 330C215.736 335.2 223.736 337.8 233.736 337.8C243.336 337.8 251.136 335 257.136 329.4C263.536 323.8 266.736 316.6 266.736 307.8C266.736 299.8 263.936 293.2 258.336 288C252.736 282.8 245.536 280.2 236.736 280.2H199.536V218.4H236.736C243.536 218.4 249.336 216 254.136 211.2C258.936 206.4 261.336 200.4 261.336 193.2C261.336 184.8 258.736 178.2 253.536 173.4C248.336 168.6 241.736 166.2 233.736 166.2C226.536 166.2 220.336 168.4 215.136 172.8C210.336 177.2 207.936 182.8 207.936 189.6H141.336C141.336 164.8 150.136 144.6 167.736 129C185.336 113 207.936 105 235.536 105C263.136 105 285.536 112.2 302.736 126.6C320.336 141 329.136 160 329.136 183.6C329.136 200.8 324.536 214.8 315.336 225.6C306.136 236 294.336 243.2 279.936 247.2C297.136 252 310.736 260.2 320.736 271.8C331.136 283.4 336.336 298 336.336 315.6C336.336 340.4 326.936 360.8 308.136 376.8C289.336 392.8 264.936 400.8 234.936 400.8Z" fill="currentColor"/>
-                            <path d="M26.8714 167.6H1.67139V105.2H94.6714V400.2H26.8714V167.6Z" fill="currentColor"/>
-                            <path d="M234.936 400.8C204.136 400.8 178.936 392.4 159.336 375.6C140.136 358.8 130.536 337 130.536 310.2H200.736C200.736 318.2 203.736 324.8 209.736 330C215.736 335.2 223.736 337.8 233.736 337.8C243.336 337.8 251.136 335 257.136 329.4C263.536 323.8 266.736 316.6 266.736 307.8C266.736 299.8 263.936 293.2 258.336 288C252.736 282.8 245.536 280.2 236.736 280.2H199.536V218.4H236.736C243.536 218.4 249.336 216 254.136 211.2C258.936 206.4 261.336 200.4 261.336 193.2C261.336 184.8 258.736 178.2 253.536 173.4C248.336 168.6 241.736 166.2 233.736 166.2C226.536 166.2 220.336 168.4 215.136 172.8C210.336 177.2 207.936 182.8 207.936 189.6H141.336C141.336 164.8 150.136 144.6 167.736 129C185.336 113 207.936 105 235.536 105C263.136 105 285.536 112.2 302.736 126.6C320.336 141 329.136 160 329.136 183.6C329.136 200.8 324.536 214.8 315.336 225.6C306.136 236 294.336 243.2 279.936 247.2C297.136 252 310.736 260.2 320.736 271.8C331.136 283.4 336.336 298 336.336 315.6C336.336 340.4 326.936 360.8 308.136 376.8C289.336 392.8 264.936 400.8 234.936 400.8Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-1-mask)"/>
-                            <path d="M26.8714 167.6H1.67139V105.2H94.6714V400.2H26.8714V167.6Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-1-mask)"/>
-                        </g>
+                        <!-- 2. YOUTUBE -->
+                        <a href="https://www.youtube.com/@TelkomAksesOfficial/streams" target="_blank" rel="noopener noreferrer" 
+                           class="w-9 h-9 rounded-xl bg-slate-50 hover:bg-[#FF0000] text-slate-600 hover:text-white border border-slate-200/80 hover:border-[#FF0000] flex items-center justify-center transition-all duration-300 shadow-2xs hover:shadow-md hover:shadow-red-500/25 hover:-translate-y-1 active:scale-95 group" 
+                           title="YouTube Channel Telkom Akses">
+                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                        </a>
 
-                        <g class="transition-all delay-400 opacity-100 duration-750 starting:opacity-0 motion-safe:starting:-translate-x-[26px] text-[#F3BEC7] dark:text-[#4B0600]">
-                            <mask id="path-2-mask" maskUnits="userSpaceOnUse" x="25.3357" y="103" width="338" height="299" fill="black">
-                                <rect fill="white" x="25.3357" y="103" width="338" height="299"/>
-                                <path d="M260.6 400.8C229.8 400.8 204.6 392.4 185 375.6C165.8 358.8 156.2 337 156.2 310.2H226.4C226.4 318.2 229.4 324.8 235.4 330C241.4 335.2 249.4 337.8 259.4 337.8C269 337.8 276.8 335 282.8 329.4C289.2 323.8 292.4 316.6 292.4 307.8C292.4 299.8 289.6 293.2 284 288C278.4 282.8 271.2 280.2 262.4 280.2H225.2V218.4H262.4C269.2 218.4 275 216 279.8 211.2C284.6 206.4 287 200.4 287 193.2C287 184.8 284.4 178.2 279.2 173.4C274 168.6 267.4 166.2 259.4 166.2C252.2 166.2 246 168.4 240.8 172.8C236 177.2 233.6 182.8 233.6 189.6H167C167 164.8 175.8 144.6 193.4 129C211 113 233.6 105 261.2 105C288.8 105 311.2 112.2 328.4 126.6C346 141 354.8 160 354.8 183.6C354.8 200.8 350.2 214.8 341 225.6C331.8 236 320 243.2 305.6 247.2C322.8 252 336.4 260.2 346.4 271.8C356.8 283.4 362 298 362 315.6C362 340.4 352.6 360.8 333.8 376.8C315 392.8 290.6 400.8 260.6 400.8Z"/>
-                                <path d="M52.5357 167.6H27.3357V105.2H120.336V400.2H52.5357V167.6Z"/>
-                            </mask>
-                            <path d="M260.6 400.8C229.8 400.8 204.6 392.4 185 375.6C165.8 358.8 156.2 337 156.2 310.2H226.4C226.4 318.2 229.4 324.8 235.4 330C241.4 335.2 249.4 337.8 259.4 337.8C269 337.8 276.8 335 282.8 329.4C289.2 323.8 292.4 316.6 292.4 307.8C292.4 299.8 289.6 293.2 284 288C278.4 282.8 271.2 280.2 262.4 280.2H225.2V218.4H262.4C269.2 218.4 275 216 279.8 211.2C284.6 206.4 287 200.4 287 193.2C287 184.8 284.4 178.2 279.2 173.4C274 168.6 267.4 166.2 259.4 166.2C252.2 166.2 246 168.4 240.8 172.8C236 177.2 233.6 182.8 233.6 189.6H167C167 164.8 175.8 144.6 193.4 129C211 113 233.6 105 261.2 105C288.8 105 311.2 112.2 328.4 126.6C346 141 354.8 160 354.8 183.6C354.8 200.8 350.2 214.8 341 225.6C331.8 236 320 243.2 305.6 247.2C322.8 252 336.4 260.2 346.4 271.8C356.8 283.4 362 298 362 315.6C362 340.4 352.6 360.8 333.8 376.8C315 392.8 290.6 400.8 260.6 400.8Z" fill="currentColor"/>
-                            <path d="M52.5357 167.6H27.3357V105.2H120.336V400.2H52.5357V167.6Z" fill="currentColor"/>
-                            <path d="M260.6 400.8C229.8 400.8 204.6 392.4 185 375.6C165.8 358.8 156.2 337 156.2 310.2H226.4C226.4 318.2 229.4 324.8 235.4 330C241.4 335.2 249.4 337.8 259.4 337.8C269 337.8 276.8 335 282.8 329.4C289.2 323.8 292.4 316.6 292.4 307.8C292.4 299.8 289.6 293.2 284 288C278.4 282.8 271.2 280.2 262.4 280.2H225.2V218.4H262.4C269.2 218.4 275 216 279.8 211.2C284.6 206.4 287 200.4 287 193.2C287 184.8 284.4 178.2 279.2 173.4C274 168.6 267.4 166.2 259.4 166.2C252.2 166.2 246 168.4 240.8 172.8C236 177.2 233.6 182.8 233.6 189.6H167C167 164.8 175.8 144.6 193.4 129C211 113 233.6 105 261.2 105C288.8 105 311.2 112.2 328.4 126.6C346 141 354.8 160 354.8 183.6C354.8 200.8 350.2 214.8 341 225.6C331.8 236 320 243.2 305.6 247.2C322.8 252 336.4 260.2 346.4 271.8C356.8 283.4 362 298 362 315.6C362 340.4 352.6 360.8 333.8 376.8C315 392.8 290.6 400.8 260.6 400.8Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-2-mask)"/>
-                            <path d="M52.5357 167.6H27.3357V105.2H120.336V400.2H52.5357V167.6Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-2-mask)"/>
-                        </g>
-                        
-                        <g class="mix-blend-color dark:mix-blend-hard-light transition-all delay-400 opacity-100 duration-750 starting:opacity-0 motion-safe:starting:-translate-x-[51px] text-[#F8B803] dark:text-[#391800]">
-                            <mask id="path-3-mask" maskUnits="userSpaceOnUse" x="51" y="103" width="338" height="299" fill="black">
-                                <rect fill="white" x="51" y="103" width="338" height="299"/>
-                                <path d="M286.264 400.8C255.464 400.8 230.264 392.4 210.664 375.6C191.464 358.8 181.864 337 181.864 310.2H252.064C252.064 318.2 255.064 324.8 261.064 330C267.064 335.2 275.064 337.8 285.064 337.8C294.664 337.8 302.464 335 308.464 329.4C314.864 323.8 318.064 316.6 318.064 307.8C318.064 299.8 315.264 293.2 309.664 288C304.064 282.8 296.864 280.2 288.064 280.2H250.864V218.4H288.064C294.864 218.4 300.664 216 305.464 211.2C310.264 206.4 312.664 200.4 312.664 193.2C312.664 184.8 310.064 178.2 304.864 173.4C299.664 168.6 293.064 166.2 285.064 166.2C277.864 166.2 271.664 168.4 266.464 172.8C261.664 177.2 259.264 182.8 259.264 189.6H192.664C192.664 164.8 201.464 144.6 219.064 129C236.664 113 259.264 105 286.864 105C314.464 105 336.864 112.2 354.064 126.6C371.664 141 380.464 160 380.464 183.6C380.464 200.8 375.864 214.8 366.664 225.6C357.464 236 345.664 243.2 331.264 247.2C348.464 252 362.064 260.2 372.064 271.8C382.464 283.4 387.664 298 387.664 315.6C387.664 340.4 378.264 360.8 359.464 376.8C340.664 392.8 316.264 400.8 286.264 400.8Z"/>
-                                <path d="M78.2 167.6H53V105.2H146V400.2H78.2V167.6Z"/>
-                            </mask>
-                            <path d="M286.264 400.8C255.464 400.8 230.264 392.4 210.664 375.6C191.464 358.8 181.864 337 181.864 310.2H252.064C252.064 318.2 255.064 324.8 261.064 330C267.064 335.2 275.064 337.8 285.064 337.8C294.664 337.8 302.464 335 308.464 329.4C314.864 323.8 318.064 316.6 318.064 307.8C318.064 299.8 315.264 293.2 309.664 288C304.064 282.8 296.864 280.2 288.064 280.2H250.864V218.4H288.064C294.864 218.4 300.664 216 305.464 211.2C310.264 206.4 312.664 200.4 312.664 193.2C312.664 184.8 310.064 178.2 304.864 173.4C299.664 168.6 293.064 166.2 285.064 166.2C277.864 166.2 271.664 168.4 266.464 172.8C261.664 177.2 259.264 182.8 259.264 189.6H192.664C192.664 164.8 201.464 144.6 219.064 129C236.664 113 259.264 105 286.864 105C314.464 105 336.864 112.2 354.064 126.6C371.664 141 380.464 160 380.464 183.6C380.464 200.8 375.864 214.8 366.664 225.6C357.464 236 345.664 243.2 331.264 247.2C348.464 252 362.064 260.2 372.064 271.8C382.464 283.4 387.664 298 387.664 315.6C387.664 340.4 378.264 360.8 359.464 376.8C340.664 392.8 316.264 400.8 286.264 400.8Z" fill="currentColor"/>
-                            <path d="M78.2 167.6H53V105.2H146V400.2H78.2V167.6Z" fill="currentColor"/>
-                            <path d="M286.264 400.8C255.464 400.8 230.264 392.4 210.664 375.6C191.464 358.8 181.864 337 181.864 310.2H252.064C252.064 318.2 255.064 324.8 261.064 330C267.064 335.2 275.064 337.8 285.064 337.8C294.664 337.8 302.464 335 308.464 329.4C314.864 323.8 318.064 316.6 318.064 307.8C318.064 299.8 315.264 293.2 309.664 288C304.064 282.8 296.864 280.2 288.064 280.2H250.864V218.4H288.064C294.864 218.4 300.664 216 305.464 211.2C310.264 206.4 312.664 200.4 312.664 193.2C312.664 184.8 310.064 178.2 304.864 173.4C299.664 168.6 293.064 166.2 285.064 166.2C277.864 166.2 271.664 168.4 266.464 172.8C261.664 177.2 259.264 182.8 259.264 189.6H192.664C192.664 164.8 201.464 144.6 219.064 129C236.664 113 259.264 105 286.864 105C314.464 105 336.864 112.2 354.064 126.6C371.664 141 380.464 160 380.464 183.6C380.464 200.8 375.864 214.8 366.664 225.6C357.464 236 345.664 243.2 331.264 247.2C348.464 252 362.064 260.2 372.064 271.8C382.464 283.4 387.664 298 387.664 315.6C387.664 340.4 378.264 360.8 359.464 376.8C340.664 392.8 316.264 400.8 286.264 400.8Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-3-mask)"/>
-                            <path d="M78.2 167.6H53V105.2H146V400.2H78.2V167.6Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-3-mask)"/>
-                        </g>
-                        
-                        <g class="mix-blend-multiply dark:mix-blend-normal transition-all delay-400 opacity-100 duration-750 starting:opacity-0 motion-safe:starting:-translate-x-[78px] text-[#F3BEC7] dark:text-[#733000]">
-                            <mask id="path-4-mask" maskUnits="userSpaceOnUse" x="76.6643" y="103" width="338" height="299" fill="black">
-                                <rect fill="white" x="76.6643" y="103" width="338" height="299"/>
-                                <path d="M311.929 400.8C281.129 400.8 255.929 392.4 236.329 375.6C217.129 358.8 207.529 337 207.529 310.2H277.729C277.729 318.2 280.729 324.8 286.729 330C292.729 335.2 300.729 337.8 310.729 337.8C320.329 337.8 328.129 335 334.129 329.4C340.529 323.8 343.729 316.6 343.729 307.8C343.729 299.8 340.929 293.2 335.329 288C329.729 282.8 322.529 280.2 313.729 280.2H276.529V218.4H313.729C320.529 218.4 326.329 216 331.129 211.2C335.929 206.4 338.329 200.4 338.329 193.2C338.329 184.8 335.729 178.2 330.529 173.4C325.329 168.6 318.729 166.2 310.729 166.2C303.529 166.2 297.329 168.4 292.129 172.8C287.329 177.2 284.929 182.8 284.929 189.6H218.329C218.329 164.8 227.129 144.6 244.729 129C262.329 113 284.929 105 312.529 105C340.129 105 362.529 112.2 379.729 126.6C397.329 141 406.129 160 406.129 183.6C406.129 200.8 401.529 214.8 392.329 225.6C383.129 236 371.329 243.2 356.929 247.2C374.129 252 387.729 260.2 397.729 271.8C408.129 283.4 413.329 298 413.329 315.6C413.329 340.4 403.929 360.8 385.129 376.8C366.329 392.8 341.929 400.8 311.929 400.8Z"/>
-                                <path d="M103.864 167.6H78.6643V105.2H171.664V400.2H103.864V167.6Z"/>
-                            </mask>
-                            <path d="M311.929 400.8C281.129 400.8 255.929 392.4 236.329 375.6C217.129 358.8 207.529 337 207.529 310.2H277.729C277.729 318.2 280.729 324.8 286.729 330C292.729 335.2 300.729 337.8 310.729 337.8C320.329 337.8 328.129 335 334.129 329.4C340.529 323.8 343.729 316.6 343.729 307.8C343.729 299.8 340.929 293.2 335.329 288C329.729 282.8 322.529 280.2 313.729 280.2H276.529V218.4H313.729C320.529 218.4 326.329 216 331.129 211.2C335.929 206.4 338.329 200.4 338.329 193.2C338.329 184.8 335.729 178.2 330.529 173.4C325.329 168.6 318.729 166.2 310.729 166.2C303.529 166.2 297.329 168.4 292.129 172.8C287.329 177.2 284.929 182.8 284.929 189.6H218.329C218.329 164.8 227.129 144.6 244.729 129C262.329 113 284.929 105 312.529 105C340.129 105 362.529 112.2 379.729 126.6C397.329 141 406.129 160 406.129 183.6C406.129 200.8 401.529 214.8 392.329 225.6C383.129 236 371.329 243.2 356.929 247.2C374.129 252 387.729 260.2 397.729 271.8C408.129 283.4 413.329 298 413.329 315.6C413.329 340.4 403.929 360.8 385.129 376.8C366.329 392.8 341.929 400.8 311.929 400.8Z" fill="currentColor"/>
-                            <path d="M103.864 167.6H78.6643V105.2H171.664V400.2H103.864V167.6Z" fill="currentColor"/>
-                            <path d="M311.929 400.8C281.129 400.8 255.929 392.4 236.329 375.6C217.129 358.8 207.529 337 207.529 310.2H277.729C277.729 318.2 280.729 324.8 286.729 330C292.729 335.2 300.729 337.8 310.729 337.8C320.329 337.8 328.129 335 334.129 329.4C340.529 323.8 343.729 316.6 343.729 307.8C343.729 299.8 340.929 293.2 335.329 288C329.729 282.8 322.529 280.2 313.729 280.2H276.529V218.4H313.729C320.529 218.4 326.329 216 331.129 211.2C335.929 206.4 338.329 200.4 338.329 193.2C338.329 184.8 335.729 178.2 330.529 173.4C325.329 168.6 318.729 166.2 310.729 166.2C303.529 166.2 297.329 168.4 292.129 172.8C287.329 177.2 284.929 182.8 284.929 189.6H218.329C218.329 164.8 227.129 144.6 244.729 129C262.329 113 284.929 105 312.529 105C340.129 105 362.529 112.2 379.729 126.6C397.329 141 406.129 160 406.129 183.6C406.129 200.8 401.529 214.8 392.329 225.6C383.129 236 371.329 243.2 356.929 247.2C374.129 252 387.729 260.2 397.729 271.8C408.129 283.4 413.329 298 413.329 315.6C413.329 340.4 403.929 360.8 385.129 376.8C366.329 392.8 341.929 400.8 311.929 400.8Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-4-mask)"/>
-                            <path d="M103.864 167.6H78.6643V105.2H171.664V400.2H103.864V167.6Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-4-mask)"/>
-                        </g>
-                        
-                        <g class="mix-blend-hard-light transition-all delay-400 opacity-100 duration-750 starting:opacity-0 motion-safe:starting:-translate-x-[102px] text-[#F3BEC7] dark:text-[#4B0600]">
-                            <mask id="path-5-mask" maskUnits="userSpaceOnUse" x="102.329" y="103" width="338" height="299" fill="black">
-                                <rect fill="white" x="102.329" y="103" width="338" height="299"/>
-                                <path d="M337.593 400.8C306.793 400.8 281.593 392.4 261.993 375.6C242.793 358.8 233.193 337 233.193 310.2H303.393C303.393 318.2 306.393 324.8 312.393 330C318.393 335.2 326.393 337.8 336.393 337.8C345.993 337.8 353.793 335 359.793 329.4C366.193 323.8 369.393 316.6 369.393 307.8C369.393 299.8 366.593 293.2 360.993 288C355.393 282.8 348.193 280.2 339.393 280.2H302.193V218.4H339.393C346.193 218.4 351.993 216 356.793 211.2C361.593 206.4 363.993 200.4 363.993 193.2C363.993 184.8 361.393 178.2 356.193 173.4C350.993 168.6 344.393 166.2 336.393 166.2C329.193 166.2 322.993 168.4 317.793 172.8C312.993 177.2 310.593 182.8 310.593 189.6H243.993C243.993 164.8 252.793 144.6 270.393 129C287.993 113 310.593 105 338.193 105C365.793 105 388.193 112.2 405.393 126.6C422.993 141 431.793 160 431.793 183.6C431.793 200.8 427.193 214.8 417.993 225.6C408.793 236 396.993 243.2 382.593 247.2C399.793 252 413.393 260.2 423.393 271.8C433.793 283.4 438.993 298 438.993 315.6C438.993 340.4 429.593 360.8 410.793 376.8C391.993 392.8 367.593 400.8 337.593 400.8Z"/>
-                                <path d="M129.529 167.6H104.329V105.2H197.329V400.2H129.529V167.6Z"/>
-                            </mask>
-                            <path d="M337.593 400.8C306.793 400.8 281.593 392.4 261.993 375.6C242.793 358.8 233.193 337 233.193 310.2H303.393C303.393 318.2 306.393 324.8 312.393 330C318.393 335.2 326.393 337.8 336.393 337.8C345.993 337.8 353.793 335 359.793 329.4C366.193 323.8 369.393 316.6 369.393 307.8C369.393 299.8 366.593 293.2 360.993 288C355.393 282.8 348.193 280.2 339.393 280.2H302.193V218.4H339.393C346.193 218.4 351.993 216 356.793 211.2C361.593 206.4 363.993 200.4 363.993 193.2C363.993 184.8 361.393 178.2 356.193 173.4C350.993 168.6 344.393 166.2 336.393 166.2C329.193 166.2 322.993 168.4 317.793 172.8C312.993 177.2 310.593 182.8 310.593 189.6H243.993C243.993 164.8 252.793 144.6 270.393 129C287.993 113 310.593 105 338.193 105C365.793 105 388.193 112.2 405.393 126.6C422.993 141 431.793 160 431.793 183.6C431.793 200.8 427.193 214.8 417.993 225.6C408.793 236 396.993 243.2 382.593 247.2C399.793 252 413.393 260.2 423.393 271.8C433.793 283.4 438.993 298 438.993 315.6C438.993 340.4 429.593 360.8 410.793 376.8C391.993 392.8 367.593 400.8 337.593 400.8Z" fill="currentColor"/>
-                            <path d="M129.529 167.6H104.329V105.2H197.329V400.2H129.529V167.6Z" fill="currentColor"/>
-                            <path d="M337.593 400.8C306.793 400.8 281.593 392.4 261.993 375.6C242.793 358.8 233.193 337 233.193 310.2H303.393C303.393 318.2 306.393 324.8 312.393 330C318.393 335.2 326.393 337.8 336.393 337.8C345.993 337.8 353.793 335 359.793 329.4C366.193 323.8 369.393 316.6 369.393 307.8C369.393 299.8 366.593 293.2 360.993 288C355.393 282.8 348.193 280.2 339.393 280.2H302.193V218.4H339.393C346.193 218.4 351.993 216 356.793 211.2C361.593 206.4 363.993 200.4 363.993 193.2C363.993 184.8 361.393 178.2 356.193 173.4C350.993 168.6 344.393 166.2 336.393 166.2C329.193 166.2 322.993 168.4 317.793 172.8C312.993 177.2 310.593 182.8 310.593 189.6H243.993C243.993 164.8 252.793 144.6 270.393 129C287.993 113 310.593 105 338.193 105C365.793 105 388.193 112.2 405.393 126.6C422.993 141 431.793 160 431.793 183.6C431.793 200.8 427.193 214.8 417.993 225.6C408.793 236 396.993 243.2 382.593 247.2C399.793 252 413.393 260.2 423.393 271.8C433.793 283.4 438.993 298 438.993 315.6C438.993 340.4 429.593 360.8 410.793 376.8C391.993 392.8 367.593 400.8 337.593 400.8Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-5-mask)"/>
-                            <path d="M129.529 167.6H104.329V105.2H197.329V400.2H129.529V167.6Z" stroke="var(--stroke-color)" stroke-width="2.4" mask="url(#path-5-mask)"/>
-                        </g>
-                    </svg>
-                    <div class="absolute inset-0 rounded-t-lg lg:rounded-t-none lg:rounded-r-lg shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d]"></div>
+                        <!-- 3. TIKTOK -->
+                        <a href="https://www.tiktok.com/@telkomaksesindonesia" target="_blank" rel="noopener noreferrer" 
+                           class="w-9 h-9 rounded-xl bg-slate-50 hover:bg-black text-slate-600 hover:text-white border border-slate-200/80 hover:border-black flex items-center justify-center transition-all duration-300 shadow-2xs hover:shadow-md hover:shadow-slate-900/30 hover:-translate-y-1 active:scale-95 group" 
+                           title="TikTok Telkom Akses (@telkomaksesindonesia)">
+                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-1.01-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                            </svg>
+                        </a>
+
+                        <!-- 4. FACEBOOK -->
+                        <a href="https://www.facebook.com/telkomaksesofficial/" target="_blank" rel="noopener noreferrer" 
+                           class="w-9 h-9 rounded-xl bg-slate-50 hover:bg-[#1877F2] text-slate-600 hover:text-white border border-slate-200/80 hover:border-[#1877F2] flex items-center justify-center transition-all duration-300 shadow-2xs hover:shadow-md hover:shadow-blue-500/25 hover:-translate-y-1 active:scale-95 group" 
+                           title="Facebook Telkom Akses">
+                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                    </div>
+
                 </div>
-            </main>
+
+            </div>
         </div>
+    </footer>
 
-        @if (Route::has('login'))
-            <div class="h-14.5 hidden lg:block"></div>
-        @endif
-    </body>
+    <!-- Header Navigation Interactive & Stable Scroll Controller -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link-item');
+            const sections = [];
+            let isUserClicking = false;
+            let clickTimeout = null;
+
+            navLinks.forEach(link => {
+                const targetId = link.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    const section = document.querySelector(targetId);
+                    if (section) {
+                        sections.push({ id: targetId, el: section, link: link });
+                    }
+                }
+
+                link.addEventListener('click', function (e) {
+                    // Lock active state immediately to the clicked link, preventing intermediate jumps during scroll
+                    isUserClicking = true;
+                    if (clickTimeout) clearTimeout(clickTimeout);
+
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Release lock after smooth scroll animation settles
+                    clickTimeout = setTimeout(() => {
+                        isUserClicking = false;
+                    }, 850);
+                });
+            });
+
+            // Smooth, deterministic scroll position tracker
+            let scrollTicking = false;
+            function updateActiveOnScroll() {
+                if (isUserClicking || sections.length === 0) return;
+
+                const scrollPos = window.scrollY + 140; // 140px accounts for sticky header height
+                let currentSection = null;
+
+                for (let i = 0; i < sections.length; i++) {
+                    const top = sections[i].el.offsetTop;
+                    const height = sections[i].el.offsetHeight;
+                    if (scrollPos >= top && scrollPos < top + height) {
+                        currentSection = sections[i];
+                        break;
+                    }
+                }
+
+                // If scrolled to near the bottom of the page, activate the last section
+                if ((window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 80)) {
+                    currentSection = sections[sections.length - 1];
+                }
+
+                if (currentSection) {
+                    navLinks.forEach(link => {
+                        if (link === currentSection.link) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+                }
+            }
+
+            window.addEventListener('scroll', function () {
+                if (!scrollTicking) {
+                    window.requestAnimationFrame(function () {
+                        updateActiveOnScroll();
+                        scrollTicking = false;
+                    });
+                    scrollTicking = true;
+                }
+            }, { passive: true });
+
+            // Live Telemetry Animated Counter (Count-Up Animation with Stable Settling)
+            const statsSection = document.getElementById('live-stats-strip');
+            if (statsSection) {
+                let hasAnimated = false;
+                const counters = statsSection.querySelectorAll('.stat-count-value');
+
+                // Pre-initialize counters to 0 so the animation cleanly counts up from zero when scrolled into view
+                counters.forEach(counter => {
+                    const format = counter.getAttribute('data-format');
+                    const decimals = parseInt(counter.getAttribute('data-decimals') || '0', 10);
+                    counter.textContent = (format === 'decimal') ? (0).toFixed(decimals) : '0';
+                });
+
+                function runStatsCounter() {
+                    if (hasAnimated) return;
+                    hasAnimated = true;
+
+                    const duration = 1800; // 1.8 seconds duration
+                    const startTime = performance.now();
+
+                    function updateCounter(currentTime) {
+                        const elapsedTime = currentTime - startTime;
+                        const progress = Math.min(elapsedTime / duration, 1);
+                        // Quartic ease-out for smooth energetic start and gentle settling into stable value
+                        const ease = 1 - Math.pow(1 - progress, 4);
+
+                        counters.forEach(counter => {
+                            const target = parseFloat(counter.getAttribute('data-target'));
+                            const format = counter.getAttribute('data-format');
+                            const decimals = parseInt(counter.getAttribute('data-decimals') || '0', 10);
+                            const currentVal = target * ease;
+
+                            if (format === 'decimal') {
+                                counter.textContent = currentVal.toFixed(decimals);
+                            } else {
+                                counter.textContent = Math.floor(currentVal).toLocaleString('en-US');
+                            }
+                        });
+
+                        if (progress < 1) {
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            // Settle into exact target values and apply stabilized visual lock
+                            counters.forEach(counter => {
+                                const target = parseFloat(counter.getAttribute('data-target'));
+                                const format = counter.getAttribute('data-format');
+                                const decimals = parseInt(counter.getAttribute('data-decimals') || '0', 10);
+
+                                if (format === 'decimal') {
+                                    counter.textContent = target.toFixed(decimals);
+                                } else {
+                                    counter.textContent = Math.round(target).toLocaleString('en-US');
+                                }
+                                counter.classList.add('counter-stabilized');
+                            });
+                        }
+                    }
+
+                    requestAnimationFrame(updateCounter);
+                }
+
+                if ('IntersectionObserver' in window) {
+                    const statsObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                runStatsCounter();
+                                statsObserver.unobserve(statsSection);
+                            }
+                        });
+                    }, { threshold: 0.15 });
+                    statsObserver.observe(statsSection);
+                } else {
+                    runStatsCounter();
+                }
+            }
+
+            // ================= INTERACTIVE FIELD AUDIT MAP (LEAFLET.JS) =================
+            const auditMapContainer = document.getElementById('interactive-audit-map');
+            if (auditMapContainer && typeof L !== 'undefined') {
+                try {
+                    // Exact coordinates: Telkom Indonesia / STO Witel Sukabumi (Jl. R. E. Martadinata No.24, Cikole)
+                    const telkomSukabumiCoords = [-6.920591, 106.928677];
+
+                    // Clear static fallback iframe
+                    auditMapContainer.innerHTML = '';
+
+                    const auditMap = L.map('interactive-audit-map', {
+                        center: telkomSukabumiCoords,
+                        zoom: 17,
+                        zoomControl: true,
+                        scrollWheelZoom: false, // Prevents unintended scroll hijack
+                        attributionControl: false
+                    });
+
+                    // Add high-clarity OpenStreetMap tiles
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        attribution: '&copy; OpenStreetMap'
+                    }).addTo(auditMap);
+
+                    // Enable wheel zoom on click/interaction
+                    auditMap.on('focus', () => { auditMap.scrollWheelZoom.enable(); });
+                    auditMap.on('click', () => { auditMap.scrollWheelZoom.enable(); });
+
+                    // Custom Telkom Red Pin Marker (Static SVG, Zero Pulse/Blink)
+                    const telkomRedPin = L.divIcon({
+                        className: 'telkom-marker-wrapper',
+                        html: `
+                            <div style="position: relative; display: flex; flex-direction: column; align-items: center; cursor: pointer; filter: drop-shadow(0 4px 10px rgba(188,0,7,0.45));">
+                                <div style="background: linear-gradient(135deg, #e3000a 0%, #bc0007 100%); width: 36px; height: 36px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; border: 2.5px solid #ffffff;">
+                                    <svg style="transform: rotate(45deg); width: 18px; height: 18px; color: #ffffff;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                    </svg>
+                                </div>
+                                <div style="width: 14px; height: 5px; background: rgba(15,23,42,0.4); border-radius: 50%; margin-top: 3px; filter: blur(1px);"></div>
+                            </div>
+                        `,
+                        iconSize: [36, 44],
+                        iconAnchor: [18, 42],
+                        popupAnchor: [0, -42]
+                    });
+
+                    // Add Marker & Custom Popup
+                    const auditMarker = L.marker(telkomSukabumiCoords, { icon: telkomRedPin }).addTo(auditMap);
+
+                    const popupContent = `
+                        <div style="font-family: 'Plus Jakarta Sans', Inter, sans-serif; min-width: 215px;">
+                            <div style="font-size: 13px; font-weight: 800; color: #bc0007; margin-bottom: 3px;">
+                                Telkom Akses Witel Sukabumi
+                            </div>
+                            <div style="font-size: 11px; color: #475569; margin-bottom: 6px; line-height: 1.35;">
+                                Jl. R. E. Martadinata No.24, Gunungparang, Kec. Cikole, Kota Sukabumi
+                            </div>
+                        </div>
+                    `;
+
+                    auditMarker.bindPopup(popupContent).openPopup();
+
+                    // Recenter button listener
+                    const recenterBtn = document.getElementById('btn-recenter-audit-map');
+                    if (recenterBtn) {
+                        recenterBtn.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            auditMap.flyTo(telkomSukabumiCoords, 17, { duration: 1.2 });
+                            setTimeout(() => {
+                                auditMarker.openPopup();
+                            }, 1250);
+                        });
+                    }
+
+                    // Invalidate size to guarantee tile rendering without grey edges
+                    setTimeout(() => { auditMap.invalidateSize(); }, 350);
+                    window.addEventListener('resize', () => { auditMap.invalidateSize(); });
+
+                    if ('IntersectionObserver' in window) {
+                        const mapObserver = new IntersectionObserver((entries) => {
+                            entries.forEach(entry => {
+                                if (entry.isIntersecting) {
+                                    auditMap.invalidateSize();
+                                }
+                            });
+                        }, { threshold: 0.1 });
+                        mapObserver.observe(auditMapContainer);
+                    }
+                } catch (err) {
+                    console.error('Interactive map init error:', err);
+                }
+            }
+        });
+    </script>
+</body>
 </html>

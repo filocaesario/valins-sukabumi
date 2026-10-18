@@ -1,0 +1,519 @@
+<!DOCTYPE html><html lang="id" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><title>Autentikasi SIM VALINS &amp; GPON Telkom Akses Sukabumi</title><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-secondary": "#ffffff", "on-secondary-container": "#5c647a", "surface-container-low": "#eff4ff", "secondary-fixed": "#dae2fd", "surface-container-high": "#dce9ff", "on-primary-fixed": "#410001", "on-primary-fixed-variant": "#930004", "surface-container-highest": "#d3e4fe", "surface-container-lowest": "#ffffff", "secondary": "#565e74", "on-tertiary-fixed-variant": "#004c6e", "surface-container": "#e5eeff", "on-surface-variant": "#5d3f3b", "background": "#f8f9ff", "primary-fixed": "#ffdad5", "inverse-surface": "#213145", "error": "#ba1a1a", "on-primary": "#ffffff", "on-error": "#ffffff", "inverse-on-surface": "#eaf1ff", "inverse-primary": "#ffb4a9", "primary-fixed-dim": "#ffb4a9", "tertiary-container": "#007cb1", "tertiary-fixed": "#c9e6ff", "on-background": "#0b1c30", "surface-tint": "#c00007", "secondary-container": "#dae2fd", "primary-container": "#e2241d", "surface-variant": "#d3e4fe", "on-secondary-fixed-variant": "#3f465c", "outline": "#926f6a", "on-error-container": "#93000a", "error-container": "#ffdad6", "secondary-fixed-dim": "#bec6e0", "tertiary": "#00628d", "outline-variant": "#e7bdb7", "on-secondary-fixed": "#131b2e", "on-surface": "#0b1c30", "on-primary-container": "#fffbff", "tertiary-fixed-dim": "#89ceff", "surface-bright": "#f8f9ff", "surface-dim": "#cbdbf5", "primary": "#bc0007", "surface": "#f8f9ff", "on-tertiary": "#ffffff", "on-tertiary-fixed": "#001e2f", "on-tertiary-container": "#fcfcff" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-lg": "1.5rem", "gutter-lg": "1.5rem", "space-xs": "0.25rem", "space-sm": "0.5rem", "space-xl": "2rem", "gutter": "1rem", "space-md": "1rem", "margin-lg": "2rem", "margin-md": "1.5rem", "margin": "1rem" }, "fontFamily": { "body-md": ["Inter"], "headline-xl-mobile": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "label-md": ["Inter"], "body-xs": ["Inter"], "body-lg": ["Inter"], "telemetry-metric": ["JetBrains Mono"], "label-lg": ["Inter"], "telemetry-data": ["JetBrains Mono"], "label-sm": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "headline-xl": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"] }, "fontSize": { "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-xl-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }], "body-xs": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "telemetry-metric": ["24px", { "lineHeight": "28px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "20px", "fontWeight": "600" }], "telemetry-data": ["13px", { "lineHeight": "18px", "fontWeight": "500" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }], "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }] } } } };</script><meta content="web_blank" name="shell-type"></head><body class="bg-background font-body-md text-on-surface antialiased"><main class="w-full min-h-screen bg-background flex flex-col justify-between p-space-md"><div class="flex flex-col w-full">
+<!-- Master Outer Canvas (Centered Enterprise Portal) -->
+<div class="w-full max-w-7xl mx-auto px-space-xs py-space-sm sm:px-space-md sm:py-space-md">
+<!-- Top Micro Bar: Witel Sukabumi Dispatch Badge & Security Protocol -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm mb-space-md bg-surface-container-low border border-surface-container px-space-lg py-3 rounded-xl shadow-sm"><div class="flex items-center"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBExGRFtDpBPnM8N0gcejus3JkLo2ehCRRxgzDcNEqgVLUKqt1txmpfYZgf5Me-idLBiu7GSGcJgfsTzZcFa-3OEgywfx0mOWV_SuN5QhTNAYI2hbXirzip6T_7Wil9-y2O8W_lmxByfE-M-5qvy9KNQzSHdyue1eBrkGD_9b_9EaGJyp5JLR_DGPDAICt0pitPxf6Ua0obJbF9WGZC8xeemcFtdRyB9KiXRxlcc2NTfL8IZpr1j-iMi7USWxIW-ZGOxQ" alt="Telkom Akses Logo" class="h-8 w-8 object-contain mr-3 flex-shrink-0"><div class="flex flex-col"><span class="text-[10px] font-semibold text-secondary uppercase tracking-widest leading-none">BY TELKOM INDONESIA</span><span class="text-body-sm font-telemetry-data font-bold text-on-surface tracking-wider mt-0.5">TELKOM AKSES SUKABUMI</span></div></div><div class="flex items-center gap-space-sm"><div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high text-tertiary font-label-sm"><span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span>LDAP Sync: Ready</div><div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high text-secondary font-label-sm"><span class="material-symbols-outlined text-base text-secondary">shield</span>TLS v1.3 Enforced</div></div></div>
+<!-- Main Dual Panel Container -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- ================= LEFT SIDE PANEL (Enterprise Context & Telemetry) ================= -->
+<aside class="lg:col-span-4 flex flex-col gap-space-md">
+<!-- Identity Summary Card -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl border border-surface-container shadow-sm relative overflow-hidden">
+<div class="flex items-center gap-2 mb-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-primary inline-block"></span>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider font-semibold">
+SISTEM OTENTIKASI RESMI
+</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight mb-space-xs">
+Portal Registrasi Terpadu
+</h2>
+<p class="font-body-sm text-body-sm text-secondary mb-space-md leading-relaxed">
+Daftarkan akun kedinasan untuk personil lapangan dan analis NOC guna validasi data ODC/ODP pada platform VALINS serta instrumen Optical Line Terminal (OLT).
+</p>
+<div class="bg-surface-container-low border border-surface-container p-space-sm rounded-lg flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary text-xl mt-0.5 flex-shrink-0">shield_lock</span>
+<div>
+<span class="font-label-md text-label-md text-on-surface font-semibold block mb-0.5">
+Otorisasi Berjenjang
+</span>
+<p class="font-body-xs text-body-xs text-secondary">
+Setiap pengajuan disinkronkan ke Asman Jaringan &amp; Tim Verifikator Regional Sukabumi.
+</p>
+</div>
+</div>
+</div>
+<!-- Telemetry Dark Card: KAWASAN SUKABUMI 5 STO -->
+<div class="bg-[#1b2a3a] text-white p-5 rounded-xl shadow-md relative overflow-hidden"><svg class="absolute -right-6 -bottom-6 w-56 h-56 text-[#38bdf8] opacity-20 pointer-events-none select-none z-0 transform rotate-12" viewBox="0 0 200 200" fill="none" stroke="currentColor" aria-hidden="true">
+  <circle cx="100" cy="100" r="18" stroke-width="3" fill="currentColor" fill-opacity="0.1"></circle>
+  <circle cx="45" cy="55" r="12" stroke-width="2.5" fill="currentColor" fill-opacity="0.15"></circle>
+  <circle cx="155" cy="55" r="12" stroke-width="2.5" fill="currentColor" fill-opacity="0.15"></circle>
+  <circle cx="35" cy="145" r="10" stroke-width="2" fill="currentColor" fill-opacity="0.15"></circle>
+  <circle cx="165" cy="145" r="10" stroke-width="2" fill="currentColor" fill-opacity="0.15"></circle>
+  <circle cx="100" cy="175" r="14" stroke-width="2.5" fill="currentColor" fill-opacity="0.15"></circle>
+  <circle cx="100" cy="25" r="9" stroke-width="2" fill="currentColor" fill-opacity="0.15"></circle>
+  <line x1="100" y1="82" x2="100" y2="34" stroke-width="2" stroke-dasharray="3 3"></line>
+  <line x1="86" y1="89" x2="55" y2="63" stroke-width="2.5"></line>
+  <line x1="114" y1="89" x2="145" y2="63" stroke-width="2.5"></line>
+  <line x1="86" y1="111" x2="43" y2="139" stroke-width="2"></line>
+  <line x1="114" y1="111" x2="157" y2="139" stroke-width="2"></line>
+  <line x1="100" y1="118" x2="100" y2="161" stroke-width="2.5"></line>
+  <circle cx="100" cy="100" r="42" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"></circle>
+  <circle cx="100" cy="100" r="70" stroke-width="1" stroke-dasharray="6 6" opacity="0.4"></circle>
+</svg>
+<div class="relative z-10">
+  <div class="flex items-start justify-between mb-2">
+    <div>
+      <span class="text-[11px] font-semibold text-slate-300 uppercase tracking-widest block font-telemetry-data">
+        TELEMETRI DISTRIBUSI
+      </span>
+      <h3 class="text-[17px] font-bold text-white tracking-tight leading-snug mt-1">
+        KAWASAN SUKABUMI – 5 STO Utama
+      </h3>
+    </div>
+    <div class="text-[#38bdf8] flex-shrink-0 ml-2 mt-1">
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="18" cy="2" r="2"></circle>
+        <circle cx="6" cy="12" r="2"></circle>
+        <circle cx="18" cy="19" r="2"></circle>
+        <circle cx="13" cy="12" r="2.5"></circle>
+        <line x1="7.8" x2="10.7" y1="12" y2="12"></line>
+        <line x1="16.3" x2="14.8" y1="6.5" y2="10.2"></line>
+        <line x1="14.8" x2="16.3" y1="13.8" y2="17.5"></line>
+      </svg>
+    </div>
+  </div>
+  <p class="text-xs text-slate-300 font-normal mb-4 opacity-90">
+    Monitoring Jalur Fiber &amp; Core Distribution
+  </p>
+  <div class="space-y-2.5 font-telemetry-data">
+    <div class="bg-[#243547]/80 px-3.5 py-2.5 rounded-lg flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#10b981] flex-shrink-0"></span>
+        <span class="text-white font-medium text-xs font-mono">Cakupan STO Sukabumi Kota</span>
+      </div>
+      <span class="text-[#10b981] font-bold text-xs font-mono tracking-wider">ACTIVE</span>
+    </div>
+    <div class="bg-[#243547]/80 px-3.5 py-2.5 rounded-lg flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#38bdf8] flex-shrink-0"></span>
+        <span class="text-white font-medium text-xs font-mono">Pelabuhanratu Sub-Loop</span>
+      </div>
+      <span class="text-[#38bdf8] font-bold text-xs font-mono tracking-wider">SYNCHRONIZED</span>
+    </div>
+    <div class="bg-[#243547]/80 px-3.5 py-2.5 rounded-lg flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#f59e0b] flex-shrink-0"></span>
+        <span class="text-white font-medium text-xs font-mono">Cibadak - Cicurug Feeder</span>
+      </div>
+      <div class="text-right leading-tight">
+        <span class="text-[#f59e0b] font-bold font-mono text-xs block">NORMAL</span>
+        <span class="text-[#f59e0b] font-mono text-[11px] block mt-0.5">-18.4 dBm</span>
+      </div>
+    </div>
+    <div class="bg-[#243547]/80 px-3.5 py-2.5 rounded-lg flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#fca5a5] flex-shrink-0"></span>
+        <span class="text-white font-medium text-xs font-mono">Audit Valins Berjalan</span>
+      </div>
+      <span class="text-[#fca5a5] font-bold font-mono text-xs">94.8% <span class="font-normal text-white text-[11px]">Akurasi</span></span>
+    </div>
+  </div>
+  <div class="mt-4 space-y-2 opacity-40">
+    <div class="h-2 bg-[#243547]/80 rounded-full w-full"></div>
+    <div class="h-2 bg-[#243547]/80 rounded-full w-4/5"></div>
+  </div>
+</div></div>
+<!-- Support Card -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center flex-shrink-0 text-primary">
+<span class="material-symbols-outlined text-xl">contact_support</span>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface">Bantuan PIC NOC Sukabumi</h4>
+<p class="font-body-xs text-body-xs text-secondary mt-1">
+              Kendala data identitas NIK/HRMS? Hubungi hotline <span class="font-semibold text-on-surface font-telemetry-data">(0266) 221100</span> atau grup Telegram Dispatcher Telkom Akses Regional Sukabumi.
+            </p>
+</div>
+</div>
+</aside>
+<!-- ================= RIGHT MAIN FORM PANEL (Step 2 Active) ================= -->
+<section class="lg:col-span-8 flex flex-col gap-space-md">
+<div class="bg-surface-container-lowest p-space-lg sm:p-space-xl rounded-xl shadow-sm">
+<!-- Form Header -->
+<div class="flex items-center gap-space-sm mb-space-xs">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-sm">
+<span class="material-symbols-outlined text-2xl">account_circle</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface font-bold">
+                Registrasi Akun Petugas &amp; Validator
+              </h1>
+<p class="font-body-sm text-body-sm text-secondary">
+                Daftarkan identitas kedinasan Anda untuk mendapatkan hak akses monitoring GPON &amp; audit VALINS Sukabumi.
+              </p>
+</div>
+</div>
+<!-- Multi-step Stepper Indicator -->
+<div class="my-space-lg bg-surface-container-low p-space-sm rounded-xl">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm items-center">
+<!-- STEP 1: Done -->
+<div class="flex items-center gap-space-sm p-2 rounded-lg bg-surface-container-lowest shadow-sm">
+<div class="w-8 h-8 rounded-full bg-emerald-600 text-on-primary flex items-center justify-center font-bold text-label-md flex-shrink-0">
+<span class="material-symbols-outlined text-lg">check</span>
+</div>
+<div class="min-w-0">
+<span class="text-label-sm font-label-sm text-emerald-700 font-bold block uppercase tracking-wide">LANGKAH 1</span>
+<span class="text-body-xs font-body-xs text-secondary truncate block font-medium">Mochamad Farhan P. (941029)</span>
+</div>
+</div>
+<!-- STEP 2: Active (Current Focus) -->
+<div class="flex items-center gap-space-sm p-2 rounded-lg bg-primary text-on-primary shadow-md">
+<div class="w-8 h-8 rounded-full bg-on-primary text-primary flex items-center justify-center font-bold text-label-md flex-shrink-0">
+                  2
+                </div>
+<div class="min-w-0">
+<span class="text-label-sm font-label-sm text-primary-fixed uppercase tracking-wider block font-bold">LANGKAH 2 (AKTIF)</span>
+<span class="text-label-md font-label-md text-on-primary truncate block font-semibold">Unit Kerja &amp; STO</span>
+</div>
+</div>
+<!-- STEP 3: Pending -->
+<div class="flex items-center gap-space-sm p-2 rounded-lg opacity-70">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-secondary flex items-center justify-center font-bold text-label-md flex-shrink-0">
+                  3
+                </div>
+<div class="min-w-0">
+<span class="text-label-sm font-label-sm text-secondary uppercase tracking-wider block">LANGKAH 3</span>
+<span class="text-body-xs font-body-xs text-secondary truncate block">Kredensial &amp; Akses</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Info Box Callout -->
+<div class="mb-space-lg p-space-md rounded-xl bg-surface-container-high text-on-surface flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary text-2xl mt-0.5">location_city</span>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-1">
+                Penempatan Basecamp Operasional &amp; Radius Patroli
+              </h4>
+<p class="font-body-sm text-body-sm text-secondary leading-relaxed">
+                Informasi pemilihan Sentral Telepon Otomat (STO) dan Sub-Rayon menentukan penugasan tiket anomali VALINS otomatis serta akses berkas BAST di aplikasi mobile teknisi.
+              </p>
+</div>
+</div>
+<!-- Form Body -->
+<form class="space-y-space-xl" onsubmit="event.preventDefault();">
+<!-- SECTION 1: Unit Kerja & Basis Operasional -->
+<div class="space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs border-b border-surface-container">
+<span class="font-label-lg text-label-lg font-bold text-on-surface uppercase tracking-wide flex items-center gap-2">
+<span class="w-1.5 h-4 bg-primary rounded-full"></span>
+                  1. Unit Kerja &amp; Basis Operasional
+                </span>
+<span class="font-label-sm text-label-sm text-secondary">Wajib Diisi</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Sub-Direktorat -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface font-semibold mb-1.5">
+                    Sub-Direktorat / Divisi Operasi
+                  </label>
+<div class="relative">
+<select class="w-full h-11 px-3 py-2 bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg focus:outline-none focus:ring-2 focus:ring-primary shadow-sm cursor-pointer appearance-none">
+<option selected="">Operation &amp; Maintenance (O&amp;M) Sukabumi</option>
+<option>Construction &amp; Fiber Deployment (CFD)</option>
+<option>Quality Assurance &amp; Inventory Audit</option>
+<option>Network Operations Center (NOC) Core</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-secondary pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Posko Lapangan -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface font-semibold mb-1.5">
+                    Posko Lapangan / Homebase
+                  </label>
+<div class="relative">
+<select class="w-full h-11 px-3 py-2 bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg focus:outline-none focus:ring-2 focus:ring-primary shadow-sm cursor-pointer appearance-none">
+<option selected="">Plaza Telkom Sukabumi - Jl. Pelabuhan II No. 34</option>
+<option>Posko Daman Cibadak - Jl. Raya Sukabumi-Bogor</option>
+<option>Kantor Sentral Cicurug - Jl. Siliwangi</option>
+<option>Sub-Unit Palabuhanratu - Komplek Perkantoran</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-secondary pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Wilayah Penugasan STO Utama (Grid multi-select card / chips) -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface font-semibold mb-1">
+                  Wilayah Penugasan STO Utama <span class="text-secondary font-normal">(Pilih satu atau beberapa wilayah kerja)</span>
+</label>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-space-sm mt-space-sm">
+<!-- STO Sukabumi Kota (SKB) - Checked -->
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" name="sto" type="checkbox" value="SKB">
+<div class="p-space-sm rounded-xl bg-surface-container-low peer-checked:bg-primary-fixed peer-checked:text-on-primary-fixed transition-all flex items-start justify-between shadow-sm">
+<div>
+<span class="font-headline-sm text-headline-sm font-bold block">SKB</span>
+<span class="font-body-xs text-body-xs block">Sukabumi</span>
+<span class="font-telemetry-data text-label-sm text-secondary peer-checked:text-on-primary-fixed-variant mt-1 block">42 ODC // 380 ODP</span>
+</div>
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+</div>
+</label>
+<!-- STO Cicurug (CCR) - Unchecked -->
+<label class="cursor-pointer">
+<input class="peer sr-only" name="sto" type="checkbox" value="CCR">
+<div class="p-space-sm rounded-xl bg-surface-container-low peer-checked:bg-primary-fixed peer-checked:text-on-primary-fixed hover:bg-surface-container transition-all flex items-start justify-between shadow-sm">
+<div>
+<span class="font-headline-sm text-headline-sm font-bold block">CCR</span>
+<span class="font-body-xs text-body-xs block">Cicurug</span>
+<span class="font-telemetry-data text-label-sm text-secondary mt-1 block">18 ODC // 142 ODP</span>
+</div>
+<span class="material-symbols-outlined text-secondary text-xl opacity-40">radio_button_unchecked</span>
+</div>
+</label>
+<!-- STO Cibadak (CBD) - Checked -->
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" name="sto" type="checkbox" value="CBD">
+<div class="p-space-sm rounded-xl bg-surface-container-low peer-checked:bg-primary-fixed peer-checked:text-on-primary-fixed transition-all flex items-start justify-between shadow-sm">
+<div>
+<span class="font-headline-sm text-headline-sm font-bold block">CBD</span>
+<span class="font-body-xs text-body-xs block">Cibadak</span>
+<span class="font-telemetry-data text-label-sm text-secondary peer-checked:text-on-primary-fixed-variant mt-1 block">28 ODC // 215 ODP</span>
+</div>
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+</div>
+</label>
+<!-- STO Cikembar (CKB) - Unchecked -->
+<label class="cursor-pointer">
+<input class="peer sr-only" name="sto" type="checkbox" value="CKB">
+<div class="p-space-sm rounded-xl bg-surface-container-low peer-checked:bg-primary-fixed peer-checked:text-on-primary-fixed hover:bg-surface-container transition-all flex items-start justify-between shadow-sm">
+<div>
+<span class="font-headline-sm text-headline-sm font-bold block">CKB</span>
+<span class="font-body-xs text-body-xs block">Cikembar</span>
+<span class="font-telemetry-data text-label-sm text-secondary mt-1 block">12 ODC // 98 ODP</span>
+</div>
+<span class="material-symbols-outlined text-secondary text-xl opacity-40">radio_button_unchecked</span>
+</div>
+</label>
+<!-- STO Palabuhanratu (PLR) - Unchecked -->
+<label class="cursor-pointer">
+<input class="peer sr-only" name="sto" type="checkbox" value="PLR">
+<div class="p-space-sm rounded-xl bg-surface-container-low peer-checked:bg-primary-fixed peer-checked:text-on-primary-fixed hover:bg-surface-container transition-all flex items-start justify-between shadow-sm">
+<div>
+<span class="font-headline-sm text-headline-sm font-bold block">PLR</span>
+<span class="font-body-xs text-body-xs block">Palabuhanratu</span>
+<span class="font-telemetry-data text-label-sm text-secondary mt-1 block">16 ODC // 120 ODP</span>
+</div>
+<span class="material-symbols-outlined text-secondary text-xl opacity-40">radio_button_unchecked</span>
+</div>
+</label>
+<!-- STO Sagaranten (SGN) - Unchecked -->
+<label class="cursor-pointer">
+<input class="peer sr-only" name="sto" type="checkbox" value="SGN">
+<div class="p-space-sm rounded-xl bg-surface-container-low peer-checked:bg-primary-fixed peer-checked:text-on-primary-fixed hover:bg-surface-container transition-all flex items-start justify-between shadow-sm">
+<div>
+<span class="font-headline-sm text-headline-sm font-bold block">SGN</span>
+<span class="font-body-xs text-body-xs block">Sagaranten</span>
+<span class="font-telemetry-data text-label-sm text-secondary mt-1 block">9 ODC // 64 ODP</span>
+</div>
+<span class="material-symbols-outlined text-secondary text-xl opacity-40">radio_button_unchecked</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Regu & Atasan Langsung -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface font-semibold mb-1.5">
+                    Tim Pemeliharaan / Sektor Regu
+                  </label>
+<div class="relative">
+<select class="w-full h-11 px-3 py-2 bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg focus:outline-none focus:ring-2 focus:ring-primary shadow-sm cursor-pointer appearance-none">
+<option selected="">Regu Daman 03 - Jalur Feeder Lingkar Selatan</option>
+<option>Regu Patroli ODC 01 - Sukabumi Utara</option>
+<option>Regu Audit Validasi Valins Khusus Fiber 02</option>
+<option>Regu Emergency Restoration Team (ERT) Witel</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-secondary pointer-events-none">expand_more</span>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface font-semibold mb-1.5">
+                    Atasan Langsung / SPV / Asman Verifikator
+                  </label>
+<div class="relative">
+<input class="w-full h-11 px-3 py-2 bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg focus:outline-none focus:ring-2 focus:ring-primary shadow-sm font-medium" type="text" value="Bpk. Rian Pratama, S.T. - HD DAMAN SKB / NOC Lead">
+<span class="material-symbols-outlined absolute right-3 top-3 text-secondary">badge</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 2: Peran Akun & Hak Akses (Role Hierarchy) -->
+<div class="space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs border-b border-surface-container">
+<span class="font-label-lg text-label-lg font-bold text-on-surface uppercase tracking-wide flex items-center gap-2">
+<span class="w-1.5 h-4 bg-primary rounded-full"></span>
+                  2. Peran Akun &amp; Hak Akses (Role Hierarchy)
+                </span>
+<span class="font-label-sm text-label-sm text-secondary">Tentukan Tingkat Wewenang</span>
+</div>
+<!-- Radio Role Selectors -->
+<div class="space-y-space-sm">
+<!-- Role 1: Validator Valins (Selected) -->
+<label class="flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-low cursor-pointer shadow-sm hover:bg-surface-container transition-all">
+<input checked="" class="mt-1 w-4 h-4 text-primary focus:ring-primary accent-primary" name="role" type="radio">
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">
+                        Helpdesk HD Daman</span>
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-primary-fixed text-on-primary-fixed font-bold uppercase">
+                        Terpilih
+                      </span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-1">
+                      Akses validasi QR code, update status data, unggah foto redaman, serta sinkronisasi BAST lapangan.
+                    </p>
+</div>
+</label>
+<!-- Role 2: NOC Engineer & GPON Analyst -->
+<label class="flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-lowest cursor-pointer shadow-sm hover:bg-surface-container transition-all">
+<input class="mt-1 w-4 h-4 text-primary focus:ring-primary accent-primary" name="role" type="radio">
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">
+                        NOC Engineer &amp; GPON Analyst
+                      </span>
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-surface-container-high text-secondary uppercase">
+                        NOC Console
+                      </span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-1">
+                      Akses monitoring telemetri OLT, alarm redaman LOS/LOF, diagnosis trace route optik, dan konfigurasi port GPON.
+                    </p>
+</div>
+</label>
+<!-- Role 3: Helpdesk Daman & Dispatcher -->
+<label class="flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-lowest cursor-pointer shadow-sm hover:bg-surface-container transition-all">
+<input class="mt-1 w-4 h-4 text-primary focus:ring-primary accent-primary" name="role" type="radio">
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface"><span style="background-color: rgb(239, 244, 255);" class="">Validator Valins Services &amp; GPON</span></span>
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-surface-container-high text-secondary uppercase">
+                        Operasional Tiket
+                      </span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-1">
+                      Pengelolaan tiket insiden fisik kabel putus, eskalasi bot Telegram dispatcher, rekapitulasi performa teknisi harian.
+                    </p>
+</div>
+</label>
+</div>
+<!-- Permission Previews -->
+<div class="p-space-md rounded-xl bg-surface-container-low">
+<span class="font-label-md text-label-md font-semibold text-on-surface block mb-space-sm">
+                  Matriks Izin Modul Sistem (Otomatis sesuai Role)
+                </span>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<div class="flex items-center gap-2 text-body-sm font-body-sm text-on-surface">
+<span class="material-symbols-outlined text-emerald-600 text-lg">check_box</span>
+<span class="">Sinkronisasi Data UIM SAP</span>
+</div>
+<div class="flex items-center gap-2 text-body-sm font-body-sm text-on-surface">
+<span class="material-symbols-outlined text-emerald-600 text-lg">check_box</span>
+<span class="">Input Validasi Lapangan (VALINS Mobile)</span>
+</div>
+<div class="flex items-center gap-2 text-body-sm font-body-sm text-on-surface">
+<span class="material-symbols-outlined text-emerald-600 text-lg">check_box</span>
+<span class="">Akses Peta Topologi Fiber GIS</span>
+</div>
+<div class="flex items-center gap-2 text-body-sm font-body-sm text-secondary opacity-60">
+<span class="material-symbols-outlined text-secondary text-lg">check_box_outline_blank</span>
+<span class="">Kontrol Command OLT GPON (Read-Only)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 3: Dokumen Pendukung (Surat Penugasan) -->
+<div class="space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs border-b border-surface-container">
+<span class="font-label-lg text-label-lg font-bold text-on-surface uppercase tracking-wide flex items-center gap-2">
+<span class="w-1.5 h-4 bg-primary rounded-full"></span>
+                  3. Dokumen Verifikasi Penugasan
+                </span>
+<span class="font-label-sm text-label-sm text-secondary">PDF / JPG Max 5MB</span>
+</div>
+<!-- Drag & Drop Upload Container -->
+<div class="p-space-lg rounded-xl bg-surface-container-low text-center flex flex-col items-center justify-center">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-primary mb-space-sm">
+<span class="material-symbols-outlined text-2xl">cloud_upload</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface font-semibold">Upload berkas Surat Tugas resmi atau klik untuk telusuri (Opsional)</p>
+<p class="font-body-xs text-body-xs text-secondary mt-1">
+                  Format didukung: PDF, JPG, atau PNG yang disahkan oleh Manager Witel/Asman Unit.
+                </p>
+<!-- Attached File Sample Card -->
+<div class="mt-space-md w-full max-w-md bg-surface-container-lowest p-space-sm rounded-lg shadow-sm flex items-center justify-between text-left">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-primary text-2xl">picture_as_pdf</span>
+<div class="truncate">
+<span class="font-label-md text-label-md font-semibold text-on-surface block truncate">ST_TelkomAkses_SKB_2025.pdf</span>
+<span class="font-telemetry-data text-label-sm text-secondary">1.2 MB • Terunggah &amp; Valid</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-600 text-lg">check_circle</span>
+<button class="text-secondary hover:text-error" type="button">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Navigation Buttons -->
+<div class="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<!-- Back to Step 1 -->
+<button class="w-full sm:w-auto px-space-lg py-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold flex items-center justify-center gap-2 transition-all" type="button">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+<span class="">Kembali ke Langkah 1</span>
+</button>
+<!-- Forward to Step 3 -->
+<button class="w-full sm:w-auto px-space-xl py-3 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2" type="submit">
+<span class="">Lanjut ke Langkah 3: Kredensial &amp; Akses</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+</form>
+</div>
+</section>
+</div>
+<!-- Persistent Telkom Akses Operations Footer -->
+<footer class="mt-16 p-8 sm:p-10 bg-white border border-slate-100 rounded-2xl shadow-sm text-secondary"><div class="grid grid-cols-1 md:grid-cols-4 gap-8"><!-- Column 1: Brand & Desc --><div><div class="flex items-center gap-3"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmqCg--njF-AnxZI1QUgjHBtv-MMoxJlq9CFeKemAQYaRs3uwgtUh5MSneVCCpXalxzHtOyvDFCEgVe2Q2gr2FKby3V_mdg6k1smrcDABIJzJOL20E_AvAYhk6Is6Efgs9jcdOW36mIHXd_1El00I2SXpkKDoLVXvKGDfOflu5x1jxLWHBmdMHtU45O7wSrN51zAGuC4m5RBJsFBK7wuKzt7om30he_e4hrIgqvxXvbnvTrAbfJ2_TDH-jFc0lPL-Y7w" alt="Logo Telkom Akses" class="w-10 h-10 object-contain inline-block mr-2 flex-shrink-0"><div class="flex flex-col"><span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase leading-none">PT TELKOM AKSES INDONESIA</span><span class="text-sm font-black text-slate-800 tracking-tight mt-1">WITEL SUKABUMI</span></div></div><p class="text-xs text-slate-500 leading-relaxed mt-4">Sistem Informasi Manajemen Data VALINS &amp; Monitoring GPON OLT Terpadu Kawasan Sukabumi. Platform resmi operasional jaringan optik dan integrasi topologi ODC/ODP regional.</p><div class="flex flex-wrap items-center gap-2 mt-4"><div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold text-tertiary bg-surface-container-high border border-surface-variant"><span class="material-symbols-outlined text-sm text-tertiary">verified_user</span><span class="">BUMN Terpercaya</span></div><div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold text-primary bg-primary-fixed border border-outline-variant"><span class="material-symbols-outlined text-sm text-primary">security</span><span class="">ISO 27001 Certified</span></div></div></div><!-- Column 2: Navigasi Portal --><div><div class="flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-slate-800 mb-4"><span class="w-2 h-2 rounded-full bg-primary inline-block"></span>NAVIGASI PORTAL</div><ul class="space-y-2 text-xs"><li class="text-slate-600 hover:text-primary cursor-pointer transition-colors flex items-center gap-2 py-1"><span class="material-symbols-outlined text-sm text-slate-400">arrow_forward</span><span class="">Beranda SIM</span></li><li class="text-slate-600 hover:text-primary cursor-pointer transition-colors flex items-center gap-2 py-1"><span class="material-symbols-outlined text-sm text-slate-400">arrow_forward</span><span class="">Portal Registrasi</span></li><li class="text-slate-600 hover:text-primary cursor-pointer transition-colors flex items-center gap-2 py-1"><span class="material-symbols-outlined text-sm text-slate-400">arrow_forward</span><span class="">Panduan Validasi ODP</span></li><li class="text-slate-600 hover:text-primary cursor-pointer transition-colors flex items-center gap-2 py-1"><span class="material-symbols-outlined text-sm text-slate-400">arrow_forward</span><span class="">Cek NIK / HRMS</span></li><li class="text-slate-600 hover:text-primary cursor-pointer transition-colors flex items-center gap-2 py-1"><span class="material-symbols-outlined text-sm text-slate-400">arrow_forward</span><span class="">Status Server NOC</span></li></ul></div><!-- Column 3: Area Distribusi STO --><div><div class="flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-slate-800 mb-4"><span class="w-2 h-2 rounded-full bg-tertiary inline-block"></span>AREA DISTRIBUSI STO</div><div class="space-y-2"><div class="bg-surface-container-low px-3 py-2 rounded-lg flex items-center justify-between"><span class="font-mono text-xs font-semibold text-slate-700">STO SKB - Sukabumi Kota</span><span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600 inline-block"></span>Online</span></div><div class="bg-surface-container-low px-3 py-2 rounded-lg flex items-center justify-between"><span class="font-mono text-xs font-semibold text-slate-700">STO CCR - Cicurug</span><span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600 inline-block"></span>Online</span></div><div class="bg-surface-container-low px-3 py-2 rounded-lg flex items-center justify-between"><span class="font-mono text-xs font-semibold text-slate-700">STO CBD - Cibadak</span><span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600 inline-block"></span>Online</span></div><div class="bg-surface-container-low px-3 py-2 rounded-lg flex items-center justify-between"><span class="font-mono text-xs font-semibold text-slate-700">STO PLR - Pelabuhanratu</span><span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600 inline-block"></span>Online</span></div><div class="bg-surface-container-low px-3 py-2 rounded-lg flex items-center justify-between"><span class="font-mono text-xs font-semibold text-slate-700">STO SGN - Sagaranten</span><span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600 inline-block"></span>Online</span></div></div></div><!-- Column 4: Kontak Bantuan NOC --><div><div class="flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-slate-800 mb-4"><span class="w-2 h-2 rounded-full bg-primary inline-block"></span>KONTAK BANTUAN NOC</div><div class="space-y-3"><div class="flex items-start gap-2.5"><span class="material-symbols-outlined text-primary text-lg mt-0.5 flex-shrink-0">call</span><div><span class="block text-xs font-bold text-slate-800">Hotline Fixed Line</span><span class="block text-xs font-mono text-slate-500">(0266) 221100 / ext. 402</span></div></div><div class="flex items-start gap-2.5"><span class="material-symbols-outlined text-tertiary text-lg mt-0.5 flex-shrink-0">support_agent</span><div><span class="block text-xs font-bold text-slate-800">WhatsApp Dispatcher NOC</span><span class="block text-xs font-mono text-slate-500">+62 811-2009-8800</span></div></div><div class="flex items-start gap-2.5"><span class="material-symbols-outlined text-slate-500 text-lg mt-0.5 flex-shrink-0">mail</span><div><span class="block text-xs font-bold text-slate-800">Email Kedinasan</span><span class="block text-xs font-mono text-slate-500 truncate">noc.sukabumi@telkomakses.co.id</span></div></div></div><div class="mt-4 bg-surface-container-low text-tertiary text-xs font-semibold px-3 py-2 rounded-lg flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-[#10b981] inline-block"></span><span class="">24/7 Monitoring Center Sukabumi</span></div></div></div><div class="border-t border-slate-200 my-6"></div><div class="flex flex-col md:flex-row items-center justify-between text-[11px] text-slate-500 gap-4"><p class="text-center md:text-left">© 2025 PT Telkom Akses Witel Sukabumi. All rights reserved. • Sub-Direktorat Operasi Jaringan Regional Jawa Barat</p><div class="flex flex-wrap items-center justify-center gap-4 text-slate-500"><span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm text-tertiary">lock</span>TLS v1.3 Enforced</span><span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm text-tertiary">cloud</span>Tier-3 Data Center</span><span class="">•</span><a class="hover:text-primary cursor-pointer" href="#">Kebijakan Privasi SOP Kedinasan</a><span class="">•</span><a class="hover:text-primary cursor-pointer" href="#">Syarat &amp; Ketentuan</a></div></div></footer>
+</div>
+</div></main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>
