@@ -14,13 +14,14 @@ class ValinsController extends Controller
     }
 
     // Menampilkan halaman Tambah Data
-    public function create()
+    public function create(Request $request)
     {
         // Tarik kategori dengan kolom spesifik yang dibutuhkan saja (hemat memori)
         $categories = ValinsCategory::select('id', 'nama_kategori', 'slug', 'is_navbar', 'konfigurasi_kolom', 'urutan')
             ->orderBy('urutan', 'asc')
             ->get();
-        return view('valins.create', compact('categories'));
+        $defaultKategori = $request->query('kategori', '');
+        return view('valins.create', compact('categories', 'defaultKategori'));
     }
 
     // Menyimpan data baru ke Database
@@ -29,17 +30,37 @@ class ValinsController extends Controller
         $data = $request->except(['_token', '_method']);
 
         // Kompatibilitas jika ada form yang memakai panel_odp atau port_odp (TETAP AMAN)
-        if ($request->has('panel_odp') && !$request->has('panel_odp')) {
-            $data['panel_odp'] = $request->panel_odp;
+        if ($request->has('panel_odp') && !$request->has('panel_o')) {
+            $data['panel_o'] = trim((string)$request->panel_odp);
         }
-        if ($request->has('port_odp') && !$request->has('port_odp')) {
-            $data['port_odp'] = $request->port_odp;
+        if ($request->has('port_odp') && !$request->has('port_od')) {
+            $data['port_od'] = trim((string)$request->port_odp);
         }
         unset($data['panel_odp'], $data['port_odp']);
 
+        if (isset($data['port_od'])) {
+            $pTrim = trim((string)$data['port_od']);
+            $data['port_od'] = preg_match('/(\d+)/', $pTrim, $mP) ? $mP[1] : ($pTrim ?: null);
+        }
+
         // TAMBAHAN: Menangkap input dynamic_data (JSON) dari form kategori kustom
-        if ($request->has('dynamic_data')) {
-            $data['dynamic_data'] = $request->input('dynamic_data');
+        if ($request->has('dynamic_data') && is_array($request->input('dynamic_data'))) {
+            $dyn = $request->input('dynamic_data');
+            foreach ($dyn as $k => $v) {
+                $normK = strtoupper(preg_replace('/[^A-Z0-9]/', '', (string)$k));
+                if (in_array($normK, ['PORTODP', 'PORTOD'])) {
+                    if ($v !== null && trim((string)$v) !== '' && trim((string)$v) !== '-') {
+                        $pTrim = trim((string)$v);
+                        $dyn[$k] = preg_match('/(\d+)/', $pTrim, $mP) ? $mP[1] : $pTrim;
+                        $data['port_od'] = $dyn[$k];
+                    } else {
+                        $dyn[$k] = null;
+                    }
+                } elseif (is_string($v)) {
+                    $dyn[$k] = trim($v);
+                }
+            }
+            $data['dynamic_data'] = $dyn;
         } else {
             $data['dynamic_data'] = null;
         }
@@ -68,7 +89,7 @@ class ValinsController extends Controller
     }
 
     // Memproses data yang di-submit dari form EDIT
-   public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $valins = ValinsService::findOrFail($id);
         $currentUser = auth()->check() ? auth()->user()->name : 'System';
@@ -82,10 +103,44 @@ class ValinsController extends Controller
         // Ambil data request yang akan diupdate
         $data = $request->except(['_token', '_method']);
 
+        if ($request->has('panel_odp') && !$request->has('panel_o')) {
+            $data['panel_o'] = trim((string)$request->panel_odp);
+        }
+        if ($request->has('port_odp') && !$request->has('port_od')) {
+            $data['port_od'] = trim((string)$request->port_odp);
+        }
+        unset($data['panel_odp'], $data['port_odp']);
+
+        if (isset($data['port_od'])) {
+            $pTrim = trim((string)$data['port_od']);
+            $data['port_od'] = preg_match('/(\d+)/', $pTrim, $mP) ? $mP[1] : ($pTrim ?: null);
+        }
+
         // PENGAMANAN: Pastikan kategori tetap mengacu pada kategori asli data tersebut
         $data['kategori'] = $valins->kategori;
         if (!empty($valins->valins_category_id)) {
             $data['valins_category_id'] = $valins->valins_category_id;
+        }
+
+        // Sinkronisasi data dinamis (merge agar data kustom tidak hilang)
+        if ($request->has('dynamic_data') && is_array($request->input('dynamic_data'))) {
+            $currentDyn = is_array($valins->dynamic_data) ? $valins->dynamic_data : [];
+            $inputDyn = $request->input('dynamic_data');
+            foreach ($inputDyn as $k => $v) {
+                $normK = strtoupper(preg_replace('/[^A-Z0-9]/', '', (string)$k));
+                if (in_array($normK, ['PORTODP', 'PORTOD'])) {
+                    if ($v !== null && trim((string)$v) !== '' && trim((string)$v) !== '-') {
+                        $pTrim = trim((string)$v);
+                        $inputDyn[$k] = preg_match('/(\d+)/', $pTrim, $mP) ? $mP[1] : $pTrim;
+                        $data['port_od'] = $inputDyn[$k];
+                    } else {
+                        $inputDyn[$k] = null;
+                    }
+                } elseif (is_string($v)) {
+                    $inputDyn[$k] = trim($v);
+                }
+            }
+            $data['dynamic_data'] = array_merge($currentDyn, $inputDyn);
         }
 
         // KUNCI PERBAIKAN: Lepaskan gembok otomatis saat data berhasil disimpan

@@ -46,8 +46,6 @@ class RegisteredUserController extends Controller
             'role' => ['nullable', 'string', 'max:100'],
             'supervisor' => ['nullable', 'string', 'max:150'],
             'regu' => ['nullable', 'string', 'max:100'],
-            'mfa_method' => ['nullable', 'string', 'max:50'],
-            'telegram_id' => ['nullable', 'string', 'max:100'],
             'surat_tugas' => ['nullable', 'file', 'max:10240'],
         ]);
 
@@ -77,8 +75,8 @@ class RegisteredUserController extends Controller
             'role' => $request->role ?: 'valins_validator',
             'supervisor' => $request->supervisor ?: 'Asman Jaringan Sukabumi',
             'regu' => $request->regu ?: 'Regu Pemeliharaan Fiber SKB 01',
-            'mfa_method' => $request->mfa_method ?: 'telegram',
-            'telegram_id' => $request->telegram_id ?: '@noc_sukabumi_bot',
+            'mfa_method' => null,
+            'telegram_id' => null,
             'surat_tugas_path' => $suratTugasPath,
         ]);
 

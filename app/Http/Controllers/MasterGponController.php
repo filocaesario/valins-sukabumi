@@ -185,6 +185,11 @@ class MasterGponController extends Controller
             }
         }
 
+        // Sinkronisasi Real-Time Cache Dashboard
+        \Illuminate\Support\Facades\Cache::forget('dashboard_metrics');
+        \Illuminate\Support\Facades\Cache::forget('dashboard_gpon_nodes');
+        \Illuminate\Support\Facades\Cache::forget('dashboard_sto_matrix');
+
         return back()->with('success', 'SUKSES ' . count($insertData) . ' berhasil dipindai dengan sempurna!');
     }
 }

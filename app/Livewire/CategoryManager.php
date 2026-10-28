@@ -35,7 +35,7 @@ class CategoryManager extends Component
             'col_sto'            => ['id' => 'col_sto', 'nama' => 'STO', 'tipe' => 'text', 'hidden' => false],
             'col_odp_name'       => ['id' => 'col_odp_name', 'nama' => 'ODP NAME', 'tipe' => 'text', 'hidden' => false],
             'col_panel_odp'      => ['id' => 'col_panel_odp', 'nama' => 'PANEL ODP', 'tipe' => 'text', 'hidden' => false],
-            'col_port_odp'       => ['id' => 'col_port_odp', 'nama' => 'PORT ODP', 'tipe' => 'text', 'hidden' => false],
+            'col_port_odp'       => ['id' => 'col_port_odp', 'nama' => 'PORT ODP', 'tipe' => 'number', 'hidden' => false],
             'col_valins_id'      => ['id' => 'col_valins_id', 'nama' => 'VALINS ID', 'tipe' => 'number', 'hidden' => false],
             'col_node_id'        => ['id' => 'col_node_id', 'nama' => 'NODE ID', 'tipe' => 'text', 'hidden' => false],
             'col_node_ip'        => ['id' => 'col_node_ip', 'nama' => 'NODE IP', 'tipe' => 'text', 'hidden' => false],
@@ -68,11 +68,24 @@ class CategoryManager extends Component
         $this->mode = 'form';
     }
 
+    public function formatNamaKategoriDisplay($nama)
+    {
+        $rawUpper = strtoupper(trim($nama));
+        return match ($rawUpper) {
+            'ODP TIDAK SAMA' => 'ODP Tidak Sama',
+            'DATEK TIDAK SAMA' => 'Datek Tidak Sama',
+            'ODP DAN DATEK TIDAK SAMA', 'ODP & DATEK TIDAK SAMA' => 'ODP & Datek Tidak Sama',
+            'NOT IN SERVICE' => 'Not In Service',
+            'KENDALA ODP' => 'Kendala ODP',
+            default => preg_replace_callback('/\b(odp|gpon|nis|olo|olt|ont|sid|sip)\b/i', fn($m) => strtoupper($m[0]), ucwords(strtolower($nama))),
+        };
+    }
+
     public function bukaEdit($id)
     {
         $category = ValinsCategory::findOrFail($id);
         $this->categoryId = $category->id;
-        $this->nama_kategori = $category->nama_kategori;
+        $this->nama_kategori = $this->formatNamaKategoriDisplay($category->nama_kategori);
         $this->selectedKolom = [];
         $this->selectAllKolom = false;
 
@@ -174,6 +187,7 @@ class CategoryManager extends Component
             'hidden' => false, // Default: tampil
         ];
         $this->dispatch('kolom-reordered');
+        $this->dispatch('kolom-ditambah');
     }
 
     // Method hapus baris kolom tunggal
@@ -315,16 +329,30 @@ class CategoryManager extends Component
         // Setelah datanya habis, hapus kategorinya
         $category->delete();
 
+        \Illuminate\Support\Facades\Cache::forget('valins_stats_counts');
+        \Illuminate\Support\Facades\Cache::forget('valins_category_row_counts');
+        \Illuminate\Support\Facades\Cache::forget('dashboard_metrics');
+        \Illuminate\Support\Facades\Cache::forget('dashboard_sto_chart');
+        \Illuminate\Support\Facades\Cache::forget('dashboard_donut_chart');
+        \Illuminate\Support\Facades\Cache::forget('dashboard_sto_matrix');
+
         session()->flash('success_modal', "Kategori '{$nama}' beserta {$jumlahData} datanya berhasil dihapus permanen!");
         
         // Refresh tabel dan kategori
         $this->dispatch('refreshKategori');
+        $this->dispatch('valinsUpdated');
     }
 
     public function render()
     {
         return view('livewire.category-manager', [
-            'daftarKategori' => ValinsCategory::orderBy('urutan', 'asc')->orderBy('id', 'asc')->get()
+            'daftarKategori' => ValinsCategory::orderBy('urutan', 'asc')->orderBy('id', 'asc')->get(),
+            'mode' => $this->mode,
+            'isEditing' => $this->isEditing,
+            'nama_kategori' => $this->nama_kategori,
+            'konfigurasi_kolom' => $this->konfigurasi_kolom,
+            'selectedKolom' => $this->selectedKolom,
+            'selectAllKolom' => $this->selectAllKolom,
         ]);
     }
 }

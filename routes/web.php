@@ -18,14 +18,17 @@ Route::get('/', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Halaman Kebijakan Privasi, Syarat Ketentuan & Hubungi Kami
+| Halaman Kebijakan Privasi, Syarat Ketentuan, Hubungi Kami & Tentang Kami
 |--------------------------------------------------------------------------
 */
+Route::view('/tentang-kami', 'about-us')->name('about.us');
 Route::view('/kebijakan-privasi', 'legal.privacy-policy')->name('privacy.policy');
 Route::view('/syarat-ketentuan', 'legal.terms-conditions')->name('terms.conditions');
 Route::view('/hubungi-kami', 'contact-us')->name('contact.us');
 
 // Alias pengalihan rute lama / bahasa Inggris untuk kompatibilitas tautan
+Route::redirect('/about', '/tentang-kami');
+Route::redirect('/about-us', '/tentang-kami');
 Route::redirect('/privacy-policy', '/kebijakan-privasi');
 Route::redirect('/privacy', '/kebijakan-privasi');
 Route::redirect('/terms', '/syarat-ketentuan');
@@ -33,6 +36,14 @@ Route::redirect('/terms-conditions', '/syarat-ketentuan');
 Route::redirect('/contact', '/hubungi-kami');
 Route::redirect('/contact-us', '/hubungi-kami');
 Route::redirect('/bantuan', '/hubungi-kami');
+
+Route::get('/dev-login', function () {
+    if (app()->environment('local')) {
+        auth()->loginUsingId(1);
+        return redirect()->route('dashboard');
+    }
+    abort(404);
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +65,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Pengaturan Profil & Akun: foto, preferensi notifikasi, sesi login
+    Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar.update');
+    Route::delete('/profile/avatar', [ProfileController::class, 'destroyAvatar'])->name('profile.avatar.destroy');
+    Route::patch('/profile/notifications', [ProfileController::class, 'updateNotifications'])->name('profile.notifications.update');
+    Route::delete('/profile/sessions/{sessionId}', [ProfileController::class, 'destroySession'])->name('profile.sessions.destroy');
 
     // 1. RUTE KE FOLDER MASTER GPON
     // Memanggil MasterGponController yang akan mengembalikan view('master-gpon.index')

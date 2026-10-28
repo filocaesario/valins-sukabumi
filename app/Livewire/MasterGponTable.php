@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Url;
 use App\Models\MasterGpon;
 
 class MasterGponTable extends Component
@@ -15,6 +16,7 @@ class MasterGponTable extends Component
     public $searchSlot = '';
     public $searchPort = '';
 
+    #[Url(as: 'sto', history: true)]
     public $activeSto = '';
 
     public $isOpen = false;
@@ -25,8 +27,20 @@ class MasterGponTable extends Component
 
     public function mount()
     {
-        $firstSto = MasterGpon::whereNotNull('sto')->where('sto', '!=', '')->orderBy('sto')->value('sto');
-        $this->activeSto = trim($firstSto ?? '');
+        if (empty($this->activeSto)) {
+            if (request()->filled('sto')) {
+                $this->activeSto = strtoupper(trim(request('sto')));
+            } else {
+                $firstSto = MasterGpon::whereNotNull('sto')->where('sto', '!=', '')->orderBy('sto')->value('sto');
+                $this->activeSto = trim($firstSto ?? '');
+            }
+        } else {
+            $this->activeSto = strtoupper(trim($this->activeSto));
+        }
+
+        if (request()->filled('search')) {
+            $this->searchNode = request('search');
+        }
     }
 
     public function updatingSearchNode() { $this->resetPage(); }
@@ -43,14 +57,23 @@ class MasterGponTable extends Component
 
     public function setSto($sto)
     {
-        $this->activeSto = trim($sto);
+        $cleanSto = strtoupper(trim($sto));
+        if ($this->activeSto === $cleanSto && empty($this->searchNode) && empty($this->searchSlot) && empty($this->searchPort)) {
+            return;
+        }
+        $this->activeSto = $cleanSto;
         $this->resetSearch();
     }
 
     public function hapusData($id)
     {
-        MasterGpon::find($id)->delete();
-        session()->flash('success', 'Data Port berhasil dihapus!');
+        $port = MasterGpon::find($id);
+        if ($port) {
+            $port->delete();
+            \Illuminate\Support\Facades\Cache::forget('master_gpon_stos_list');
+            $this->dispatch('gponUpdated');
+            session()->flash('success', 'Data Port berhasil dihapus!');
+        }
     }
 
     public function openModalTambah()
@@ -145,18 +168,22 @@ class MasterGponTable extends Component
             ]
         );
 
+        \Illuminate\Support\Facades\Cache::forget('master_gpon_stos_list');
+
         session()->flash('success', $this->isEdit ? 'Data Port berhasil diupdate!' : 'Data Port baru berhasil ditambahkan!');
-        $this->closeModal();
+        $this->dispatch('gponUpdated');
 
         if (!$this->isEdit) {
             $this->activeSto = strtoupper(trim($this->formSto));
         }
+
+        $this->isOpen = false;
     }
 
     public function render()
     {
-        // Optimasi: Cache daftar STO unik selama 60 detik agar tidak scanning seluruh tabel setiap render
-        $stosArray = \Illuminate\Support\Facades\Cache::remember('master_gpon_stos_list', 60, function () {
+        // Optimasi: Cache daftar STO unik selama 300 detik agar tidak scanning seluruh tabel setiap render
+        $stosArray = \Illuminate\Support\Facades\Cache::remember('master_gpon_stos_list', 300, function () {
             return MasterGpon::select('sto')->distinct()->whereNotNull('sto')->where('sto', '!=', '')->orderBy('sto')->pluck('sto')->toArray();
         });
         $stos = collect($stosArray);
@@ -165,7 +192,12 @@ class MasterGponTable extends Component
             $this->activeSto = $stos->first();
         }
 
-        $nodeQuery = MasterGpon::select('node_id')->distinct();
+        $nodeQuery = MasterGpon::query();
+
+        // Kunci query ke STO aktif yang sedang dipilih pengguna
+        if (!empty($this->activeSto)) {
+            $nodeQuery->where('sto', $this->activeSto);
+        }
 
         $hasSearch = !empty($this->searchNode) || !empty($this->searchSlot) || !empty($this->searchPort);
 
@@ -206,19 +238,42 @@ class MasterGponTable extends Component
                       ->orWhere('port', 'like', "%-0{$term}");
                 });
             }
-        } else {
-            // Mode Normal (Tab STO)
-            if ($this->activeSto) {
-                $nodeQuery->where('sto', $this->activeSto);
-            }
         }
 
-       $paginatedNodes = $nodeQuery->orderBy('node_id', 'asc')->simplePaginate(5);
-        $nodeIds = $paginatedNodes->pluck('node_id');
+        $perPage = 5;
+        // Hitung total distinct node langsung di level SQL (Covering Index scan) tanpa memuat ribuan baris ke memori PHP
+        $totalNodes = (clone $nodeQuery)->distinct()->count('node_id');
+        $lastPage = max(1, (int) ceil($totalNodes / $perPage));
+
+        $currentPage = (int) $this->getPage();
+        if ($currentPage < 1) {
+            $currentPage = 1;
+        } elseif ($currentPage > $lastPage) {
+            $currentPage = $lastPage;
+        }
+
+        // Ambil HANYA 5 Node ID untuk halaman aktif via SQL LIMIT & OFFSET
+        $nodeIds = (clone $nodeQuery)
+            ->distinct()
+            ->orderBy('node_id', 'asc')
+            ->forPage($currentPage, $perPage)
+            ->pluck('node_id');
+
+        $paginatedNodes = new \Illuminate\Pagination\LengthAwarePaginator(
+            $nodeIds,
+            $totalNodes,
+            $perPage,
+            $currentPage,
+            ['path' => \Illuminate\Pagination\Paginator::resolveCurrentPath(), 'pageName' => 'page']
+        );
 
         $data = collect();
-        if ($nodeIds->count() > 0) {
+        if ($nodeIds->isNotEmpty()) {
             $portsQuery = MasterGpon::whereIn('node_id', $nodeIds);
+
+            if (!empty($this->activeSto)) {
+                $portsQuery->where('sto', $this->activeSto);
+            }
 
             // Filter Tampilan 1: Jangan tampilkan slot yang tidak dicari
             if (!empty($this->searchSlot)) {
@@ -240,20 +295,26 @@ class MasterGponTable extends Component
             if (!empty($this->searchPort)) {
                 $term = trim($this->searchPort);
 
-                $matchingSlots = MasterGpon::whereIn('node_id', $nodeIds)
+                $matchingSlotsQuery = MasterGpon::whereIn('node_id', $nodeIds);
+                if (!empty($this->activeSto)) {
+                    $matchingSlotsQuery->where('sto', $this->activeSto);
+                }
+
+                $matchingSlots = $matchingSlotsQuery
                     ->where(function($q) use ($term) {
                         $q->where('port', 'like', "%{$term}%")
                           ->orWhere('port', 'like', "%:{$term}")
                           ->orWhere('port', 'like', "%:0{$term}")
                           ->orWhere('port', 'like', "%-{$term}")
                           ->orWhere('port', 'like', "%-0{$term}");
-                    })->pluck('slot')->unique();
+                    })->distinct()->pluck('slot');
 
                 $portsQuery->whereIn('slot', $matchingSlots);
             }
 
             $data = $portsQuery->select('id', 'sto', 'node_id', 'node_ip', 'id_logical_device', 'type_gpon', 'slot', 'port')
                         ->orderBy('node_id', 'asc')
+                        ->orderBy('slot', 'asc')
                         ->orderBy('id', 'asc')
                         ->get()
                         ->groupBy('node_id')

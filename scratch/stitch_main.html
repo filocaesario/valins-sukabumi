@@ -1,0 +1,502 @@
+<!-- 2-Column Main Workspace -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Left Column: User Summary & Tactical ID Card (4 cols) -->
+<div class="lg:col-span-4 flex flex-col gap-space-md">
+<!-- Profile Badge Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col items-center text-center relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-24 bg-gradient-to-r from-primary-container via-primary to-surface-container-high"></div>
+<!-- Profile Picture Container -->
+<div class="relative mt-8 mb-space-md group">
+<div class="w-32 h-32 rounded-full overflow-hidden shadow-lg ring-4 ring-surface-container-lowest bg-surface-container">
+<img alt="Foto Profil Rian Pratama, S.T." class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" id="avatarPreview" src="DATA_URI">
+</div>
+<div class="absolute bottom-1 right-1 w-6 h-6 rounded-full bg-emerald-500 ring-2 ring-surface-container-lowest flex items-center justify-center text-white" title="Akun Aktif &amp; Terverifikasi">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+</div>
+</div>
+<!-- Name & Badges -->
+<div class="flex items-center gap-space-xs mb-space-xs">
+
+
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight" id="dispFullname">Rian Pratama, S.T.</h2>
+<p class="font-body-sm text-body-sm text-secondary mb-space-xs">Network Engineer / Data Validator</p>
+<div class="inline-flex items-center gap-1.5 bg-surface-container-low px-space-md py-1 rounded-full text-tertiary font-telemetry-data text-telemetry-data font-semibold mb-space-md">
+<span class="material-symbols-outlined text-body-sm">badge</span>
+<span class="">NIK: TA-SKB-8821</span>
+</div>
+<!-- Photo Actions -->
+<div class="flex items-center gap-space-xs w-full mb-space-lg">
+<label class="flex-1 cursor-pointer bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-body-md text-secondary">photo_camera</span>
+<span class="">Unggah Baru</span>
+<input accept="image/*" class="hidden" onchange="simulateAvatarUpload(event)" type="file">
+</label>
+<button class="p-2 rounded-lg bg-surface-container-low hover:bg-red-50 text-secondary hover:text-error transition-colors" onclick="removeAvatar()" title="Hapus Foto" type="button">
+<span class="material-symbols-outlined text-body-md">delete</span>
+</button>
+</div>
+<!-- Organization Metadata Block -->
+<div class="w-full bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-sm text-left">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary text-body-lg shrink-0 mt-0.5">apartment</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase">Penempatan Teritorial</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">STO Sukabumi Kota</span>
+<span class="font-body-xs text-body-xs text-secondary">Datel Sukabumi - Witel Jabar Barat</span>
+</div>
+</div>
+<div class="flex items-start gap-space-sm pt-space-xs">
+<span class="material-symbols-outlined text-tertiary text-body-lg shrink-0 mt-0.5">calendar_month</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase">Masa Kedinasan</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">14 Maret 2019</span>
+<span class="font-body-xs text-body-xs text-secondary">6 Tahun Operasional Lapangan</span>
+</div>
+</div>
+</div>
+<!-- Metric Cards Grid inside Profile -->
+<div class="grid grid-cols-2 gap-space-sm w-full mt-space-md">
+
+
+</div>
+<!-- Telemetry Optical Micro-card -->
+
+</div>
+<!-- Quick Security Overview Mini-card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined">security</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">2-Factor Auth (2FA)</span>
+<span class="font-body-xs text-body-xs text-emerald-600 font-medium">Aktif • Telkom Authenticator</span>
+</div>
+</div>
+<button class="text-tertiary hover:text-on-tertiary-fixed-variant font-label-md text-label-md font-semibold px-2 py-1 rounded hover:bg-surface-container" onclick="switchTab('tabSecurity')">
+          Kelola
+        </button>
+</div>
+</div>
+<!-- Right Column: Interactive Settings Tabbed Panels (8 cols) -->
+<div class="lg:col-span-8 flex flex-col gap-space-md">
+<!-- Tab Controls Bar -->
+<div class="bg-surface-container-lowest rounded-xl p-1.5 shadow-sm flex flex-wrap gap-1.5">
+<button class="flex-1 min-w-[160px] py-space-sm px-space-md rounded-lg font-label-lg text-label-lg transition-all flex items-center justify-center gap-space-xs bg-primary-container text-on-primary-container shadow-sm font-semibold" id="tabBtnProfile" onclick="switchTab('tabProfile')">
+<span class="material-symbols-outlined text-body-lg">person_pin</span>
+<span class="">Informasi Profil &amp; Identitas</span>
+</button>
+<button class="flex-1 min-w-[160px] py-space-sm px-space-md rounded-lg font-label-lg text-label-lg transition-all flex items-center justify-center gap-space-xs text-secondary hover:bg-surface-container hover:text-on-surface" id="tabBtnSecurity" onclick="switchTab('tabSecurity')">
+<span class="material-symbols-outlined text-body-lg">lock_reset</span>
+<span class="">Keamanan &amp; Autentikasi</span>
+</button>
+<button class="flex-1 min-w-[160px] py-space-sm px-space-md rounded-lg font-label-lg text-label-lg transition-all flex items-center justify-center gap-space-xs text-secondary hover:bg-surface-container hover:text-on-surface" id="tabBtnNotification" onclick="switchTab('tabNotification')">
+<span class="material-symbols-outlined text-body-lg">notifications_active</span>
+<span class="">Preferensi Notifikasi</span>
+</button>
+</div>
+<!-- TAB 1: Profile & Identity Information -->
+<div class="tab-panel bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-lg" id="tabContentProfile">
+<!-- Section Title -->
+<div class="flex items-center justify-between border-b pb-space-sm border-transparent">
+<div class="flex flex-col">
+<h3 class="font-headline-md text-headline-md text-on-surface">Identitas Validator &amp; Pegawai Lapangan</h3>
+<p class="font-body-sm text-body-sm text-secondary">Data verifikasi SIM VALINS terkoneksi otomatis dengan basis data SDM Human Capital Telkom Akses.</p>
+</div>
+<span class="material-symbols-outlined text-tertiary text-headline-md">badge</span>
+</div>
+<form class="flex flex-col gap-space-md" id="profileForm" onsubmit="handleFormSubmit(event)">
+<!-- Full Name (Read-Only) -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-lg text-label-lg font-semibold text-on-surface">Nama Lengkap Sesuai SK</label>
+<div class="flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span class="">Terverifikasi Kedinasan (Read-Only)</span>
+</div>
+</div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-secondary text-body-lg">person</span>
+<input class="w-full h-11 bg-surface-container-low text-secondary rounded-lg pl-10 pr-10 font-body-md text-body-md cursor-not-allowed outline-none select-none" readonly="" type="text" value="Rian Pratama, S.T.">
+<span class="material-symbols-outlined absolute right-3 text-secondary text-body-md" title="Dikunci oleh Administrator HR">lock</span>
+</div>
+<p class="font-body-xs text-body-xs text-secondary">Perubahan gelar atau penulisan nama resmi memerlukan eskalasi ke HR &amp; Unit Operasi Witel.</p>
+</div>
+<!-- Nickname / Call Name (Editable) -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-lg text-label-lg font-semibold text-on-surface flex items-center gap-1" for="inputNickname">
+<span class="">Nama Panggilan / Nickname Operasional</span>
+<span class="text-primary">*</span>
+</label>
+<span class="font-label-sm text-label-sm text-secondary" id="nickCharCount">12 / 24 karakter</span>
+</div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-tertiary text-body-lg">edit_note</span>
+<input class="w-full h-11 bg-surface-container-lowest text-on-surface rounded-lg pl-10 pr-4 font-body-md text-body-md focus:bg-surface-container-low outline-none transition-all" id="inputNickname" maxlength="24" oninput="updateCharCount(this)" type="text" value="Rian Pratama">
+</div>
+<div class="flex items-start gap-1.5 text-secondary bg-surface-container-low p-space-sm rounded-lg">
+<span class="material-symbols-outlined text-body-sm text-tertiary mt-0.5">info</span>
+<p class="font-body-xs text-body-xs">Nickname ini akan tampil di log rekonsiliasi VALINS, tiket dispatch OLT, dan laporan berita acara uji terima ODP.</p>
+</div>
+</div>
+<!-- Grid: Primary Corporate Email & Alternative Email -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Corporate Email -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-lg text-label-lg font-semibold text-on-surface">Email&nbsp; (Utama)</label>
+<span class="bg-blue-50 text-blue-800 font-label-sm text-label-sm px-2 py-0.5 rounded font-semibold">SSO Telkom</span>
+</div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-secondary text-body-lg">mail</span>
+<input class="w-full h-11 bg-surface-container-low text-on-surface rounded-lg pl-10 pr-24 font-body-md text-body-md outline-none" id="inputCorpEmail" readonly="" type="email" value="rian.pratama@telkomakses.co.id">
+<button class="absolute right-1.5 px-space-sm py-1 rounded bg-surface-container-highest hover:bg-secondary-container text-on-surface font-label-sm text-label-sm font-semibold transition-colors" onclick="openEmailModal()" type="button">
+                  Ubah Email
+                </button>
+</div>
+<p class="font-body-xs text-body-xs text-secondary">Digunakan untuk akses login SSO dan notifikasi alert OLT kritis.</p>
+</div>
+<!-- Alternative Personal Email -->
+
+</div>
+<!-- Grid: Phone / WhatsApp & Workplace Sector -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- WhatsApp / Phone -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-lg text-label-lg font-semibold text-on-surface" for="inputPhone">Nomor Handphone / WhatsApp</label>
+<span class="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">check</span>
+                  Terverifikasi
+                </span>
+</div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-emerald-600 text-body-lg">phone_android</span>
+<input class="w-full h-11 bg-surface-container-lowest text-on-surface rounded-lg pl-10 pr-4 font-telemetry-data text-telemetry-data font-semibold focus:bg-surface-container-low outline-none transition-all" id="inputPhone" type="tel" value="+62 812-3456-7890">
+</div>
+<p class="font-body-xs text-body-xs text-secondary">Pusat penerimaan dispatch darurat teknisi lapangan 24/7.</p>
+</div>
+<!-- Default Operational Sector -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-lg text-label-lg font-semibold text-on-surface" for="selectSector">Sektor Kerja Default (Homebase)</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-secondary text-body-lg">pin_drop</span>
+<select class="w-full h-11 bg-surface-container-lowest text-on-surface rounded-lg pl-10 pr-10 font-body-md text-body-md focus:bg-surface-container-low outline-none appearance-none cursor-pointer" id="selectSector">
+<option selected="" value="SKI-CBD">STO Sukabumi &amp; Cibadak Live</option>
+<option value="PLR">STO Pelabuhan Ratu &amp; Cikembar</option>
+<option value="CSL">STO Cisaat &amp; Nagrak</option>
+<option value="SUR">STO Surade &amp; Jampang Kulon</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 text-secondary text-body-md pointer-events-none">expand_more</span>
+</div>
+<p class="font-body-xs text-body-xs text-secondary">Menentukan feed telemetry dan filter ODC otomatis saat login.</p>
+</div>
+</div>
+<!-- Bottom Action Buttons inside Tab 1 -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm pt-space-md border-t border-surface-container">
+<div class="flex items-center gap-space-xs text-secondary font-body-xs text-body-xs">
+<span class="material-symbols-outlined text-body-md text-emerald-600">cloud_done</span>
+<span class="">Terakhir disinkronkan: Hari ini, 09:42 WIB via SSO Telkom</span>
+</div>
+<div class="flex items-center gap-space-sm w-full sm:w-auto">
+<button class="flex-1 sm:flex-none px-space-md py-space-sm rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold transition-colors flex items-center justify-center gap-1" onclick="resetProfileForm()" type="button">
+<span class="material-symbols-outlined text-body-md">refresh</span>
+<span class="">Reset Formulir</span>
+</button>
+<button class="flex-1 sm:flex-none px-space-lg py-space-sm rounded-lg bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg font-semibold shadow-md transition-all active:scale-95 flex items-center justify-center gap-1.5" type="submit">
+<span class="material-symbols-outlined text-body-md">check</span>
+<span class="">Simpan Perubahan Profil</span>
+</button>
+</div>
+</div>
+</form>
+</div>
+<!-- TAB 2: Security & Authentication -->
+<div class="tab-panel bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-lg hidden" id="tabContentSecurity">
+<div class="flex items-center justify-between border-b pb-space-sm border-transparent">
+<div class="flex flex-col">
+<h3 class="font-headline-md text-headline-md text-on-surface">Keamanan &amp; Autentikasi Pengguna</h3>
+<p class="font-body-sm text-body-sm text-secondary">Standar proteksi level 3 untuk validator infrastruktur fiber optik nasional.</p>
+</div>
+<span class="material-symbols-outlined text-primary text-headline-md">enhanced_encryption</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Password Card -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between gap-space-md">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">password</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">Kata Sandi Akun</span>
+<span class="font-body-xs text-body-xs text-secondary mt-0.5">Terakhir diperbarui 45 hari yang lalu. Wajib diganti berkala setiap 90 hari.</span>
+</div>
+</div>
+<button class="w-full py-2 px-3 bg-surface-container-highest hover:bg-secondary-container text-on-surface font-label-md text-label-md font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-colors" onclick="alert('Mengarahkan ke Portal SSO Pusat Telkom Group...')" type="button">
+<span class="material-symbols-outlined text-body-md">open_in_new</span>
+<span class="">Ubah Password</span>
+</button>
+</div>
+<!-- 2FA Card -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between gap-space-md">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">phonelink_lock</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">Telkom Authenticator</span>
+<span class="bg-emerald-50 text-emerald-800 text-label-sm font-semibold px-2 py-0.5 rounded">Aktif</span>
+</div>
+<span class="font-body-xs text-body-xs text-secondary mt-0.5">Metode 2FA berbasis TOTP untuk validasi transaksi rekonsiliasi data ODC.</span>
+</div>
+</div>
+<button class="w-full py-2 px-3 bg-surface-container-highest hover:bg-secondary-container text-on-surface font-label-md text-label-md font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-colors" onclick="alert('Konfigurasi 2FA telah terenkripsi di perangkat terdaftar Anda.')" type="button">
+<span class="material-symbols-outlined text-body-md">qr_code_scanner</span>
+<span class="">Sinkronisasi Ulang OTP</span>
+</button>
+</div>
+</div>
+<!-- Session List -->
+<div class="flex flex-col gap-space-xs mt-space-sm">
+<span class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Sesi Login Aktif</span>
+<div class="bg-surface-container-low rounded-xl p-space-md flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-emerald-600 text-headline-sm">laptop_mac</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">MacBook Pro M2 • Google Chrome (Sesi Ini)</span>
+<span class="font-body-xs text-body-xs text-secondary">IP: 10.14.88.192 • STO Sukabumi Kota Intranet</span>
+</div>
+</div>
+<span class="bg-emerald-50 text-emerald-800 font-label-sm text-label-sm px-2.5 py-1 rounded-full font-semibold">Sedang Aktif</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-md flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-headline-sm">smartphone</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Samsung Galaxy S23 (Field Mobile VALINS)</span>
+<span class="font-body-xs text-body-xs text-secondary">IP: 10.180.22.4 • Aktif 3 jam lalu di Pelabuhan Ratu</span>
+</div>
+</div>
+<button class="text-error hover:bg-red-50 p-1.5 rounded font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-body-sm">logout</span>
+              Putus Sesi
+            </button>
+</div>
+</div>
+</div>
+<!-- TAB 3: Notification Preferences -->
+<div class="tab-panel bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-lg hidden" id="tabContentNotification">
+<div class="flex items-center justify-between border-b pb-space-sm border-transparent">
+<div class="flex flex-col">
+<h3 class="font-headline-md text-headline-md text-on-surface">Preferensi Notifikasi &amp; Alert Lapangan</h3>
+<p class="font-body-sm text-body-sm text-secondary">Konfigurasikan ambang batas sinyal optik GPON dan saluran pengiriman informasi kritis.</p>
+</div>
+<span class="material-symbols-outlined text-tertiary text-headline-md">notifications_active</span>
+</div>
+<div class="flex flex-col gap-space-md">
+<!-- Optical Attenuation Alert Toggle -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex items-start justify-between gap-space-md">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">Alert Anomali Redaman GPON (&gt; -24 dBm)</span>
+<span class="bg-amber-100 text-amber-900 font-label-sm text-label-sm px-2 py-0.5 rounded font-semibold">Kritis</span>
+</div>
+<p class="font-body-xs text-body-xs text-secondary mt-1">Kirim peringatan seketika saat redaman splitter ODP melampaui toleransi standar optik Telkom Akses Sukabumi.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0 mt-1">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<!-- Telegram & WA Dispatch Alert -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex items-start justify-between gap-space-md">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-sky-100 text-sky-800 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">send</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">Notifikasi Tiket Dispatch via Telegram &amp; WA Bot</span>
+<p class="font-body-xs text-body-xs text-secondary mt-1">Teruskan pembaruan tiket validasi VALINS baru langsung ke grup bot operasional Datel Sukabumi.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0 mt-1">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<!-- Weekly QA Reconciliation Summary -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex items-start justify-between gap-space-md">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest text-tertiary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">Laporan Rekapitulasi Audit Mingguan</span>
+<p class="font-body-xs text-body-xs text-secondary mt-1">Kirim ringkasan PDF rekonsiliasi data ODP yang telah divalidasi ke email utama setiap Senin pukul 07:00 WIB.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0 mt-1">
+<input class="sr-only peer" type="checkbox">
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+<div class="flex justify-end pt-space-sm">
+<button class="px-space-lg py-space-sm rounded-lg bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg font-semibold shadow-md transition-all active:scale-95 flex items-center gap-1.5" onclick="saveProfile()">
+<span class="material-symbols-outlined text-body-md">check</span>
+<span class="">Simpan Pengaturan Notifikasi</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Email Change Confirmation Modal -->
+<div class="fixed inset-0 z-50 bg-inverse-surface/60 backdrop-blur-sm flex items-center justify-center p-4 hidden" id="emailModal">
+<div class="bg-surface-container-lowest rounded-xl max-w-md w-full p-space-lg shadow-2xl flex flex-col gap-space-md border-0 animate-in fade-in zoom-in duration-200">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-red-100 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-body-lg">mark_email_unread</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm font-bold text-on-surface">Ubah Email Kedinasan</h4>
+</div>
+<button class="text-secondary hover:text-on-surface p-1 rounded" onclick="closeEmailModal()">
+<span class="material-symbols-outlined text-body-md">close</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+        Masukkan alamat email kedinasan baru Telkom Group Anda. Kode One-Time Password (OTP) verifikasi 6 digit akan dikirimkan untuk otorisasi keamanan.
+      </p>
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md font-semibold text-on-surface" for="modalNewEmail">Email Baru (@telkomakses.co.id)</label>
+<input class="w-full h-11 bg-surface-container-low rounded-lg px-space-md font-body-md text-body-md text-on-surface outline-none focus:bg-surface-container" id="modalNewEmail" placeholder="nama.anda@telkomakses.co.id" type="email">
+</div>
+<div class="bg-amber-50 p-space-sm rounded-lg flex items-start gap-2 text-amber-900">
+<span class="material-symbols-outlined text-body-md mt-0.5 text-amber-700">security_update_warning</span>
+<span class="font-body-xs text-body-xs">Perubahan email utama akan memutuskan semua sesi aktif dan mewajibkan otentikasi ulang.</span>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-space-xs">
+<button class="px-space-md py-space-sm rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold" onclick="closeEmailModal()" type="button">
+          Batal
+        </button>
+<button class="px-space-md py-space-sm rounded-lg bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md font-semibold flex items-center gap-1" onclick="sendOtpRequest()" type="button">
+<span class="">SImpan</span>
+<span class="material-symbols-outlined text-body-md">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+    // Tab switching logic
+    function switchTab(tabId) {
+      const tabs = ['tabProfile', 'tabSecurity', 'tabNotification'];
+      tabs.forEach(t => {
+        const panel = document.getElementById(t.replace('tab', 'tabContent'));
+        const btn = document.getElementById(t.replace('tab', 'tabBtn'));
+        if (t === tabId) {
+          panel.classList.remove('hidden');
+          btn.className = 'flex-1 min-w-[160px] py-space-sm px-space-md rounded-lg font-label-lg text-label-lg transition-all flex items-center justify-center gap-space-xs bg-primary-container text-on-primary-container shadow-sm font-semibold';
+        } else {
+          panel.classList.add('hidden');
+          btn.className = 'flex-1 min-w-[160px] py-space-sm px-space-md rounded-lg font-label-lg text-label-lg transition-all flex items-center justify-center gap-space-xs text-secondary hover:bg-surface-container hover:text-on-surface';
+        }
+      });
+    }
+
+    // Dynamic character counter
+    function updateCharCount(el) {
+      const counter = document.getElementById('nickCharCount');
+      if (counter) {
+        counter.innerText = el.value.length + ' / 24 karakter';
+      }
+    }
+
+    // Profile form submission
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      saveProfile();
+    }
+
+    // Save Action & Toast feedback
+    function saveProfile() {
+      const nickname = document.getElementById('inputNickname').value.trim();
+      if (nickname) {
+        document.getElementById('dispFullname').innerText = nickname + ', S.T.';
+      }
+
+      const toast = document.getElementById('toastNotification');
+      toast.classList.remove('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      setTimeout(() => {
+        dismissToast();
+      }, 4500);
+    }
+
+    function dismissToast() {
+      const toast = document.getElementById('toastNotification');
+      toast.classList.add('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
+      toast.classList.remove('opacity-100', 'translate-y-0');
+    }
+
+    // Reset Form confirmation
+    function resetProfileForm() {
+      document.getElementById('inputNickname').value = "Rian Pratama";
+      updateCharCount(document.getElementById('inputNickname'));
+      document.getElementById('inputAltEmail').value = "rian.telekomunikasi@gmail.com";
+      document.getElementById('inputPhone').value = "+62 812-3456-7890";
+      document.getElementById('selectSector').value = "SKI-CBD";
+      document.getElementById('dispFullname').innerText = "Rian Pratama, S.T.";
+    }
+
+    // Avatar preview simulation
+    function simulateAvatarUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('avatarPreview').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function removeAvatar() {
+      if (confirm('Kembalikan foto profil ke default sistem Telkom Akses?')) {
+        document.getElementById('avatarPreview').src = "https://lh3.googleusercontent.com/aida/AEtjO1Wo9T-wkx_tD3CO4X2cZIidU6ueIxaR1C-Kpqo236Qkv7OfteWO-vykVzSFGsyXxzpRLTzy7su6xuDAjXUhZ7dUS03dGjWOH5egUyDhlhf77CYOpnXOF01_dasgLdZJNjpYQUiRXvy99Tz8k9REeLQm5o-vhym6gtFu3K12jPp4H0qYKsfU7STo6fYBHtDsWXiNCUvYMrv50YYytW-5lrZ0qZHxWYOMPVOVDK7y2e4exeTp6EG2xVz34Pc";
+      }
+    }
+
+    // Email Modal handling
+    function openEmailModal() {
+      document.getElementById('emailModal').classList.remove('hidden');
+    }
+
+    function closeEmailModal() {
+      document.getElementById('emailModal').classList.add('hidden');
+    }
+
+    function sendOtpRequest() {
+      const newEmail = document.getElementById('modalNewEmail').value.trim();
+      if (!newEmail || !newEmail.includes('@telkomakses.co.id')) {
+        alert('Harap gunakan alamat email valid dengan domain resmi @telkomakses.co.id');
+        return;
+      }
+      closeEmailModal();
+      document.getElementById('inputCorpEmail').value = newEmail;
+      saveProfile();
+    }
+  </script>
+</div></main></div>
+
+
+
+</body></html>

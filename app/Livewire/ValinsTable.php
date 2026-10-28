@@ -8,14 +8,19 @@ use Livewire\WithFileUploads;
 use App\Models\ValinsService;
 use App\Models\ValinsCategory;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 use Illuminate\Support\Facades\DB;
 
 class ValinsTable extends Component
 {
     use WithPagination, WithFileUploads; // TAMBAHAN: WithFileUploads
 
+    #[Url(as: 'kategori', history: true)]
     public $kategori = '';
+
+    #[Url(as: 'search', history: true)]
     public $search = '';
+
     public $selectedRows = [];
 
    protected function getLockKey()
@@ -90,7 +95,7 @@ class ValinsTable extends Component
             ['nama' => 'STO', 'tipe' => 'text', 'hidden' => false],
             ['nama' => 'ODP NAME', 'tipe' => 'text', 'hidden' => false],
             ['nama' => 'PANEL ODP', 'tipe' => 'text', 'hidden' => false],
-            ['nama' => 'PORT ODP', 'tipe' => 'text', 'hidden' => false],
+            ['nama' => 'PORT ODP', 'tipe' => 'number', 'hidden' => false],
             ['nama' => 'VALINS ID', 'tipe' => 'number', 'hidden' => false],
             ['nama' => 'NODE ID', 'tipe' => 'text', 'hidden' => false],
             ['nama' => 'NODE IP', 'tipe' => 'text', 'hidden' => false],
@@ -106,24 +111,38 @@ class ValinsTable extends Component
 
     public function mount()
     {
-        if (empty($this->kategori)) {
+        if (request()->filled('kategori')) {
+            $this->kategori = request('kategori');
+        } elseif (empty($this->kategori)) {
             $firstCat = ValinsCategory::orderBy('urutan', 'asc')->orderBy('id', 'asc')->first();
             $this->kategori = $firstCat ? $firstCat->nama_kategori : '';
+        }
+
+        if (request()->filled('search')) {
+            $this->search = request('search');
         }
     }
 
     public function updatedSearch()
     {
+        $this->clearSelection();
         $this->resetPage();
-        $this->selectedRows = [];
+        $this->dispatch('clear-checkboxes');
     }
 
     public function setKategori($kat)
     {
+        $this->clearSelection();
         $this->kategori = $kat;
         $this->search = ''; 
         $this->resetPage();
-        $this->selectedRows = [];
+        $this->dispatch('clear-checkboxes');
+    }
+
+    public function updatingPage()
+    {
+        $this->clearSelection();
+        $this->dispatch('clear-checkboxes');
     }
 
     #[On('refreshKategori')]
@@ -167,6 +186,10 @@ class ValinsTable extends Component
         $currentUser = auth()->check() ? auth()->user()->name : 'System';
         $query = ValinsService::query();
 
+        if (!empty($this->kategori)) {
+            $query->where('kategori', $this->kategori);
+        }
+
         if (!empty($this->search)) {
             $searchTerm = trim($this->search);
             $query->where(function($q) use ($searchTerm) {
@@ -179,12 +202,11 @@ class ValinsTable extends Component
                   ->orWhere('sto', 'like', "%{$searchTerm}%")
                   ->orWhere('pic', 'like', "%{$searchTerm}%")
                   ->orWhere('keterangan', 'like', "%{$searchTerm}%")
+                  ->orWhere('sid', 'like', "%{$searchTerm}%")
+                  ->orWhere('treg', 'like', "%{$searchTerm}%")
+                  ->orWhere('witel', 'like', "%{$searchTerm}%")
                   ->orWhereRaw("CAST(dynamic_data AS CHAR) LIKE ?", ["%{$searchTerm}%"]);
             });
-        } else {
-            if (!empty($this->kategori)) {
-                $query->where('kategori', $this->kategori);
-            }
         }
 
         // Lewati data yang sedang dikunci akun lain
@@ -199,43 +221,105 @@ class ValinsTable extends Component
 
    public function hapusData($id)
     {
-        $item = ValinsService::findOrFail($id);
-        $userName = auth()->check() ? auth()->user()->name : 'System';
+        $item = ValinsService::find($id);
+        if (!$item) {
+            session()->flash('error', 'Data tidak ditemukan atau sudah dihapus.');
+            $this->dispatch('clear-checkboxes');
+            return;
+        }
+
+        $user = auth()->user();
+        $userName = $user ? $user->name : 'System';
+        $isAdmin = $user && in_array(strtolower($user->role ?? ''), ['admin', 'superadmin', 'management']);
         $lockedByName = explode('|', $item->locked_by ?? '')[0];
         $expireTime = now()->subMinutes(15);
 
-        // Tolak jika dikunci orang lain DAN belum kedaluwarsa
-        if (!empty($item->locked_by) && $lockedByName !== $userName && $item->locked_at >= $expireTime) {
+        // Tolak jika dikunci orang lain DAN belum kedaluwarsa (kecuali admin/management)
+        if (!$isAdmin && !empty($item->locked_by) && $lockedByName !== $userName && $item->locked_at >= $expireTime) {
             session()->flash('error', "Gagal! Data ini sedang diproses oleh {$lockedByName}.");
+            $this->dispatch('clear-checkboxes');
             return;
         }
 
         $item->delete();
-        if (($key = array_search($id, $this->selectedRows)) !== false) {
-            unset($this->selectedRows[$key]);
-            $this->selectedRows = array_values($this->selectedRows);
+
+        // Bersihkan dari array seleksi jika ada
+        $this->selectedRows = array_values(array_filter($this->selectedRows, fn($rowId) => (string)$rowId !== (string)$id));
+
+        // Periksa jika halaman saat ini melebihi total halaman setelah data dihapus
+        $remainingCount = ValinsService::when(!empty($this->kategori), fn($q) => $q->where('kategori', $this->kategori))->count();
+        if ($remainingCount == 0 || $this->getPage() > ceil($remainingCount / 15)) {
+            $this->resetPage();
         }
+
         $this->dispatch('clear-checkboxes');
-        session()->flash('success', 'Data berhasil dihapus!');
+        $this->dispatch('valinsUpdated');
+
+        // Bersihkan SEMUA cache statistik agar metrik kartu dan kategori langsung ter-refresh 100%
+        \Illuminate\Support\Facades\Cache::forget('valins_stats_counts');
+        \Illuminate\Support\Facades\Cache::forget('valins_category_row_counts');
+        \Illuminate\Support\Facades\Cache::forget('dashboard_metrics');
+        \Illuminate\Support\Facades\Cache::forget('dashboard_sto_chart');
+        \Illuminate\Support\Facades\Cache::forget('dashboard_donut_chart');
+        \Illuminate\Support\Facades\Cache::forget('dashboard_sto_matrix');
+
+        session()->flash('success', 'Data berhasil dihapus permanen!');
     }
 
-    public function bulkDelete()
+    public function bulkDelete($ids = [])
     {
-        if (count($this->selectedRows) > 0) {
-            $userName = auth()->check() ? auth()->user()->name : 'System';
+        // Prioritaskan ID yang dikirim langsung dari parameter client, fallback ke $this->selectedRows
+        $idsToDelete = !empty($ids) ? array_map('strval', (array)$ids) : array_map('strval', $this->selectedRows);
+
+        if (!empty($idsToDelete)) {
+            $user = auth()->user();
+            $userName = $user ? $user->name : 'System';
+            $isAdmin = $user && in_array(strtolower($user->role ?? ''), ['admin', 'superadmin', 'management']);
             $expireTime = now()->subMinutes(15);
 
-            $deletedCount = ValinsService::whereIn('id', $this->selectedRows)
-                ->where(function($q) use ($userName, $expireTime) {
+            $query = ValinsService::whereIn('id', $idsToDelete);
+
+            // Jika bukan admin/superadmin, pastikan hanya menghapus data yang tidak dikunci orang lain yang masih aktif
+            if (!$isAdmin) {
+                $query->where(function($q) use ($userName, $expireTime) {
                     $q->whereNull('locked_by')
+                      ->orWhere('locked_by', $userName)
                       ->orWhere('locked_by', 'like', $userName . '|%')
                       ->orWhere('locked_at', '<', $expireTime);
-                })->delete();
+                });
+            }
+
+            $deletedCount = $query->delete();
+
+            // Lepaskan gembok apapun yang mungkin tersisa dari data yang diproses
+            \Illuminate\Support\Facades\DB::table('valins_services')
+                ->where('locked_by', $userName)
+                ->whereIn('id', $idsToDelete)
+                ->update([
+                    'locked_by' => null,
+                    'locked_at' => null
+                ]);
 
             $this->selectedRows = [];
-            $this->resetPage();
+
+            // Periksa jika halaman saat ini melebihi total halaman setelah data dihapus
+            $remainingCount = ValinsService::when(!empty($this->kategori), fn($q) => $q->where('kategori', $this->kategori))->count();
+            if ($remainingCount == 0 || $this->getPage() > ceil($remainingCount / 15)) {
+                $this->resetPage();
+            }
+
             $this->dispatch('clear-checkboxes');
-            session()->flash('success', "{$deletedCount} data berhasil dihapus!");
+            $this->dispatch('valinsUpdated');
+
+            // Bersihkan SEMUA cache statistik agar metrik kartu dan kategori langsung ter-refresh 100%
+            \Illuminate\Support\Facades\Cache::forget('valins_stats_counts');
+            \Illuminate\Support\Facades\Cache::forget('valins_category_row_counts');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_metrics');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_sto_chart');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_donut_chart');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_sto_matrix');
+
+            session()->flash('success', "{$deletedCount} data berhasil dihapus permanen!");
         }
     }
 
@@ -248,8 +332,17 @@ class ValinsTable extends Component
             }
             ValinsService::whereIn('id', $this->selectedRows)->update($dataUpdate);
             $this->selectedRows = [];
-            $this->dispatch('clear-checkboxes'); // Bersihkan centang UI
+            $this->dispatch('clear-checkboxes');
+            $this->dispatch('valinsUpdated');
             $this->clearSelection();
+
+            \Illuminate\Support\Facades\Cache::forget('valins_stats_counts');
+            \Illuminate\Support\Facades\Cache::forget('valins_category_row_counts');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_metrics');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_sto_chart');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_donut_chart');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_sto_matrix');
+
             session()->flash('success', "Status berhasil diubah menjadi {$status}!");
         }
     }
@@ -322,6 +415,7 @@ class ValinsTable extends Component
             
             $this->selectedRows = [];
             $this->dispatch('clear-checkboxes');
+            $this->dispatch('valinsUpdated');
         }
 
         $this->closeBulkEdit();
@@ -332,20 +426,34 @@ class ValinsTable extends Component
     // ==========================================
     public function openImportModal()
     {
+        $this->cleanupImportFile();
         $this->importModalOpen = true;
     }
 
     public function closeImportModal()
     {
         $this->importModalOpen = false;
+        $this->cleanupImportFile();
+    }
+
+    protected function cleanupImportFile()
+    {
+        if ($this->importFile) {
+            try {
+                $path = $this->importFile->getRealPath();
+                if ($path && file_exists($path)) {
+                    @unlink($path);
+                }
+            } catch (\Throwable $e) {}
+        }
         $this->reset('importFile');
         $this->resetErrorBag('importFile');
     }
 
-   // =========================================================================
-    // FITUR IMPORT EXCEL / CSV DENGAN PROTEKSI FORMULA ERROR & MULTI-SHEET SCAN
     // =========================================================================
-   public function importData()
+    // FITUR IMPORT EXCEL / CSV: TERKUNCI MUTLAK PADA KATEGORI AKTIF
+    // =========================================================================
+    public function importData()
     {
         $this->validate([
             'importFile' => 'required|file|max:30720',
@@ -355,9 +463,31 @@ class ValinsTable extends Component
 
         $filePath = $this->importFile->getRealPath();
         $ext = strtolower($this->importFile->getClientOriginalExtension());
-        $allCategories = ValinsCategory::all();
         $importedCount = 0;
 
+        // 1. PENGUNCIAN MUTLAK KATEGORI TARGET:
+        // Gunakan hanya kategori yang sedang aktif dibuka pengguna saat ini
+        $activeKategoriName = trim((string)$this->kategori);
+        $targetCategory = null;
+
+        if (!empty($activeKategoriName)) {
+            $targetCategory = ValinsCategory::where('nama_kategori', $activeKategoriName)->first();
+        }
+
+        if (!$targetCategory) {
+            $targetCategory = ValinsCategory::orderBy('urutan', 'asc')->orderBy('id', 'asc')->first();
+        }
+
+        if (!$targetCategory) {
+            session()->flash('error', 'Tidak ada kategori aktif yang tersedia untuk tujuan impor.');
+            $this->closeImportModal();
+            return;
+        }
+
+        $targetCatName = $targetCategory->nama_kategori;
+        $targetCatId = $targetCategory->id;
+
+        // Helper parser & normalisasi
         $parseConn = function($str) {
             $res = [];
             if (empty($str)) return $res;
@@ -370,41 +500,13 @@ class ValinsTable extends Component
             return $res;
         };
 
-        $detectCategory = function($sheetTitle, $rowAssocNorm, $rawRow) use ($allCategories) {
-            $candidates = [
-                $sheetTitle,
-                $rowAssocNorm['KATEGORI'] ?? '',
-                $rowAssocNorm['CATEGORY'] ?? '',
-                $rowAssocNorm['CONNECTIVITYCOMPAREREF'] ?? '',
-                $rowAssocNorm['ANOMALI'] ?? '',
-                $rowAssocNorm['KENDALA'] ?? '',
-                $rowAssocNorm['STATUS'] ?? '',
-                $rowAssocNorm['NOTES'] ?? '',
-            ];
-            
-            $textToScan = strtoupper(str_replace(['&', '_', '-'], ['DAN', ' ', ' '], implode(' ', $candidates) . ' ' . implode(' ', $rawRow)));
+        $normalizeStr = function($str) {
+            $s = strtoupper(str_replace(['&', '_', '-', ' '], ['DAN', '', '', ''], (string)$str));
+            return preg_replace('/[^A-Z0-9]/', '', $s);
+        };
 
-            if (strpos($textToScan, 'ODP DAN DATEK') !== false || strpos($textToScan, 'ODP AND DATEK') !== false) {
-                return 'ODP DAN DATEK TIDAK SAMA';
-            }
-            if (strpos($textToScan, 'DATEK TIDAK SAMA') !== false || strpos($textToScan, 'DATEK NOT EQUAL') !== false) {
-                return 'DATEK TIDAK SAMA';
-            }
-            if (strpos($textToScan, 'ODP TIDAK SAMA') !== false || strpos($textToScan, 'ODP NOT EQUAL') !== false) {
-                return 'ODP TIDAK SAMA';
-            }
-            if (strpos($textToScan, 'NOT IN SERVICE') !== false || strpos($textToScan, 'NOTINSERVICE') !== false || strpos($textToScan, ' NIS ') !== false) {
-                return 'Not In Service';
-            }
-
-            foreach ($allCategories as $c) {
-                $normC = strtoupper(preg_replace('/[^A-Z0-9]/', '', str_replace('&', 'DAN', $c->nama_kategori)));
-                if (strpos(preg_replace('/[^A-Z0-9]/', '', $textToScan), $normC) !== false) {
-                    return $c->nama_kategori;
-                }
-            }
-
-            return $sheetTitle ?: $this->kategori;
+        $normalizeCol = function($str) {
+            return preg_replace('/[^A-Z0-9]/', '', strtoupper((string)$str));
         };
 
         $limitStr = function($str, $maxLen) {
@@ -414,12 +516,45 @@ class ValinsTable extends Component
             return mb_strlen($str) > $maxLen ? mb_substr($str, 0, $maxLen) : $str;
         };
 
-        $processRow = function($headersNorm, $headersOrig, $row, $sheetTitle) use ($parseConn, $detectCategory, $allCategories, $limitStr, &$importedCount) {
+        // Helper pemroses tanggal berkas Excel / CSV
+        // Helper pemroses tanggal berkas Excel / CSV (Aman dari 1970 dan akurat mengonversi serial Excel)
+        $parseFileDate = function($raw) {
+            if ($raw === null || $raw === '' || $raw === '-' || $raw === '0' || $raw === 0) return null;
+            if (is_numeric($raw)) {
+                $num = (float)$raw;
+                // Angka serial Excel standar (20000 s/d 80000 = rentang tahun 1954 - 2119)
+                if ($num >= 20000 && $num < 80000) {
+                    $days = floor($num);
+                    return gmdate('Y-m-d', (int)(($days - 25569) * 86400));
+                }
+                return null;
+            }
+            $rawStr = trim((string)$raw);
+            if (empty($rawStr) || $rawStr === '-' || $rawStr === '0000-00-00' || $rawStr === '1970-01-01' || $rawStr === '01-01-1970' || $rawStr === '1970-01-01 00:00:00') return null;
+            try {
+                $carbon = \Carbon\Carbon::parse($rawStr);
+                if ($carbon->year > 1971) {
+                    return $carbon->format('Y-m-d');
+                }
+            } catch (\Throwable $e) {}
+            return null;
+        };
+
+        // State carry-forward untuk menangani penggabungan sel (merged cells) wilayah
+        $lastTreg = null;
+        $lastWitel = null;
+        $lastSto = null;
+
+        // Pemroses baris data: Seluruh baris dikunci khusus ke kategori aktif
+        $processRow = function($headersNorm, $headersOrig, $row) use (
+            $parseConn, $targetCatName, $targetCatId, $limitStr, $parseFileDate, &$importedCount,
+            &$lastTreg, &$lastWitel, &$lastSto
+        ) {
             $assocNorm = [];
             $assocOrig = [];
             foreach ($row as $i => $val) {
-                $hN = $headersNorm[$i] ?? "COL_{$i}";
-                $hO = $headersOrig[$i] ?? "COL_{$i}";
+                $hN = !empty($headersNorm[$i]) ? $headersNorm[$i] : "COL_{$i}";
+                $hO = !empty($headersOrig[$i]) ? $headersOrig[$i] : (string)($hN ?: "COL_{$i}");
                 
                 $v = is_string($val) ? trim($val) : $val;
                 if (is_string($v) && strpos($v, '=') === 0 && strlen($v) > 10) $v = '-';
@@ -428,80 +563,24 @@ class ValinsTable extends Component
                 $assocOrig[$hO] = $v;
             }
 
-            if (count(array_filter($assocNorm)) === 0) return;
-
-            $catName = $detectCategory($sheetTitle, $assocNorm, $row);
-            $catTarget = $allCategories->first(function($c) use ($catName) {
-                $n1 = strtoupper(preg_replace('/[^A-Z0-9]/', '', str_replace('&', 'DAN', $c->nama_kategori)));
-                $n2 = strtoupper(preg_replace('/[^A-Z0-9]/', '', str_replace('&', 'DAN', $catName)));
-                return $n1 === $n2;
-            });
-
-            if (!$catTarget && !empty($catName) && $catName !== '-') {
-                $catTarget = ValinsCategory::create([
-                    'nama_kategori' => $limitStr($catName, 100),
-                    'slug' => \Illuminate\Support\Str::slug($catName),
-                    'urutan' => ($allCategories->max('urutan') ?? 0) + 1,
-                    'konfigurasi_kolom' => [], // Akan diisi di logika Auto-Adapt bawah
-                ]);
-                $allCategories->push($catTarget);
-            }
-
-            // ==============================================================
-            // FITUR AUTO-ADAPT: Tangkap Header Excel ke Kolom Kategori 
-            // ==============================================================
-            if ($catTarget) {
-                $existingCols = is_array($catTarget->konfigurasi_kolom) ? $catTarget->konfigurasi_kolom : [];
-                $existingColNames = array_map(function($c) {
-                    return strtoupper(preg_replace('/[^A-Z0-9]/', '', $c['nama'] ?? ''));
-                }, $existingCols);
-
-                $excludeNorm = [
-                    'KATEGORI', 'CATEGORY', 'CONNECTIVITYCOMPAREREF', 'ANOMALI', 'KENDALA', 
-                    'KETERANGAN', 'STATUS', 'TANGGAL', 'DATE', 'DBLASTUPDATEDATE', 
-                    'DBLASTUPDATE', 'PIC', 'PETUGAS', 'USER', 'UPDATEPROGRESS', 'NOTES', 'CATATAN', 'ID'
-                ];
-                $hasNewCols = false;
-
-                foreach($headersOrig as $idx => $hOrigName) {
-                    if (empty(trim($hOrigName))) continue;
-                    $hNormName = $headersNorm[$idx] ?? '';
-                    
-                    if (in_array($hNormName, $excludeNorm)) continue;
-                    
-                    if (!in_array($hNormName, $existingColNames)) {
-                        $existingCols[] = [
-                            'nama' => $limitStr(trim($hOrigName), 50),
-                            'tipe' => 'text',
-                            'hidden' => false,
-                        ];
-                        $existingColNames[] = $hNormName;
-                        $hasNewCols = true;
-                    }
-                }
-
-                if (empty($existingCols)) {
-                    $existingCols = $this->getTemplateKolomStandar();
-                    $hasNewCols = true;
-                }
-
-                if ($hasNewCols) {
-                    $catTarget->update(['konfigurasi_kolom' => $existingCols]);
-                    $catTarget->konfigurasi_kolom = $existingCols; // Sinkronkan memori koleksi
-                }
-            }
-
-            $catName = $catTarget ? $catTarget->nama_kategori : ($catName ?: $this->kategori);
-            $catId = $catTarget ? $catTarget->id : null;
+            if (count(array_filter($assocNorm, fn($x) => $x !== null && $x !== '')) === 0) return;
 
             $connRaw = $assocNorm['UIMCONNECTIVITY'] ?? ($assocNorm['VALINSCONNECTIVITY'] ?? ($assocNorm['NMSCONNECTIVITY'] ?? ''));
             $conn = $parseConn($connRaw);
 
             $odpName = $assocNorm['ODPNAME'] ?? ($assocNorm['ODPLOCATION'] ?? ($assocNorm['ODP'] ?? null));
-            $sto = $assocNorm['STO'] ?? null;
-            if (empty($sto) && !empty($odpName) && preg_match('/ODP-([A-Z0-9]+)-/i', $odpName, $mSto)) {
-                $sto = strtoupper($mSto[1]);
+
+            // STO: Dukung carry-forward merged cells jika sel kosong
+            $rawSto = $assocNorm['STO'] ?? null;
+            if (empty($rawSto) && !empty($odpName) && preg_match('/ODP-([A-Z0-9]+)-/i', $odpName, $mSto)) {
+                $rawSto = strtoupper($mSto[1]);
             }
+            if (!empty($rawSto) && trim((string)$rawSto) !== '-') {
+                $lastSto = strtoupper(trim((string)$rawSto));
+            } elseif (!empty($lastSto)) {
+                $rawSto = $lastSto;
+            }
+            $sto = $rawSto ?: '-';
 
             $nodeId = $assocNorm['NODEID'] ?? null;
             $nodeIp = $assocNorm['NODEIP'] ?? null;
@@ -522,54 +601,132 @@ class ValinsTable extends Component
                 elseif (count($parts) === 2) { $slot = $parts[0]; $port = $parts[1]; }
             }
 
-            $tgl = null;
-            $rawTgl = $assocNorm['TANGGAL'] ?? ($assocNorm['DBLASTUPDATEDATE'] ?? ($assocNorm['DBLASTUPDATE'] ?? null));
-            if (!empty($rawTgl)) {
-                try { $tgl = \Carbon\Carbon::parse($rawTgl)->format('Y-m-d'); } catch (\Exception $e) {}
+            // Keterangan: Murni membaca kolom Keterangan berkas. Dilarang fallback ke Status, dilarang default "VALID"!
+            $rawKet = $assocNorm['KETERANGAN'] ?? ($assocNorm['KETERANGANSTATUS'] ?? null);
+            $keterangan = (!empty($rawKet) && trim((string)$rawKet) !== '-' && trim((string)$rawKet) !== '')
+                ? $limitStr(rtrim(trim((string)$rawKet), '^'), 150)
+                : null;
+
+            // Tanggal: Konversi angka serial Excel atau format teks tanggal, null jika kosong tanpa menjadi 1970
+            $rawTgl = $assocNorm['TANGGAL'] ?? ($assocNorm['DATE'] ?? null);
+            $tgl = $parseFileDate($rawTgl);
+
+            // PIC: Murni membaca kolom PIC berkas. Dilarang keras fallback ke nama pengguna yang sedang login!
+            $rawPic = $assocNorm['PIC'] ?? ($assocNorm['PETUGAS'] ?? ($assocNorm['USER'] ?? null));
+            $pic = (!empty($rawPic) && trim((string)$rawPic) !== '-' && trim((string)$rawPic) !== '')
+                ? $limitStr(trim((string)$rawPic), 100)
+                : null;
+
+            // Resolusi TREG: Deteksi cerdas kolom TREG / Regional / Area Regional
+            $rawTreg = $assocNorm['TREG'] ?? ($assocNorm['REGIONAL'] ?? ($assocNorm['AREAREGIONAL'] ?? ($assocNorm['TELKOMREGIONAL'] ?? ($assocNorm['AREANUM'] ?? ($assocNorm['NOMORAREA'] ?? null)))));
+
+            // Periksa jika sel index 0 berisi TREG (kasus berkas tanpa judul di kolom pertama)
+            if ($rawTreg === null || $rawTreg === '' || $rawTreg === '-') {
+                $firstVal = reset($row);
+                if (!empty($firstVal) && $firstVal !== '-') {
+                    $firstStr = trim((string)$firstVal);
+                    if (preg_match('/^(TREG\s*\d+|\d+)$/i', $firstStr)) {
+                        $rawTreg = $firstStr;
+                    }
+                }
+            }
+
+            // Carry-forward merged cells untuk TREG
+            if ($rawTreg !== null && trim((string)$rawTreg) !== '' && trim((string)$rawTreg) !== '-') {
+                $lastTreg = trim((string)$rawTreg);
+            } elseif (!empty($lastTreg)) {
+                $rawTreg = $lastTreg;
+            }
+
+            // Format baku TREG: Simpan angka saja tanpa teks "TREG"
+            $resolvedTreg = null;
+            if (!empty($rawTreg) && trim((string)$rawTreg) !== '-') {
+                $tregTrim = trim((string)$rawTreg);
+                if (preg_match('/(\d+)/', $tregTrim, $mTr)) {
+                    $resolvedTreg = $mTr[1];
+                } else {
+                    $resolvedTreg = $tregTrim;
+                }
+            }
+
+            // WITEL: Dukung carry-forward merged cells (terisolasi dari kolom regional)
+            $rawWitel = $assocNorm['WITEL'] ?? ($assocNorm['DISTRICT'] ?? ($assocNorm['AREA'] ?? null));
+            if (!empty($rawWitel) && trim((string)$rawWitel) !== '-') {
+                $lastWitel = trim((string)$rawWitel);
+            } elseif (!empty($lastWitel)) {
+                $rawWitel = $lastWitel;
+            }
+            $resolvedWitel = $rawWitel ?: 'SUKABUMI';
+
+            $portOdpRaw = $assocNorm['PORTODP'] ?? ($assocNorm['PORTOD'] ?? ($conn['ODP_PORT'] ?? null));
+            $cleanedPortOdp = null;
+            if ($portOdpRaw !== null && trim((string)$portOdpRaw) !== '' && trim((string)$portOdpRaw) !== '-') {
+                $portTrim = trim((string)$portOdpRaw);
+                $cleanedPortOdp = preg_match('/(\d+)/', $portTrim, $mPort) ? $mPort[1] : $portTrim;
             }
 
             $dbData = [
-                'kategori' => $limitStr($catName, 100),
-                'valins_category_id' => $catId,
-                'treg' => $limitStr($assocNorm['TREG'] ?? ($assocNorm['AREANUM'] ?? '3'), 20),
-                'witel' => $limitStr($assocNorm['WITEL'] ?? ($assocNorm['DISTRICT'] ?? 'SUKABUMI'), 100),
-                'sto' => $limitStr($sto ?: '-', 50),
-                'odp_name' => $limitStr($odpName ?: ($sto ? "ODP-{$sto}" : $catName), 150),
-                'panel_o' => $limitStr($assocNorm['PANELODP'] ?? ($assocNorm['PANELO'] ?? ($conn['ODP_PANEL'] ?? '-')), 50),
-                'port_od' => $limitStr($assocNorm['PORTODP'] ?? ($assocNorm['PORTOD'] ?? ($conn['ODP_PORT'] ?? null)), 50),
+                'kategori' => $limitStr($targetCatName, 100),
+                'valins_category_id' => $targetCatId,
+                'treg' => $resolvedTreg,
+                'witel' => $limitStr($resolvedWitel, 100),
+                'sto' => $limitStr($sto, 50),
+                'odp_name' => $limitStr($odpName ?: ($sto ? "ODP-{$sto}" : $targetCatName), 150),
+                'panel_o' => $limitStr($assocNorm['PANELODP'] ?? ($assocNorm['PANELO'] ?? ($conn['ODP_PANEL'] ?? null)), 50),
+                'port_od' => $limitStr($cleanedPortOdp, 50),
                 'valins_id' => $limitStr($assocNorm['VALINSID'] ?? ($conn['ODP_ID'] ?? ($conn['VALINS_ID'] ?? null)), 50),
-                'node_id' => $limitStr($nodeId ?: '-', 100),
-                'node_ip' => $limitStr($nodeIp ?: '-', 50),
+                'node_id' => $limitStr($nodeId ?: null, 100),
+                'node_ip' => $limitStr($nodeIp ?: null, 50),
                 'slot' => $limitStr($slot ?: null, 20),
                 'port' => $limitStr($port ?: null, 20),
-                'onu_sn' => $limitStr($assocNorm['ONUSN'] ?? ($assocNorm['SN'] ?? ($conn['ONU_SN'] ?? '-')), 100),
-                'no_inet_valins' => $limitStr($assocNorm['NOINETVALINS'] ?? ($assocNorm['NOINET'] ?? ($conn['NO_INET'] ?? '-')), 50),
-                'sip1_valins' => $limitStr($assocNorm['SIP1VALINS'] ?? ($assocNorm['SIP1'] ?? '-'), 50),
-                'sip2_valins' => $limitStr($assocNorm['SIP2VALINS'] ?? ($assocNorm['SIP2'] ?? '-'), 50),
-                'sid' => $limitStr($assocNorm['SID'] ?? ($conn['SID'] ?? '-'), 50),
-                'keterangan' => $limitStr(rtrim($assocNorm['KETERANGAN'] ?? ($assocNorm['STATUS'] ?? 'NO STATUS'), '^'), 150),
+                'onu_sn' => $limitStr($assocNorm['ONUSN'] ?? ($assocNorm['SN'] ?? ($conn['ONU_SN'] ?? null)), 100),
+                'no_inet_valins' => $limitStr($assocNorm['NOINETVALINS'] ?? ($assocNorm['NOINET'] ?? ($conn['NO_INET'] ?? null)), 50),
+                'sip1_valins' => $limitStr($assocNorm['SIP1VALINS'] ?? ($assocNorm['SIP1'] ?? null), 50),
+                'sip2_valins' => $limitStr($assocNorm['SIP2VALINS'] ?? ($assocNorm['SIP2'] ?? null), 50),
+                'sid' => $limitStr($assocNorm['SID'] ?? ($conn['SID'] ?? null), 50),
+                'keterangan' => $keterangan,
                 'tanggal' => $tgl,
-                'pic' => $limitStr($assocNorm['PIC'] ?? ($assocNorm['PETUGAS'] ?? ($assocNorm['USER'] ?? auth()->user()->name ?? 'System')), 100),
-                'update_progress' => $limitStr($assocNorm['UPDATEPROGRESS'] ?? ($assocNorm['NOTES'] ?? null), 1000),
+                'pic' => $pic,
+                'update_progress' => $limitStr($assocNorm['UPDATEPROGRESS'] ?? ($assocNorm['NOTES'] ?? ($assocNorm['CATATAN'] ?? null)), 1000),
             ];
 
-            $dyn = $assocOrig;
-            $dyn['TREG'] = $dbData['treg'];
-            $dyn['WITEL'] = $dbData['witel'];
-            $dyn['STO'] = $dbData['sto'];
-            $dyn['ODP NAME'] = $dbData['odp_name'];
-            $dyn['PANEL ODP'] = $dbData['panel_o'];
-            $dyn['PORT ODP'] = $dbData['port_od'];
-            $dyn['VALINS ID'] = $dbData['valins_id'];
-            $dyn['NODE ID'] = $dbData['node_id'];
-            $dyn['NODE IP'] = $dbData['node_ip'];
-            $dyn['SLOT'] = $dbData['slot'];
-            $dyn['PORT'] = $dbData['port'];
-            $dyn['ONU SN'] = $dbData['onu_sn'];
-            $dyn['NO INET VALINS'] = $dbData['no_inet_valins'];
-            $dyn['SIP 1 VALINS'] = $dbData['sip1_valins'];
-            $dyn['SIP 2 VALINS'] = $dbData['sip2_valins'];
-            $dyn['SID'] = $dbData['sid'];
+            // dynamic_data menyimpan data berkas 100% akurat 1:1 sesuai kolom aslinya
+            // serta merapikan format tanggal numerik serial di dalamnya jika ada
+            $dyn = [];
+            $tregStoredInDyn = false;
+            foreach ($assocOrig as $kOrig => $vOrig) {
+                $normK = preg_replace('/[^A-Z0-9]/', '', strtoupper((string)$kOrig));
+                if (in_array($normK, ['TANGGAL', 'DATE', 'DBLASTUPDATEDATE', 'TANGGALUPDATEDATABASE'])) {
+                    $formattedDate = $parseFileDate($vOrig);
+                    $dyn[$kOrig] = $formattedDate ? \Carbon\Carbon::parse($formattedDate)->format('d-m-Y') : null;
+                } elseif ($normK === 'KETERANGAN') {
+                    $dyn[$kOrig] = (!empty($vOrig) && trim((string)$vOrig) !== '-' && trim((string)$vOrig) !== '')
+                        ? rtrim(trim((string)$vOrig), '^')
+                        : null;
+                } elseif (in_array($normK, ['PIC', 'PETUGAS'])) {
+                    $dyn[$kOrig] = (!empty($vOrig) && trim((string)$vOrig) !== '-' && trim((string)$vOrig) !== '')
+                        ? trim((string)$vOrig)
+                        : null;
+                } elseif (in_array($normK, ['TREG', 'REGIONAL', 'AREAREGIONAL', 'TELKOMREGIONAL'])) {
+                    $dyn[$kOrig] = $resolvedTreg;
+                    $tregStoredInDyn = true;
+                } elseif (in_array($normK, ['PORTODP', 'PORTOD'])) {
+                    if ($vOrig !== null && trim((string)$vOrig) !== '' && trim((string)$vOrig) !== '-') {
+                        $pTrim = trim((string)$vOrig);
+                        $dyn[$kOrig] = preg_match('/(\d+)/', $pTrim, $mP) ? $mP[1] : $pTrim;
+                    } else {
+                        $dyn[$kOrig] = null;
+                    }
+                } else {
+                    $dyn[$kOrig] = ($vOrig === '' || $vOrig === '-') ? null : (is_string($vOrig) ? trim($vOrig) : $vOrig);
+                }
+            }
+
+            // Pastikan TREG selalu tercatat pada dynamic_data agar kolom skema dapat menampilkannya
+            if (!$tregStoredInDyn && !empty($resolvedTreg)) {
+                $dyn['TREG'] = $resolvedTreg;
+            }
+
             $dbData['dynamic_data'] = $dyn;
 
             if (\Illuminate\Support\Facades\Schema::hasColumn('valins_services', 'updated_by')) {
@@ -580,22 +737,137 @@ class ValinsTable extends Component
             $importedCount++;
         };
 
+        // Sinkronisasi skema kolom dinamis 1:1 dengan penempatan hierarki wilayah (TREG di sisi paling kiri)
+        $adaptColumns = function($headersOrig, $headersNorm, $sampleRows = []) use ($targetCategory, $limitStr) {
+            $newCols = [];
+            $seenCols = [];
+
+            // Cek apakah kolom pertama tidak bertajuk tetapi datanya angka TREG (1-9 atau "TREG X")
+            $hasFirstColTreg = false;
+            if (!empty($headersOrig)) {
+                $firstHeader = trim((string)reset($headersOrig));
+                $firstNorm = !empty($headersNorm[0]) ? $headersNorm[0] : '';
+                if (empty($firstHeader) || strpos($firstNorm, 'COL') === 0) {
+                    foreach ($sampleRows as $sRow) {
+                        $v0 = trim((string)reset($sRow));
+                        if (preg_match('/^(TREG\s*\d+|\d+)$/i', $v0)) {
+                            $hasFirstColTreg = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            foreach ($headersOrig as $idx => $hOrigName) {
+                $trimmed = trim((string)$hOrigName);
+                if ($idx === 0 && empty($trimmed) && $hasFirstColTreg) {
+                    $trimmed = 'TREG';
+                }
+                if (empty($trimmed)) continue;
+                $hNorm = $headersNorm[$idx] ?? preg_replace('/[^A-Z0-9]/', '', strtoupper($trimmed));
+                if ($idx === 0 && $hasFirstColTreg) {
+                    $hNorm = 'TREG';
+                }
+                if (isset($seenCols[$hNorm])) continue;
+                $seenCols[$hNorm] = true;
+
+                $type = 'text';
+                if (in_array($hNorm, ['TANGGAL', 'DATE', 'DBLASTUPDATEDATE', 'TANGGALUPDATEDATABASE'])) {
+                    $type = 'date';
+                } elseif (in_array($hNorm, ['AREANUM', 'NOMORAREA', 'VALINSID', 'SLOT', 'PORT', 'NOINETVALINS', 'SIP1VALINS', 'SIP2VALINS'])) {
+                    $type = 'number';
+                }
+
+                $newCols[] = [
+                    'nama' => $limitStr($trimmed, 100),
+                    'tipe' => $type,
+                    'hidden' => false,
+                ];
+            }
+
+            // Pastikan TREG selalu berada di posisi paling kiri tabel jika ditemukan di berkas
+            $tregColIndex = -1;
+            foreach ($newCols as $cIdx => $cItem) {
+                $cNorm = preg_replace('/[^A-Z0-9]/', '', strtoupper($cItem['nama']));
+                if (in_array($cNorm, ['TREG', 'REGIONAL', 'AREAREGIONAL', 'TELKOMREGIONAL'])) {
+                    $tregColIndex = $cIdx;
+                    break;
+                }
+            }
+            if ($tregColIndex > 0) {
+                $tregCol = $newCols[$tregColIndex];
+                unset($newCols[$tregColIndex]);
+                array_unshift($newCols, $tregCol);
+                $newCols = array_values($newCols);
+            }
+
+            if (!empty($newCols)) {
+                $targetCategory->update(['konfigurasi_kolom' => $newCols]);
+                $targetCategory->konfigurasi_kolom = $newCols;
+            }
+        };
+
         DB::beginTransaction();
         try {
             if ($ext === 'xlsx' || $ext === 'xls') {
                 $sheetsData = $this->readExcelSheetsRaw($filePath);
-                foreach ($sheetsData as $sheetTitle => $sheetRows) {
-                    if (empty($sheetRows) || count($sheetRows) < 2) continue;
-                    
-                    $rawHeader = array_shift($sheetRows);
-                    $hOrig = array_map(fn($h) => is_string($h) ? trim($h) : (string)$h, $rawHeader);
-                    $hNorm = array_map(fn($h) => strtoupper(preg_replace('/[^A-Z0-9]/', '', $h)), $hOrig);
 
-                    foreach ($sheetRows as $r) {
-                        $processRow($hNorm, $hOrig, $r, $sheetTitle);
+                // Filter hanya sheet yang memiliki baris data (minimal header + 1 baris)
+                $validSheets = [];
+                foreach ($sheetsData as $sheetTitle => $sheetRows) {
+                    if (!empty($sheetRows) && count($sheetRows) >= 2) {
+                        $validSheets[$sheetTitle] = $sheetRows;
                     }
                 }
+
+                if (empty($validSheets)) {
+                    throw new \Exception("Berkas Excel tidak memiliki data atau baris kosong.");
+                }
+
+                $sheetToProcess = null;
+                $chosenSheetTitle = '';
+
+                // ATURAN PEMILIHAN LEMBAR KERJA TEPAT SASARAN:
+                // Kasus 1: Jika hanya ada 1 sheet, langsung gunakan sheet tersebut
+                if (count($validSheets) === 1) {
+                    $chosenSheetTitle = array_key_first($validSheets);
+                    $sheetToProcess = $validSheets[$chosenSheetTitle];
+                } else {
+                    // Kasus 2: Multi-sheet, cari HANYA sheet yang namanya cocok dengan kategori aktif
+                    $targetNorm = $normalizeStr($targetCatName);
+                    foreach ($validSheets as $sheetTitle => $sheetRows) {
+                        $sNorm = $normalizeStr($sheetTitle);
+                        if ($sNorm === $targetNorm || strpos($sNorm, $targetNorm) !== false || strpos($targetNorm, $sNorm) !== false) {
+                            $chosenSheetTitle = $sheetTitle;
+                            $sheetToProcess = $sheetRows;
+                            break;
+                        }
+                    }
+
+                    // Jika tidak ada sheet yang cocok, ambil HANYA lembar kerja pertama yang tampil
+                    if (!$sheetToProcess) {
+                        $chosenSheetTitle = array_key_first($validSheets);
+                        $sheetToProcess = $validSheets[$chosenSheetTitle];
+                    }
+                }
+
+                // Jika kolom pertama tanpa tajuk namun barisnya berisi TREG
+                if (!empty($hOrig) && (empty($hOrig[0]) || strpos($hNorm[0], 'COL') === 0)) {
+                    $firstSample = !empty($sheetToProcess[0][0]) ? trim((string)$sheetToProcess[0][0]) : '';
+                    if (preg_match('/^(TREG\s*\d+|\d+)$/i', $firstSample)) {
+                        $hOrig[0] = 'TREG';
+                        $hNorm[0] = 'TREG';
+                    }
+                }
+
+                $adaptColumns($hOrig, $hNorm, array_slice($sheetToProcess, 0, 10));
+
+                foreach ($sheetToProcess as $r) {
+                    $processRow($hNorm, $hOrig, $r);
+                }
+
             } else {
+                // Berkas CSV
                 $file = fopen($filePath, 'r');
                 $firstLine = fgets($file);
                 $delimiter = strpos($firstLine, ';') !== false ? ';' : (strpos($firstLine, "\t") !== false ? "\t" : ',');
@@ -604,12 +876,28 @@ class ValinsTable extends Component
                 $rawHeader = fgetcsv($file, 10000, $delimiter);
                 $rawHeader[0] = ltrim($rawHeader[0], "\xEF\xBB\xBF");
                 $hOrig = array_map('trim', $rawHeader);
-                $hNorm = array_map(fn($h) => strtoupper(preg_replace('/[^A-Z0-9]/', '', $h)), $hOrig);
+                $hNorm = array_map(fn($h) => preg_replace('/[^A-Z0-9]/', '', strtoupper((string)$h)), $hOrig);
+
+                $csvSample = [];
+                $csvPos = ftell($file);
+                for ($si = 0; $si < 10 && ($sr = fgetcsv($file, 10000, $delimiter)); $si++) {
+                    $csvSample[] = $sr;
+                }
+                fseek($file, $csvPos);
+
+                if (!empty($hOrig) && (empty($hOrig[0]) || strpos($hNorm[0], 'COL') === 0)) {
+                    $firstSample = !empty($csvSample[0][0]) ? trim((string)$csvSample[0][0]) : '';
+                    if (preg_match('/^(TREG\s*\d+|\d+)$/i', $firstSample)) {
+                        $hOrig[0] = 'TREG';
+                        $hNorm[0] = 'TREG';
+                    }
+                }
+
+                $adaptColumns($hOrig, $hNorm, $csvSample);
 
                 while ($r = fgetcsv($file, 10000, $delimiter)) {
                     if (count($rawHeader) !== count($r)) continue;
-                    $targetCat = $this->kategori;
-                    $processRow($hNorm, $hOrig, $r, $targetCat);
+                    $processRow($hNorm, $hOrig, $r);
                 }
                 fclose($file);
             }
@@ -617,21 +905,34 @@ class ValinsTable extends Component
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+            $this->cleanupImportFile();
             session()->flash('error', 'Gagal memproses file: ' . $e->getMessage());
             $this->closeImportModal();
             return;
         }
 
+        // Pembersihan berkas sementara server setelah proses tuntas
+        $this->cleanupImportFile();
         $this->closeImportModal();
-        
-        // Memancarkan sinyal refresh ke tabel dan modal "Kelola Kategori"
+        $this->resetPage();
+
+        // Bersihkan cache metrik & statistik agar sinkron seketika
+        \Illuminate\Support\Facades\Cache::forget('valins_stats_counts');
+        \Illuminate\Support\Facades\Cache::forget('valins_category_row_counts');
+        \Illuminate\Support\Facades\Cache::forget('dashboard_metrics');
+        \Illuminate\Support\Facades\Cache::forget('dashboard_sto_chart');
+        \Illuminate\Support\Facades\Cache::forget('dashboard_donut_chart');
+        \Illuminate\Support\Facades\Cache::forget('dashboard_sto_matrix');
+
+        // Memancarkan sinyal refresh ke tabel dan kategori
         $this->dispatch('refreshKategori');
-        
-        session()->flash('success', "Berhasil memindai dan mengimpor {$importedCount} data ke kategori masing-masing!");
+        $this->dispatch('valinsUpdated');
+
+        session()->flash('success', "Berhasil mengimpor {$importedCount} data khusus ke kategori '{$targetCatName}'!");
     }
 
     // =========================================================================
-    // Ekstraktor File Excel (Bebas dari Formula Calculation Error)
+    // Ekstraktor File Excel (Bebas Formula Crash & Mengabaikan Sheet Tersembunyi)
     // =========================================================================
     protected function readExcelSheetsRaw($filePath)
     {
@@ -639,14 +940,17 @@ class ValinsTable extends Component
         if (class_exists(\PhpOffice\PhpSpreadsheet\IOFactory::class)) {
             $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReaderForFile($filePath);
             
-            // KUNCI PENTING: Matikan kalkulasi formula agar tidak terjadi crash 'Formula Error'
+            // Matikan kalkulasi formula agar tidak crash
             $reader->setReadDataOnly(true);
             $reader->setReadEmptyCells(false);
             
             $spreadsheet = $reader->load($filePath);
             $res = [];
             foreach ($spreadsheet->getAllSheets() as $sheet) {
-                // Parameter ke-2 (calculateFormulas = false) mencegah kalkulasi formula di sel
+                // Abaikan lembar kerja yang disembunyikan (hidden / very hidden)
+                if ($sheet->getSheetState() !== \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::SHEETSTATE_VISIBLE) {
+                    continue;
+                }
                 $res[$sheet->getTitle()] = $sheet->toArray(null, false, false, false);
             }
             return $res;
@@ -679,6 +983,10 @@ class ValinsTable extends Component
                 $relMap[(string)$rel['Id']] = (string)$rel['Target'];
             }
             foreach ($wb->sheets->sheet as $s) {
+                // Abaikan lembar kerja yang disembunyikan
+                if (isset($s['state']) && (string)$s['state'] !== 'visible') {
+                    continue;
+                }
                 $rId = (string)$s->attributes('http://schemas.openxmlformats.org/officeDocument/2006/relationships')['id'];
                 if (isset($relMap[$rId])) {
                     $path = 'xl/' . ltrim(str_replace('xl/', '', $relMap[$rId]), '/');
@@ -730,6 +1038,10 @@ class ValinsTable extends Component
 
         $query = ValinsService::query();
         
+        if (!empty($this->kategori)) {
+            $query->where('kategori', $this->kategori);
+        }
+
         if (!empty($this->search)) {
             $searchTerm = trim($this->search);
             $query->where(function($q) use ($searchTerm) {
@@ -742,12 +1054,11 @@ class ValinsTable extends Component
                   ->orWhere('sto', 'like', "%{$searchTerm}%")
                   ->orWhere('pic', 'like', "%{$searchTerm}%")
                   ->orWhere('keterangan', 'like', "%{$searchTerm}%")
+                  ->orWhere('sid', 'like', "%{$searchTerm}%")
+                  ->orWhere('treg', 'like', "%{$searchTerm}%")
+                  ->orWhere('witel', 'like', "%{$searchTerm}%")
                   ->orWhereRaw("CAST(dynamic_data AS CHAR) LIKE ?", ["%{$searchTerm}%"]);
             });
-        } else {
-            if (!empty($this->kategori)) {
-                $query->where('kategori', $this->kategori);
-            }
         }
 
         $activeCategory = ValinsCategory::where('nama_kategori', $this->kategori)->first();
@@ -821,7 +1132,10 @@ class ValinsTable extends Component
     {
         $query = \App\Models\ValinsService::query();
 
-        // 1. Terapkan Filter Pencarian atau Kategori Aktif
+        if (!empty($this->kategori)) {
+            $query->where('kategori', $this->kategori);
+        }
+
         if (!empty($this->search)) {
             $searchTerm = trim($this->search);
             $query->where(function($q) use ($searchTerm) {
@@ -834,12 +1148,11 @@ class ValinsTable extends Component
                   ->orWhere('sto', 'like', "%{$searchTerm}%")
                   ->orWhere('pic', 'like', "%{$searchTerm}%")
                   ->orWhere('keterangan', 'like', "%{$searchTerm}%")
+                  ->orWhere('sid', 'like', "%{$searchTerm}%")
+                  ->orWhere('treg', 'like', "%{$searchTerm}%")
+                  ->orWhere('witel', 'like', "%{$searchTerm}%")
                   ->orWhereRaw("CAST(dynamic_data AS CHAR) LIKE ?", ["%{$searchTerm}%"]);
             });
-        } else {
-            if (!empty($this->kategori)) {
-                $query->where('kategori', $this->kategori);
-            }
         }
 
         // Batasi maksimal 2000 data untuk ekspor PDF agar PHP tidak kehabisan memori (Out Of Memory)
@@ -1072,6 +1385,122 @@ class ValinsTable extends Component
         );
     }
 
+    /**
+     * Placeholder dinamis untuk kotak pencarian yang adaptif terhadap kategori aktif
+     */
+    public function getSearchPlaceholderProperty()
+    {
+        if (empty($this->kategori)) {
+            return 'Cari ONU SN, No Inet, ODP, IP, Keterangan...';
+        }
+
+        $upper = strtoupper($this->kategori);
+        if (strpos($upper, 'KENDALA ODP') !== false) {
+            return 'Cari STO, QR Code Valins, Keterangan, atau PIC...';
+        }
+        if (strpos($upper, 'NOT IN SERVICE') !== false) {
+            return 'Cari ODP Name, Valins ID, Node IP, Update, PIC...';
+        }
+        return 'Cari ONU SN, No Inet, ODP Name, IP, Keterangan, PIC...';
+    }
+
+    /**
+     * Resolusi Kolom Dinamis Cerdas (Zero Empty Column Bloat)
+     * Menentukan daftar kolom yang relevan dan memiliki data untuk kategori yang sedang dipilih.
+     */
+    public function resolveActiveColumns($activeCategory, $pagedData = null)
+    {
+        // 1. Kumpulkan konfigurasi kolom dari kategori
+        $konfigurasiKolom = $activeCategory?->konfigurasi_kolom;
+        if (is_string($konfigurasiKolom)) {
+            $konfigurasiKolom = json_decode($konfigurasiKolom, true);
+        }
+
+        $hasExplicitSchema = !empty($konfigurasiKolom) && is_array($konfigurasiKolom) && count($konfigurasiKolom) > 0;
+        
+        // JIKA KATEGORI MEMILIKI SKEMA EKSPLISIT (misal hasil Impor Excel/CSV atau Kategori Kustom):
+        // Sajikan kolom 100% 1:1 persis urutan skema tanpa menyisipkan kolom sintetis WITEL & STO atau menduplikasi Keterangan
+        if ($hasExplicitSchema) {
+            $schemaColumns = [];
+            foreach ($konfigurasiKolom as $idx => $col) {
+                $colName = is_array($col) ? ($col['nama'] ?? '') : (is_object($col) ? ($col->nama ?? '') : (string)$col);
+                $isHidden = is_array($col) ? (!empty($col['hidden'])) : (!empty($col->hidden));
+                if ($isHidden || empty(trim($colName))) continue;
+
+                $norm = strtoupper(preg_replace('/[^A-Z0-9]/', '', $colName));
+                $tipe = is_array($col) ? ($col['tipe'] ?? 'text') : 'text';
+
+                // Deteksi tipe dan penyelarasan teks
+                $align = 'left';
+                $isDate = ($tipe === 'date') || in_array($norm, ['TANGGAL', 'DATE', 'DBLASTUPDATEDATE', 'TANGGALUPDATEDATABASE']);
+                $isPortOdp = in_array($norm, ['PORTODP', 'PORTOD', 'PORT_ODP', 'PORT_OD']);
+                $isNumber = ($tipe === 'number') || in_array($norm, [
+                    'AREANUM', 'NOMORAREA', 'VALINSID', 'SLOT', 'PORT', 
+                    'NOINETVALINS', 'SIP1VALINS', 'SIP2VALINS', 'PORTODP', 'PORTOD', 'PANELODP', 'PANELO'
+                ]);
+                $isStatus = in_array($norm, ['KETERANGAN', 'STATUS', 'KETERANGANSTATUS']);
+                $isPic = in_array($norm, ['PIC', 'PETUGAS', 'USER']);
+                $isTreg = in_array($norm, ['TREG', 'REGIONAL', 'AREAREGIONAL', 'TELKOMREGIONAL']);
+
+                if ($isDate || $isNumber || $isStatus || $isTreg || $isPortOdp) {
+                    $align = 'center';
+                }
+
+                $schemaColumns[] = [
+                    'key' => 'col_' . strtolower(preg_replace('/[^a-zA-Z0-9_]/', '_', $colName)) . '_' . $idx,
+                    'nama' => $colName,
+                    'norm' => $norm,
+                    'label' => strtoupper($colName),
+                    'align' => $align,
+                    'is_date' => $isDate,
+                    'is_status' => $isStatus,
+                    'is_pic' => $isPic,
+                    'is_treg' => $isTreg,
+                    'is_port_odp' => $isPortOdp,
+                ];
+            }
+
+            return [
+                'mode' => 'schema',
+                'columns' => $schemaColumns,
+            ];
+        }
+
+        // JIKA TIDAK ADA SKEMA EKSPLISIT (Kategori Standar Sistem Tanpa Skema):
+        // Gunakan layout standar hierarki wilayah berjenjang: TREG -> WITEL -> STO -> ODP NAME
+        $standardCols = [
+            'treg'           => true,
+            'witel'          => true,
+            'sto'            => true,
+            'odp_name'       => true,
+            'valins_id'      => true,
+            'node_info'      => true,
+            'slot_port'      => true,
+            'onu_sn'         => true,
+            'no_inet_valins' => true,
+            'sip1_valins'    => true,
+            'sip2_valins'    => true,
+            'sid'            => true,
+            'custom'         => [],
+            'keterangan'     => true,
+            'tanggal'        => true,
+            'pic'            => true,
+        ];
+
+        if ($pagedData && $pagedData->isNotEmpty()) {
+            $standardCols['valins_id']      = $pagedData->contains(fn($r) => !empty($r->valins_id) && $r->valins_id !== '-');
+            $standardCols['node_info']      = $pagedData->contains(fn($r) => (!empty($r->node_id) && $r->node_id !== '-') || (!empty($r->node_ip) && $r->node_ip !== '-'));
+            $standardCols['slot_port']      = $pagedData->contains(fn($r) => (!empty($r->slot) && $r->slot !== '-') || (!empty($r->port) && $r->port !== '-'));
+            $standardCols['onu_sn']         = $pagedData->contains(fn($r) => !empty($r->onu_sn) && $r->onu_sn !== '-');
+            $standardCols['no_inet_valins'] = $pagedData->contains(fn($r) => !empty($r->no_inet_valins) && $r->no_inet_valins !== '-');
+            $standardCols['sip1_valins']    = $pagedData->contains(fn($r) => !empty($r->sip1_valins) && $r->sip1_valins !== '-');
+            $standardCols['sip2_valins']    = $pagedData->contains(fn($r) => !empty($r->sip2_valins) && $r->sip2_valins !== '-');
+            $standardCols['sid']            = $pagedData->contains(fn($r) => !empty($r->sid) && $r->sid !== '-');
+        }
+
+        return array_merge(['mode' => 'standard'], $standardCols);
+    }
+
    // =========================================================================
     // 5. RENDER (BERSIH DARI QUERY UPDATE)
     // =========================================================================
@@ -1089,7 +1518,11 @@ class ValinsTable extends Component
         // 1. Inisialisasi $query terlebih dahulu agar tidak undefined
         $query = ValinsService::query();
 
-        // 2. Terapkan filter pencarian atau kategori
+        // 2. Terapkan filter kategori dan pencarian dinamis
+        if (!empty($this->kategori)) {
+            $query->where('kategori', $this->kategori);
+        }
+
         if (!empty($this->search)) {
             $searchTerm = trim($this->search);
             $query->where(function($q) use ($searchTerm) {
@@ -1102,12 +1535,11 @@ class ValinsTable extends Component
                   ->orWhere('sto', 'like', "%{$searchTerm}%")
                   ->orWhere('pic', 'like', "%{$searchTerm}%")
                   ->orWhere('keterangan', 'like', "%{$searchTerm}%")
+                  ->orWhere('sid', 'like', "%{$searchTerm}%")
+                  ->orWhere('treg', 'like', "%{$searchTerm}%")
+                  ->orWhere('witel', 'like', "%{$searchTerm}%")
                   ->orWhereRaw("CAST(dynamic_data AS CHAR) LIKE ?", ["%{$searchTerm}%"]);
             });
-        } else {
-            if (!empty($this->kategori)) {
-                $query->where('kategori', $this->kategori);
-            }
         }
 
         // 3. Hitung data bebas setelah $query didefinisikan di atas
@@ -1136,12 +1568,31 @@ class ValinsTable extends Component
             ];
         });
 
+        // 6. Hitung jumlah data aktual per kategori (Cached 15 detik)
+        $categoryCounts = \Illuminate\Support\Facades\Cache::remember('valins_category_row_counts', 15, function () {
+            return ValinsService::selectRaw('kategori, count(*) as count')
+                ->whereNotNull('kategori')
+                ->groupBy('kategori')
+                ->pluck('count', 'kategori')
+                ->toArray();
+        });
+
+        $activeColumns = $this->resolveActiveColumns($activeCategory, $data->getCollection());
+
         return view('livewire.valins-table', [
             'data' => $data,
             'categories' => $categories,
+            'categoryCounts' => $categoryCounts,
             'activeCategory' => $activeCategory,
+            'activeColumns' => $activeColumns,
+            'searchPlaceholder' => $this->searchPlaceholder,
             'stats' => $stats,
             'totalSelectable' => $totalSelectable,
+            'kategori' => $this->kategori,
+            'search' => $this->search,
+            'selectedRows' => $this->selectedRows,
+            'bulkEditOpen' => $this->bulkEditOpen,
+            'importModalOpen' => $this->importModalOpen,
         ]);
     }
 }

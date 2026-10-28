@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Master GPON</title>
+    <title>Telkom Akses Sukabumi</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('images/telkom-akses-logo.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/telkom-akses-logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/telkom-akses-logo.png') }}">
+
     @vite('resources/css/app.css')
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">

@@ -21,4 +21,22 @@ class MasterGpon extends Model
         'slot',
         'port'
     ];
+
+    // ========================================================
+    // SENSOR OTOMATIS: Sinkronisasi Real-Time Cache Dashboard
+    // ========================================================
+    protected static function booted()
+    {
+        static::saved(function () {
+            \Illuminate\Support\Facades\Cache::forget('dashboard_metrics');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_gpon_nodes');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_sto_matrix');
+        });
+
+        static::deleted(function () {
+            \Illuminate\Support\Facades\Cache::forget('dashboard_metrics');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_gpon_nodes');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_sto_matrix');
+        });
+    }
 }

@@ -44,5 +44,66 @@ class ValinsService extends Model
                 $valins->updated_by = Auth::user()->name;
             }
         });
+
+        // 3. Sanitasi Otomatis: Bersihkan spasi liar dan ekstraksi angka murni pada PORT ODP
+        static::saving(function ($valins) {
+            if ($valins->port_od !== null && trim((string)$valins->port_od) !== '' && trim((string)$valins->port_od) !== '-') {
+                $pTrim = trim((string)$valins->port_od);
+                $valins->port_od = preg_match('/(\d+)/', $pTrim, $m) ? $m[1] : $pTrim;
+            }
+
+            if (is_array($valins->dynamic_data)) {
+                $dyn = $valins->dynamic_data;
+                $changed = false;
+                foreach ($dyn as $k => $v) {
+                    $normK = strtoupper(preg_replace('/[^A-Z0-9]/', '', (string)$k));
+                    if (in_array($normK, ['PORTODP', 'PORTOD'])) {
+                        if ($v !== null && trim((string)$v) !== '' && trim((string)$v) !== '-') {
+                            $pTrim = trim((string)$v);
+                            $cleanP = preg_match('/(\d+)/', $pTrim, $mP) ? $mP[1] : $pTrim;
+                            if ($dyn[$k] !== $cleanP) {
+                                $dyn[$k] = $cleanP;
+                                $changed = true;
+                            }
+                        } else {
+                            if ($dyn[$k] !== null) {
+                                $dyn[$k] = null;
+                                $changed = true;
+                            }
+                        }
+                    } elseif (is_string($v)) {
+                        $tV = trim($v);
+                        if ($dyn[$k] !== $tV) {
+                            $dyn[$k] = $tV;
+                            $changed = true;
+                        }
+                    }
+                }
+                if ($changed) {
+                    $valins->dynamic_data = $dyn;
+                }
+            }
+        });
+
+        // 3. Sinkronisasi Real-Time: Bersihkan cache dashboard & widget valins saat data berubah
+        static::saved(function () {
+            \Illuminate\Support\Facades\Cache::forget('dashboard_metrics');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_sto_chart');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_donut_chart');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_gpon_nodes');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_sto_matrix');
+            \Illuminate\Support\Facades\Cache::forget('valins_stats_counts');
+            \Illuminate\Support\Facades\Cache::forget('valins_category_row_counts');
+        });
+
+        static::deleted(function () {
+            \Illuminate\Support\Facades\Cache::forget('dashboard_metrics');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_sto_chart');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_donut_chart');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_gpon_nodes');
+            \Illuminate\Support\Facades\Cache::forget('dashboard_sto_matrix');
+            \Illuminate\Support\Facades\Cache::forget('valins_stats_counts');
+            \Illuminate\Support\Facades\Cache::forget('valins_category_row_counts');
+        });
     }
 }

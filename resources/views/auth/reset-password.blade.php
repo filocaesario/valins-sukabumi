@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Verifikasi OTP & Sandi Baru - Telkom Akses Sukabumi</title>
+    <title>Telkom Akses Sukabumi</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" href="{{ asset('images/telkom-akses-logo.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/telkom-akses-logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/telkom-akses-logo.png') }}">
 
     <!-- Fonts: Inter, JetBrains Mono, Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

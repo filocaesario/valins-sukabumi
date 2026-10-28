@@ -12,10 +12,15 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Inter', ...defaultTheme.fontFamily.sans],
+                headline: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+                jakarta: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+                mono: ['"JetBrains Mono"', ...defaultTheme.fontFamily.mono],
+                telemetry: ['"JetBrains Mono"', ...defaultTheme.fontFamily.mono],
             },
         },
     },
 
     plugins: [forms],
 };
+

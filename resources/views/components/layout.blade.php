@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'Valins System' }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>{{ $title ?? 'Telkom Akses Sukabumi' }}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('images/telkom-akses-logo.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/telkom-akses-logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/telkom-akses-logo.png') }}">
     <!-- Pastikan baris ini ada dan memanggil app.css DAN app.js -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>

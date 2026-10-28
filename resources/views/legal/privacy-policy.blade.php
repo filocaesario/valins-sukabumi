@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Kebijakan Privasi - Monitoring Data Valins Service & GPON</title>
+    <title>Telkom Akses Sukabumi</title>
     <meta name="description" content="Pedoman tata kelola kerahasiaan data teknis optik GPON, verifikasi NIK personel lapangan, serta kepatuhan UU PDP No. 27/2022 PT Telkom Akses Witel Sukabumi.">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" href="{{ asset('images/telkom-akses-logo.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/telkom-akses-logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/telkom-akses-logo.png') }}">
 
     <!-- Fonts: Inter, JetBrains Mono, Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -392,8 +394,18 @@
     <header class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200/80 transition-all duration-300 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
         <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 h-18 sm:h-20 flex items-center justify-between gap-4">
             
-            <!-- Brand Logo & Identity -->
-            <a href="{{ url('/') }}" class="inline-flex items-center focus:outline-none group active:scale-95 transition-transform duration-200">
+            <!-- Sisi Kiri: Tombol Kembali Panah Kiri (Khusus Mobile) & Logo Resmi Telkom Akses (Desktop Only) -->
+            <!-- Mobile Back Arrow Button -->
+            <button type="button" 
+                    onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = '{{ url('/') }}'; }" 
+                    class="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl bg-slate-100/90 hover:bg-rose-50 text-slate-700 hover:text-[#AE0C00] border border-slate-200 hover:border-rose-200 transition-all duration-200 active:scale-90 shadow-2xs group focus:outline-none"
+                    title="Kembali ke Halaman Sebelumnya"
+                    aria-label="Kembali ke Halaman Sebelumnya">
+                <span class="material-symbols-outlined text-2xl text-slate-700 group-hover:text-[#AE0C00] transition-colors">arrow_back</span>
+            </button>
+
+            <!-- Brand Logo & Identity (Desktop Only) -->
+            <a href="{{ url('/') }}" class="hidden lg:inline-flex items-center focus:outline-none group active:scale-95 transition-transform duration-200">
                 <img src="{{ asset('images/telkom-akses-official-transparent.png') }}" 
                      alt="Logo Resmi PT Telkom Akses" 
                      width="165"
@@ -455,13 +467,8 @@
 
     <main class="w-full flex-1 flex flex-col">
         <!-- Hero & Regulation Banner (Clean Light Enterprise Header) -->
-        <section class="w-full bg-gradient-to-b from-slate-50 via-white to-slate-50/60 border-b border-slate-200/80 relative overflow-hidden">
-            <!-- Decorative Subtle Ambient Glow & Pattern Elements -->
-            <div class="absolute -right-24 -top-24 w-96 h-96 rounded-full bg-rose-500/[0.04] blur-3xl pointer-events-none"></div>
-            <div class="absolute right-1/4 -bottom-20 w-80 h-80 rounded-full bg-red-500/[0.02] blur-2xl pointer-events-none"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:20px_20px] opacity-40 pointer-events-none"></div>
-
-            <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-8 sm:py-10 lg:py-12 relative z-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+        <section class="w-full bg-white border-b border-slate-200/80 relative">
+            <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-8 sm:py-10 lg:py-12 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
                 <!-- Blok Kiri: Headline & Deskripsi -->
                 <div class="max-w-3xl flex flex-col gap-3 text-left items-start">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-50 border border-rose-200/80 text-[#AE0C00] text-xs font-bold tracking-wider uppercase w-fit shadow-2xs">
@@ -941,7 +948,6 @@
                                     <span class="text-xs text-slate-500">Setiap klik ekspor data memicu watermark dinamis yang berisi NIK personel penarik data.</span>
                                 </div>
                             </div>
-                            <span class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-800 font-telemetry text-xs font-bold shrink-0">SHA-256 HASHED</span>
                         </div>
                     </article>
 
@@ -1255,7 +1261,7 @@
                     </div>
                     <ul class="flex flex-col gap-3 text-xs text-slate-600">
                         <li>
-                            <a href="{{ route('terms.conditions') }}" class="group flex items-center gap-2 text-slate-600 hover:text-[#bc0007] transition-colors duration-200">
+                            <a href="{{ route('about.us') }}" class="group flex items-center gap-2 text-slate-600 hover:text-[#bc0007] transition-colors duration-200">
                                 <span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-[#bc0007] group-hover:translate-x-1 transition-all duration-200 shrink-0">arrow_forward</span>
                                 <span class="font-medium group-hover:translate-x-0.5 transition-transform duration-200">Tentang Kami</span>
                             </a>
@@ -1312,124 +1318,56 @@
 
             </div>
 
-            <!-- Single Clean Divider -->
-            <div class="border-t border-slate-200/80 my-6 sm:my-7"></div>
+            <!-- Garis Pembatas Horisontal Tunggal yang Presisi -->
+            <div class="border-t border-slate-200/80 mt-8 mb-6 sm:mt-9 sm:mb-6"></div>
 
-            <!-- Footer Bottom Area: 2 Dedicated Distinct Rows -->
-            <div class="flex flex-col gap-5 sm:gap-5.5">
-                
-                <!-- Row 1: Logo Mitra Kerja (Lembaga Pendukung - Berlatar Transparan, Tanpa Bingkai Kotak) -->
-                <div class="flex flex-col items-center gap-3 sm:gap-3.5">
-                    <!-- Label: Supported By -->
-                    <div class="flex items-center justify-center gap-3">
-                        <div class="h-px w-8 sm:w-14 bg-gradient-to-r from-transparent to-slate-300/80"></div>
-                        <span class="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400 select-none">
-                            Supported By
-                        </span>
-                        <div class="h-px w-8 sm:w-14 bg-gradient-to-l from-transparent to-slate-300/80"></div>
-                    </div>
+            <!-- Bilah Hak Cipta & Media Sosial (Bottom Bar) -->
+            <div class="flex flex-col-reverse sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+                <!-- Sisi Kiri: Teks Hak Cipta & Otoritas Regional -->
+                <p class="text-center sm:text-left leading-relaxed text-slate-500">
+                    <span class="font-medium text-slate-700">© {{ date('Y') }} PT Telkom Akses Witel Sukabumi.</span>
+                    <span class="text-slate-300 hidden sm:inline">•</span>
+                    <span class="text-slate-500">Sub-Direktorat Operasi Jaringan Regional Jawa Barat</span>
+                </p>
 
-                    <!-- Logos Container -->
-                    <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-9 md:gap-12 py-2.5 sm:py-3 overflow-visible">
-                        <!-- 1. Kementerian BUMN / Garuda Pancasila -->
-                        <a href="https://www.bumn.go.id/" target="_blank" rel="noopener noreferrer" 
-                           class="partner-logo-item focus:outline-none" 
-                           title="Kementerian Badan Usaha Milik Negara (BUMN) Republik Indonesia">
-                            <img src="{{ asset('images/partners/bumn.png') }}" 
-                                 alt="Logo Kementerian BUMN" 
-                                 class="h-7 sm:h-8 md:h-8.5 w-auto object-contain">
-                        </a>
+                <!-- Sisi Kanan: Deretan Ikon Media Sosial (Lingkaran Abu-abu Tipis Membulat, Hover State Merah Korporat) -->
+                <div class="flex items-center gap-2">
+                    <!-- 1. Instagram -->
+                    <a href="https://www.instagram.com/telkomaksesindonesia/" target="_blank" rel="noopener noreferrer" 
+                       class="w-9 h-9 rounded-full bg-slate-50 hover:bg-[#bc0007] text-slate-600 hover:text-white border border-slate-200/90 hover:border-[#bc0007] flex items-center justify-center transition-all duration-200 shadow-2xs hover:shadow-sm active:scale-95" 
+                       title="Instagram Resmi Telkom Akses (@telkomaksesindonesia)">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
 
-                        <!-- 2. PT Telkom Indonesia (Persero) Tbk -->
-                        <a href="https://www.telkom.co.id/" target="_blank" rel="noopener noreferrer" 
-                           class="partner-logo-item focus:outline-none" 
-                           title="PT Telkom Indonesia (Persero) Tbk - the world in your hand">
-                            <img src="{{ asset('images/partners/telkom-indonesia.png') }}" 
-                                 alt="Logo Telkom Indonesia" 
-                                 class="h-6 sm:h-7 md:h-7.5 w-auto object-contain">
-                        </a>
+                    <!-- 2. YouTube -->
+                    <a href="https://www.youtube.com/@TelkomAksesOfficial/streams" target="_blank" rel="noopener noreferrer" 
+                       class="w-9 h-9 rounded-full bg-slate-50 hover:bg-[#bc0007] text-slate-600 hover:text-white border border-slate-200/90 hover:border-[#bc0007] flex items-center justify-center transition-all duration-200 shadow-2xs hover:shadow-sm active:scale-95" 
+                       title="YouTube Channel Telkom Akses">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                    </a>
 
-                        <!-- 3. Kementerian Komunikasi dan Digital RI (KOMDIGI) -->
-                        <a href="https://www.komdigi.go.id/" target="_blank" rel="noopener noreferrer" 
-                           class="partner-logo-item focus:outline-none" 
-                           title="Kementerian Komunikasi dan Digital Republik Indonesia (KOMDIGI)">
-                            <img src="{{ asset('images/partners/komdigi.png') }}" 
-                                 alt="Logo KOMDIGI" 
-                                 class="h-8 sm:h-9 md:h-10 w-auto object-contain">
-                        </a>
+                    <!-- 3. TikTok -->
+                    <a href="https://www.tiktok.com/@telkomaksesindonesia" target="_blank" rel="noopener noreferrer" 
+                       class="w-9 h-9 rounded-full bg-slate-50 hover:bg-[#bc0007] text-slate-600 hover:text-white border border-slate-200/90 hover:border-[#bc0007] flex items-center justify-center transition-all duration-200 shadow-2xs hover:shadow-sm active:scale-95" 
+                       title="TikTok Telkom Akses (@telkomaksesindonesia)">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-1.01-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                        </svg>
+                    </a>
 
-                        <!-- 4. PT Bank Syariah Indonesia Tbk (BSI) -->
-                        <a href="https://www.bankbsi.co.id/" target="_blank" rel="noopener noreferrer" 
-                           class="partner-logo-item focus:outline-none" 
-                           title="PT Bank Syariah Indonesia Tbk (BSI)">
-                            <img src="{{ asset('images/partners/bsi.png') }}" 
-                                 alt="Logo Bank Syariah Indonesia" 
-                                 class="h-6 sm:h-7 md:h-7.5 w-auto object-contain">
-                        </a>
-
-                        <!-- 5. Telkom University -->
-                        <a href="https://telkomuniversity.ac.id/" target="_blank" rel="noopener noreferrer" 
-                           class="partner-logo-item focus:outline-none" 
-                           title="Telkom University (Tel-U)">
-                            <img src="{{ asset('images/partners/telkom-university.png') }}" 
-                                 alt="Logo Telkom University" 
-                                 class="h-6 sm:h-7 md:h-7.5 w-auto object-contain">
-                        </a>
-                    </div>
+                    <!-- 4. Facebook -->
+                    <a href="https://www.facebook.com/telkomaksesofficial/" target="_blank" rel="noopener noreferrer" 
+                       class="w-9 h-9 rounded-full bg-slate-50 hover:bg-[#bc0007] text-slate-600 hover:text-white border border-slate-200/90 hover:border-[#bc0007] flex items-center justify-center transition-all duration-200 shadow-2xs hover:shadow-sm active:scale-95" 
+                       title="Facebook Telkom Akses">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
                 </div>
-
-                <!-- Row 2: Copyright & Social Media Icons (Social Media di atas Copyright pada Mobile) -->
-                <div class="flex flex-col-reverse sm:flex-row items-center justify-between gap-3.5 sm:gap-4 text-[11px] text-slate-500 pt-3.5 sm:pt-4 border-t border-slate-100/80">
-                    
-                    <!-- Left: Copyright & Regional Authority -->
-                    <p class="text-center sm:text-left leading-relaxed">
-                        <span class="font-medium text-slate-700">© {{ date('Y') }} PT Telkom Akses Witel Sukabumi.</span>
-                        <span class="text-slate-300 hidden sm:inline">•</span>
-                        <span class="text-slate-500">Sub-Direktorat Operasi Jaringan Regional Jawa Barat</span>
-                    </p>
-
-                    <!-- Right: Official Social Media Icons -->
-                    <div class="flex items-center gap-2">
-                        <!-- 1. INSTAGRAM -->
-                        <a href="https://www.instagram.com/telkomaksesindonesia/" target="_blank" rel="noopener noreferrer" 
-                           class="btn-instagram relative overflow-hidden w-9 h-9 rounded-xl bg-slate-50 text-slate-600 hover:text-white border border-slate-200/80 hover:border-transparent flex items-center justify-center transition-all duration-300 shadow-2xs hover:-translate-y-1 active:scale-95 group" 
-                           title="Instagram Resmi Telkom Akses (@telkomaksesindonesia)">
-                            <span class="btn-instagram-bg absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></span>
-                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 relative z-10" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                            </svg>
-                        </a>
-
-                        <!-- 2. YOUTUBE -->
-                        <a href="https://www.youtube.com/@TelkomAksesOfficial/streams" target="_blank" rel="noopener noreferrer" 
-                           class="w-9 h-9 rounded-xl bg-slate-50 hover:bg-[#FF0000] text-slate-600 hover:text-white border border-slate-200/80 hover:border-[#FF0000] flex items-center justify-center transition-all duration-300 shadow-2xs hover:shadow-md hover:shadow-red-500/25 hover:-translate-y-1 active:scale-95 group" 
-                           title="YouTube Channel Telkom Akses">
-                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                            </svg>
-                        </a>
-
-                        <!-- 3. TIKTOK -->
-                        <a href="https://www.tiktok.com/@telkomaksesindonesia" target="_blank" rel="noopener noreferrer" 
-                           class="w-9 h-9 rounded-xl bg-slate-50 hover:bg-black text-slate-600 hover:text-white border border-slate-200/80 hover:border-black flex items-center justify-center transition-all duration-300 shadow-2xs hover:shadow-md hover:shadow-slate-900/30 hover:-translate-y-1 active:scale-95 group" 
-                           title="TikTok Telkom Akses (@telkomaksesindonesia)">
-                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-1.01-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
-                            </svg>
-                        </a>
-
-                        <!-- 4. FACEBOOK -->
-                        <a href="https://www.facebook.com/telkomaksesofficial/" target="_blank" rel="noopener noreferrer" 
-                           class="w-9 h-9 rounded-xl bg-slate-50 hover:bg-[#1877F2] text-slate-600 hover:text-white border border-slate-200/80 hover:border-[#1877F2] flex items-center justify-center transition-all duration-300 shadow-2xs hover:shadow-md hover:shadow-blue-500/25 hover:-translate-y-1 active:scale-95 group" 
-                           title="Facebook Telkom Akses">
-                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                        </a>
-                    </div>
-
-                </div>
-
             </div>
         </div>
     </footer>

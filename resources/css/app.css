@@ -2,6 +2,162 @@
 
 @source "../../resources/views";
 
+@theme {
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-headline: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    --font-jakarta: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-telemetry: 'JetBrains Mono', monospace;
+}
+
+/* Token desain Stitch "Telkom VALINS GPON Monitoring" (halaman Pengaturan Profil & Akun) */
+@theme {
+    --color-primary: #bc0007;
+    --color-primary-container: #e2241d;
+    --color-primary-fixed: #ffdad5;
+    --color-primary-fixed-dim: #ffb4a9;
+    --color-on-primary: #ffffff;
+    --color-on-primary-container: #fffbff;
+    --color-on-primary-fixed: #410001;
+    --color-on-primary-fixed-variant: #930004;
+    --color-inverse-primary: #ffb4a9;
+    --color-surface-tint: #c00007;
+
+    --color-secondary: #565e74;
+    --color-secondary-container: #dae2fd;
+    --color-secondary-fixed: #dae2fd;
+    --color-secondary-fixed-dim: #bec6e0;
+    --color-on-secondary: #ffffff;
+    --color-on-secondary-container: #5c647a;
+    --color-on-secondary-fixed: #131b2e;
+    --color-on-secondary-fixed-variant: #3f465c;
+
+    --color-tertiary: #00628d;
+    --color-tertiary-container: #007cb1;
+    --color-tertiary-fixed: #c9e6ff;
+    --color-tertiary-fixed-dim: #89ceff;
+    --color-on-tertiary: #ffffff;
+    --color-on-tertiary-container: #fcfcff;
+    --color-on-tertiary-fixed: #001e2f;
+    --color-on-tertiary-fixed-variant: #004c6e;
+
+    --color-background: #f8f9ff;
+    --color-on-background: #0b1c30;
+    --color-surface: #f8f9ff;
+    --color-surface-bright: #f8f9ff;
+    --color-surface-dim: #cbdbf5;
+    --color-surface-variant: #d3e4fe;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #eff4ff;
+    --color-surface-container: #e5eeff;
+    --color-surface-container-high: #dce9ff;
+    --color-surface-container-highest: #d3e4fe;
+    --color-on-surface: #0b1c30;
+    --color-on-surface-variant: #5d3f3b;
+    --color-inverse-surface: #213145;
+    --color-inverse-on-surface: #eaf1ff;
+    --color-outline: #926f6a;
+    --color-outline-variant: #e7bdb7;
+
+    --color-error: #ba1a1a;
+    --color-error-container: #ffdad6;
+    --color-on-error: #ffffff;
+    --color-on-error-container: #93000a;
+
+    --spacing-space-xs: 0.25rem;
+    --spacing-space-sm: 0.5rem;
+    --spacing-space-md: 1rem;
+    --spacing-space-lg: 1.5rem;
+    --spacing-space-xl: 2rem;
+
+    /* Radius Stitch: DEFAULT 2px, lg 4px, xl 8px (sengaja tidak menimpa rounded-* bawaan) */
+    --radius-st: 0.125rem;
+    --radius-st-lg: 0.25rem;
+    --radius-st-xl: 0.5rem;
+
+    --font-headline-xl: 'Plus Jakarta Sans', sans-serif;
+    --font-headline-lg: 'Plus Jakarta Sans', sans-serif;
+    --font-headline-md: 'Plus Jakarta Sans', sans-serif;
+    --font-headline-sm: 'Plus Jakarta Sans', sans-serif;
+    --font-body-lg: 'Inter', sans-serif;
+    --font-body-md: 'Inter', sans-serif;
+    --font-body-sm: 'Inter', sans-serif;
+    --font-body-xs: 'Inter', sans-serif;
+    --font-label-lg: 'Inter', sans-serif;
+    --font-label-md: 'Inter', sans-serif;
+    --font-label-sm: 'Inter', sans-serif;
+    --font-telemetry-data: 'JetBrains Mono', monospace;
+    --font-telemetry-metric: 'JetBrains Mono', monospace;
+
+    --text-headline-xl: 32px;
+    --text-headline-xl--line-height: 40px;
+    --text-headline-xl--letter-spacing: -0.02em;
+    --text-headline-xl--font-weight: 700;
+    --text-headline-lg: 24px;
+    --text-headline-lg--line-height: 32px;
+    --text-headline-lg--letter-spacing: -0.01em;
+    --text-headline-lg--font-weight: 600;
+    --text-headline-md: 20px;
+    --text-headline-md--line-height: 28px;
+    --text-headline-md--font-weight: 600;
+    --text-headline-sm: 16px;
+    --text-headline-sm--line-height: 24px;
+    --text-headline-sm--font-weight: 600;
+    --text-body-lg: 16px;
+    --text-body-lg--line-height: 24px;
+    --text-body-lg--font-weight: 400;
+    --text-body-md: 14px;
+    --text-body-md--line-height: 20px;
+    --text-body-md--font-weight: 400;
+    --text-body-sm: 13px;
+    --text-body-sm--line-height: 18px;
+    --text-body-sm--font-weight: 400;
+    --text-body-xs: 12px;
+    --text-body-xs--line-height: 16px;
+    --text-body-xs--font-weight: 400;
+    --text-label-lg: 14px;
+    --text-label-lg--line-height: 20px;
+    --text-label-lg--font-weight: 600;
+    --text-label-md: 12px;
+    --text-label-md--line-height: 16px;
+    --text-label-md--font-weight: 500;
+    --text-label-sm: 11px;
+    --text-label-sm--line-height: 14px;
+    --text-label-sm--letter-spacing: 0.04em;
+    --text-label-sm--font-weight: 600;
+    --text-telemetry-data: 13px;
+    --text-telemetry-data--line-height: 18px;
+    --text-telemetry-data--font-weight: 500;
+    --text-telemetry-metric: 24px;
+    --text-telemetry-metric--line-height: 28px;
+    --text-telemetry-metric--letter-spacing: -0.03em;
+    --text-telemetry-metric--font-weight: 700;
+}
+
+/* Global Font, Numeric Alignment & Zero Layout Shift (Anti-Jump) */
+html {
+    scrollbar-gutter: stable;
+}
+html, body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+.font-headline, .font-jakarta {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+.font-mono, .font-telemetry {
+    font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+    font-feature-settings: "tnum" 1, "zero" 1;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Ensure numbers in metrics and tables align perfectly without jitter */
+.tabular-nums, .metric-value {
+    font-variant-numeric: tabular-nums;
+}
+
 /* Official Instagram Brand Theme & Hover Interaction */
 .btn-instagram-bg {
     background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
@@ -10,3 +166,138 @@
     border-color: transparent !important;
     box-shadow: 0 4px 14px -1px rgba(214, 36, 159, 0.45), 0 2px 6px -1px rgba(253, 89, 73, 0.3) !important;
 }
+
+/* Ensure table rows in skeleton loading always preserve pure table-row display */
+tr.skeleton-row:not(.hidden) {
+    display: table-row !important;
+}
+
+/* Custom Minimalist Thin Scrollbar */
+.custom-scrollbar::-webkit-scrollbar,
+.slot-port-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-button,
+.slot-port-scrollbar::-webkit-scrollbar-button {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+.custom-scrollbar::-webkit-scrollbar-track,
+.slot-port-scrollbar::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb,
+.slot-port-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(203, 213, 225, 0.6);
+    border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover,
+.slot-port-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.85);
+}
+.custom-scrollbar,
+.slot-port-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(203, 213, 225, 0.6) transparent;
+}
+
+/* Smooth Frosted Glass Modal Transitions (Anti-Jump) */
+@keyframes modalFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes backdropFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.animate-modal-enter {
+    animation: modalFadeIn 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-backdrop-enter {
+    animation: backdropFadeIn 180ms ease-out forwards;
+}
+
+/* ================= DASHBOARD & SCROLL REVEAL CASCADE ANIMATIONS ================= */
+@keyframes dashboardFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes dashboardSlideUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 14px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.animate-dashboard-fade {
+    animation: dashboardFadeIn 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-dashboard-slide-up {
+    opacity: 0;
+    animation: dashboardSlideUp 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Dashboard Staggered Delays (60ms - 80ms Cascade Intervals) */
+.dash-delay-1 { animation-delay: 80ms; }
+.dash-delay-2 { animation-delay: 160ms; }
+.dash-delay-3 { animation-delay: 240ms; }
+.dash-delay-4 { animation-delay: 320ms; }
+.dash-delay-5 { animation-delay: 400ms; }
+.dash-delay-6 { animation-delay: 480ms; }
+
+/* Dashboard Scroll-Triggered Chart Cards */
+.dashboard-reveal-card {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+    transition: opacity 450ms cubic-bezier(0.16, 1, 0.3, 1), transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.dashboard-reveal-card.revealed {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+/* Accessibility: Prefers-reduced-motion fallback */
+@media (prefers-reduced-motion: reduce) {
+    .animate-dashboard-fade,
+    .animate-dashboard-slide-up {
+        animation: dashboardFadeIn 250ms ease-out forwards !important;
+        transform: none !important;
+    }
+    .dashboard-reveal-card {
+        transform: none !important;
+        transition: opacity 250ms ease-out !important;
+    }
+    .dashboard-reveal-card.revealed {
+        transform: none !important;
+    }
+}
+
+
+

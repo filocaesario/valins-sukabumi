@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Telkom Akses Sukabumi - Monitoring Data Valins Service & GPON</title>
-    <meta name="description" content="Platform komando operasional otomatisasi audit fisik ODP/ODC, monitoring telemetri redaman optik OLT GPON real-time PT Telkom Akses Witel Sukabumi.">
+    <title>Telkom Akses Sukabumi</title>
+    <meta name="description" content="Platform monitoring operasional otomatisasi audit fisik ODP/ODC, monitoring telemetri redaman optik OLT GPON real-time PT Telkom Akses Witel Sukabumi.">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" href="{{ asset('images/telkom-akses-logo.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/telkom-akses-logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/telkom-akses-logo.png') }}">
 
     <!-- Fonts: Inter, JetBrains Mono, Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -109,6 +111,15 @@
         }
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
+        }
+
+        /* Hide scrollbars for clean horizontal mobile swipe snap */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
         /* Pulse glow animation */
@@ -366,6 +377,162 @@
             transform: scale(1.15) rotate(10deg);
         }
 
+        /* ================= MOBILE OVERLAY SIDEBAR DRAWER STYLES ================= */
+        .mobile-drawer-link {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+            padding: 0.75rem 1.15rem;
+            border-radius: 9999px; /* Full rounded capsule pill */
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #334155; /* slate-700 */
+            background-color: transparent;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            user-select: none;
+        }
+        .mobile-drawer-link:hover,
+        .mobile-drawer-link:active {
+            color: #AE0C00;
+            background-color: #fef2f2; /* red-50 */
+        }
+        .mobile-drawer-link .material-symbols-outlined {
+            color: #64748b; /* slate-500 */
+            font-size: 20px;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        .mobile-drawer-link:hover .material-symbols-outlined {
+            color: #AE0C00;
+            transform: scale(1.1);
+        }
+        /* Active Capsule Full Highlight (Solid Corporate Red) */
+        .mobile-drawer-link.active {
+            background-color: #AE0C00 !important;
+            color: #ffffff !important;
+            font-weight: 700;
+            box-shadow: 0 4px 14px -2px rgba(174, 12, 0, 0.45) !important;
+        }
+        .mobile-drawer-link.active .material-symbols-outlined {
+            color: #ffffff !important;
+            transform: scale(1.05);
+        }
+
+        /* Mobile Frameless Hamburger & Close Button Touch Ripple */
+        .btn-frameless-touch {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            border-radius: 9999px;
+            transition: background-color 0.2s ease, transform 0.15s ease, color 0.2s ease;
+        }
+        .btn-frameless-touch:hover {
+            background-color: rgba(241, 245, 249, 0.9); /* slate-100 */
+            color: #AE0C00;
+        }
+        .btn-frameless-touch:active {
+            transform: scale(0.9);
+            background-color: #fee2e2; /* red-100 */
+            color: #AE0C00;
+        }
+
+        /* Drawer Register & Action Button: Solid corporate red, never turns white on hover/click/active */
+        .btn-drawer-register {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.625rem;
+            width: 100%;
+            padding: 0.8rem 1.25rem;
+            border-radius: 0.75rem; /* rounded-xl */
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #ffffff !important;
+            background-color: #bc0007 !important;
+            background: linear-gradient(135deg, #d30009 0%, #bc0007 50%, #9e0006 100%) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 14px -2px rgba(188, 0, 7, 0.45), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            user-select: none;
+            outline: none;
+        }
+        .btn-drawer-register:hover {
+            background-color: #9e0006 !important;
+            background: linear-gradient(135deg, #bc0007 0%, #9e0006 50%, #850004 100%) !important;
+            color: #ffffff !important;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px -2px rgba(188, 0, 7, 0.55);
+        }
+        .btn-drawer-register:active {
+            background-color: #850004 !important;
+            background: linear-gradient(135deg, #9e0006 0%, #850004 100%) !important;
+            color: #ffffff !important;
+            transform: translateY(0.5px) scale(0.98);
+            box-shadow: 0 2px 6px rgba(188, 0, 7, 0.4);
+            transition-duration: 0.08s;
+        }
+        .btn-drawer-register:focus,
+        .btn-drawer-register:focus-visible {
+            background-color: #bc0007 !important;
+            color: #ffffff !important;
+            outline: 2px solid rgba(188, 0, 7, 0.5);
+            outline-offset: 2px;
+        }
+        .btn-drawer-register .material-symbols-outlined {
+            color: #ffffff !important;
+            font-size: 20px;
+        }
+
+        /* Drawer Login Button: Secondary Bordered */
+        .btn-drawer-login {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.625rem;
+            width: 100%;
+            padding: 0.8rem 1.25rem;
+            border-radius: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #1e293b;
+            background-color: #ffffff;
+            border: 1.5px solid #cbd5e1;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            user-select: none;
+            outline: none;
+        }
+        .btn-drawer-login:hover {
+            color: #bc0007;
+            border-color: #fca5a5;
+            background-color: #fff8f8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px -2px rgba(188, 0, 7, 0.12);
+        }
+        .btn-drawer-login:active {
+            transform: translateY(0.5px) scale(0.98);
+            background-color: #fee2e2;
+            border-color: #f87171;
+            transition-duration: 0.08s;
+        }
+        .btn-drawer-login:focus,
+        .btn-drawer-login:focus-visible {
+            border-color: #bc0007;
+            outline: 2px solid rgba(188, 0, 7, 0.25);
+            outline-offset: 1px;
+        }
+        .btn-drawer-login .material-symbols-outlined {
+            color: #64748b;
+            font-size: 20px;
+            transition: color 0.2s ease;
+        }
+        .btn-drawer-login:hover .material-symbols-outlined {
+            color: #bc0007;
+        }
+
         /* ================= LIVE STATS STRIP & COUNTER POLISH ================= */
         .stat-count-value {
             font-variant-numeric: tabular-nums;
@@ -418,6 +585,58 @@
             background: transparent !important;
             border: none !important;
         }
+
+        /* ================= SCROLL REVEAL & STAGGERED CASCADE ANIMATIONS ================= */
+        @keyframes heroFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes heroSlideUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-hero-fade {
+            animation: heroFadeIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            will-change: opacity;
+        }
+        .animate-hero-slide-up {
+            opacity: 0;
+            animation: heroSlideUp 0.44s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            will-change: opacity, transform;
+        }
+        .hero-delay-1 { animation-delay: 120ms; }
+        .hero-delay-2 { animation-delay: 240ms; }
+
+        /* Unified Scroll Reveal Element */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.44s cubic-bezier(0.16, 1, 0.3, 1), transform 0.44s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal-item.reveal-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger Cascade Delays for Multi-Column Grids */
+        .stagger-1 { transition-delay: 60ms; }
+        .stagger-2 { transition-delay: 130ms; }
+        .stagger-3 { transition-delay: 200ms; }
+        .stagger-4 { transition-delay: 270ms; }
+        .stagger-5 { transition-delay: 340ms; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animate-hero-fade,
+            .animate-hero-slide-up,
+            .reveal-item {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-[#f8f9ff] text-[#0b1c30] antialiased selection:bg-[#bc0007] selection:text-white min-h-screen flex flex-col">
@@ -436,19 +655,19 @@
 
     <!-- ================= STICKY MAIN NAVIGATION BAR ================= -->
     <header class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-all duration-300 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
-        <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 h-18 sm:h-20 flex items-center justify-between gap-4">
+        <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 h-16 sm:h-18 lg:h-20 flex items-center justify-between gap-4">
             
-            <!-- Brand Logo & Identity -->
-            <a href="{{ url('/') }}" class="inline-flex items-center focus:outline-none group active:scale-95 transition-transform duration-200">
+            <!-- Sisi Kiri: Logo Resmi PT Telkom Akses (Proporsional & Bebas Terhimpit di Mobile) -->
+            <a href="{{ url('/') }}" class="inline-flex items-center focus:outline-none group active:scale-95 transition-transform duration-200 shrink-0">
                 <img src="{{ asset('images/telkom-akses-official-transparent.png') }}" 
                      alt="Logo Resmi PT Telkom Akses" 
-                     width="165"
-                     height="42"
-                     class="h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.03]"
+                     width="165" 
+                     height="42" 
+                     class="h-[32px] sm:h-[36px] md:h-[40px] lg:h-[44px] max-h-[32px] sm:max-h-[36px] md:max-h-[40px] lg:max-h-[44px] w-auto object-contain transition-transform duration-200 group-hover:scale-[1.03]" 
                      onerror="this.src='{{ asset('images/telkom-akses-official-clean.png') }}'">
             </a>
 
-            <!-- Desktop Nav Links (Frameless Floating Aesthetic) -->
+            <!-- Desktop Nav Links (Frameless Floating Aesthetic - Khusus Layar Desktop) -->
             <nav class="hidden lg:flex items-center gap-2 xl:gap-3.5" aria-label="Navigasi Utama">
                 <a href="#fitur" class="nav-link-item active">
                     Pilar Operasional
@@ -460,171 +679,256 @@
                     Arsitektur Jaringan
                 </a>
                 <a href="#valins" class="nav-link-item">
-                    Integrasi VALINS
+                    Integrasi Valins
                 </a>
             </nav>
 
-            <!-- Auth Action Buttons & Mobile Hamburger -->
-            <div class="flex items-center gap-2.5 sm:gap-3">
+            <!-- Sisi Kanan: Desktop Auth Buttons & Mobile Frameless Hamburger Button -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Desktop Auth Action Buttons (Khusus Layar Desktop lg:, Disembunyikan di Layar Ponsel) -->
+                <div class="hidden lg:flex items-center gap-2.5 sm:gap-3">
+                    @if (Route::has('login'))
+                        @auth
+                            <!-- Authenticated User Dropdown / Dashboard Button -->
+                            <div class="flex items-center gap-3">
+                                <span class="hidden md:flex flex-col text-right">
+                                    <span class="text-xs font-bold text-slate-900 leading-tight">{{ Auth::user()->name }}</span>
+                                    <span class="text-[10px] text-slate-500 font-mono leading-none">Petugas Terautentikasi</span>
+                                </span>
+                                <a href="{{ route('dashboard') }}" 
+                                   class="btn-header-dashboard group">
+                                    <span class="material-symbols-outlined text-[18px] btn-dashboard-icon">dashboard</span>
+                                    <span>Buka Dashboard</span>
+                                </a>
+                            </div>
+                        @else
+                            <!-- Guest Auth Buttons -->
+                            <a href="{{ route('login') }}" 
+                               class="btn-header-login group"
+                               title="Masuk ke Akun">
+                                <span class="material-symbols-outlined text-[18px] btn-login-icon">login</span>
+                                <span>Masuk</span>
+                            </a>
+
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}" 
+                                   class="btn-header-register group"
+                                   title="Pendaftaran Akun Baru">
+                                    <span class="material-symbols-outlined text-[18px] btn-register-icon">how_to_reg</span>
+                                    <span>Daftar Akun</span>
+                                </a>
+                            @endif
+                        @endauth
+                    @endif
+                </div>
+
+                <!-- Sisi Kanan Ponsel: Mobile Hamburger Button (Frameless Floating Aesthetic) -->
+                <button type="button" 
+                        id="btn-open-mobile-drawer"
+                        onclick="toggleMobileDrawer(true)" 
+                        class="lg:hidden relative inline-flex items-center justify-center w-10 h-10 rounded-full text-slate-700 btn-frameless-touch focus:outline-none"
+                        aria-label="Buka Menu Navigasi"
+                        aria-expanded="false"
+                        aria-controls="mobile-overlay-drawer">
+                    <span class="material-symbols-outlined text-[24px] sm:text-[26px] leading-none transition-transform duration-200">menu</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= MOBILE OVERLAY SIDEBAR (SLIDE-OVER DRAWER DARI SISI KANAN) ================= -->
+    <div id="mobile-overlay-drawer" 
+         class="fixed inset-0 z-[100] lg:hidden invisible transition-[visibility] duration-300"
+         role="dialog"
+         aria-modal="true"
+         aria-label="Navigasi Menu Mobile">
+
+        <!-- 1. Lapisan Latar Belakang (Backdrop Overlay Buram Lembut) -->
+        <div id="mobile-drawer-backdrop" 
+             onclick="toggleMobileDrawer(false)"
+             class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm opacity-0 transition-opacity duration-300 ease-out cursor-pointer"
+             aria-hidden="true"></div>
+
+        <!-- 2. Panel Overlay Sidebar Kanan (Meluncur dari Kanan ke Dalam Layar) -->
+        <div id="mobile-drawer-panel" 
+             class="fixed top-0 right-0 bottom-0 w-[84%] max-w-[340px] sm:max-w-[380px] h-full bg-white shadow-2xl rounded-l-3xl flex flex-col justify-between overflow-hidden transform translate-x-full transition-transform duration-300 ease-out border-l border-slate-100 z-10">
+
+            <!-- Bagian Atas: Sidebar Header -->
+            <div class="px-5 py-4 sm:py-5 border-b border-slate-100 flex items-center justify-between gap-3 bg-white/95">
+                <div class="flex items-center gap-2.5">
+                    <img src="{{ asset('images/telkom-akses-official-transparent.png') }}" 
+                         alt="Logo PT Telkom Akses" 
+                         class="h-7 sm:h-8 w-auto object-contain"
+                         onerror="this.src='{{ asset('images/telkom-akses-official-clean.png') }}'">
+                    <div class="flex flex-col border-l border-slate-200 pl-2.5">
+                        <span class="text-[9px] font-black uppercase tracking-wider text-[#AE0C00] leading-none"></span>
+                        <span class="text-[11px] font-semibold text-slate-700 leading-tight mt-0.5"></span>
+                    </div>
+                </div>
+
+                <!-- Tombol Tutup (X) Frameless -->
+                <button type="button" 
+                        onclick="toggleMobileDrawer(false)" 
+                        class="w-10 h-10 rounded-full inline-flex items-center justify-center text-slate-500 btn-frameless-touch focus:outline-none"
+                        aria-label="Tutup Menu Navigasi">
+                    <span class="material-symbols-outlined text-[24px]">close</span>
+                </button>
+            </div>
+
+            <!-- Bagian Tengah: Daftar Menu Navigasi Berikon Vertikal -->
+            <div class="flex-1 overflow-y-auto px-4 py-4 sm:py-5 space-y-1.5 scrollbar-thin scrollbar-thumb-slate-200">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3 pb-1">
+                    Navigasi Beranda
+                </div>
+
+                <!-- 1. Pilar Operasional (Active By Default) -->
+                <a href="#fitur" 
+                   onclick="handleMobileNavClick(this)" 
+                   class="mobile-drawer-link active">
+                    <span class="material-symbols-outlined">grid_view</span>
+                    <span class="truncate">Pilar Operasional</span>
+                </a>
+
+                <!-- 2. Validasi & Rekonsiliasi -->
+                <a href="#telemetri" 
+                   onclick="handleMobileNavClick(this)" 
+                   class="mobile-drawer-link">
+                    <span class="material-symbols-outlined">verified</span>
+                    <span class="truncate">Validasi &amp; Rekonsiliasi</span>
+                </a>
+
+                <!-- 3. Arsitektur Jaringan -->
+                <a href="#arsitektur" 
+                   onclick="handleMobileNavClick(this)" 
+                   class="mobile-drawer-link">
+                    <span class="material-symbols-outlined">lan</span>
+                    <span class="truncate">Arsitektur Jaringan</span>
+                </a>
+
+                <!-- 4. Integrasi VALINS -->
+                <a href="#valins" 
+                   onclick="handleMobileNavClick(this)" 
+                   class="mobile-drawer-link">
+                    <span class="material-symbols-outlined">dataset</span>
+                    <span class="truncate">Integrasi Valins</span>
+                </a>
+            </div>
+
+            <!-- Bagian Bawah: Integrasi Fitur Masuk & Daftar Akun -->
+            <div class="p-4 sm:p-5 border-t border-slate-100/90 bg-slate-50/80 space-y-2.5">
                 @if (Route::has('login'))
                     @auth
-                        <!-- Authenticated User Dropdown / Dashboard Button -->
-                        <div class="flex items-center gap-3">
-                            <span class="hidden md:flex flex-col text-right">
-                                <span class="text-xs font-bold text-slate-900 leading-tight">{{ Auth::user()->name }}</span>
-                                <span class="text-[10px] text-slate-500 font-mono leading-none">Petugas Terautentikasi</span>
-                            </span>
-                            <a href="{{ route('dashboard') }}" 
-                               class="btn-header-dashboard group">
-                                <span class="material-symbols-outlined text-[18px] btn-dashboard-icon">dashboard</span>
-                                <span>Buka Dashboard</span>
-                            </a>
+                        <!-- User Card Terautentikasi -->
+                        <div class="p-3 bg-white rounded-2xl border border-slate-200/90 shadow-2xs flex items-center gap-3 mb-2">
+                            <div class="w-9 h-9 rounded-xl bg-red-50 text-[#AE0C00] flex items-center justify-center font-bold text-sm shrink-0 border border-red-100">
+                                {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+                            </div>
+                            <div class="flex flex-col min-w-0 flex-1">
+                                <span class="text-xs font-bold text-slate-900 truncate">{{ Auth::user()->name }}</span>
+                                <span class="text-[10px] text-slate-500 truncate">{{ Auth::user()->email }}</span>
+                            </div>
                         </div>
+
+                        <!-- Tombol Buka Dashboard -->
+                        <a href="{{ route('dashboard') }}" 
+                           class="btn-drawer-register">
+                            <span class="material-symbols-outlined">dashboard</span>
+                            <span>Buka Dashboard Operasional</span>
+                            <span class="material-symbols-outlined text-[17px]">arrow_forward</span>
+                        </a>
                     @else
-                        <!-- Guest Auth Buttons -->
+                        <!-- Fitur Masuk: Tombol Berbingkai Rapi dengan Ikon Masuk -->
                         <a href="{{ route('login') }}" 
-                           class="btn-header-login group"
-                           title="Masuk ke Akun">
-                            <span class="material-symbols-outlined text-[18px] btn-login-icon">login</span>
-                            <span>Masuk</span>
+                           class="btn-drawer-login">
+                            <span class="material-symbols-outlined">login</span>
+                            <span>Masuk ke Akun</span>
                         </a>
 
+                        <!-- Fitur Daftar Akun: Tombol Utama Berwarna Merah Solid Khas Telkom Akses -->
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}" 
-                               class="btn-header-register group"
-                               title="Pendaftaran Akun Baru">
-                                <span class="material-symbols-outlined text-[18px] btn-register-icon">how_to_reg</span>
-                                <span class="hidden sm:inline">Daftar Akun</span>
-                                <span class="sm:hidden">Daftar</span>
+                               class="btn-drawer-register">
+                                <span class="material-symbols-outlined">how_to_reg</span>
+                                <span>Daftar Akun Baru</span>
                             </a>
                         @endif
                     @endauth
                 @endif
-
-                <!-- Mobile Hamburger Button -->
-                <button type="button" 
-                        onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" 
-                        class="lg:hidden p-2.5 rounded-xl text-slate-600 hover:text-[#bc0007] hover:bg-red-50/80 active:scale-90 transition-all duration-200 focus:outline-none border border-transparent hover:border-red-200/60"
-                        aria-label="Toggle Navigation">
-                    <span class="material-symbols-outlined text-2xl">menu</span>
-                </button>
             </div>
         </div>
-
-        <!-- Mobile Collapsible Menu (Frameless Floating Aesthetic) -->
-        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-200 bg-white/95 backdrop-blur-md px-4 pt-3 pb-5 space-y-1 shadow-lg">
-            <a href="#fitur" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="mobile-nav-link block px-3 py-2.5 text-sm font-semibold text-slate-700 hover:text-[#bc0007] border-l-2 border-transparent hover:border-[#bc0007] active:scale-[0.98] transition-all duration-200">
-                Pilar Operasional
-            </a>
-            <a href="#telemetri" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="mobile-nav-link block px-3 py-2.5 text-sm font-semibold text-slate-700 hover:text-[#bc0007] border-l-2 border-transparent hover:border-[#bc0007] active:scale-[0.98] transition-all duration-200">
-                Validasi &amp; Rekonsiliasi
-            </a>
-            <a href="#arsitektur" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="mobile-nav-link block px-3 py-2.5 text-sm font-semibold text-slate-700 hover:text-[#bc0007] border-l-2 border-transparent hover:border-[#bc0007] active:scale-[0.98] transition-all duration-200">
-                Arsitektur Jaringan
-            </a>
-            <a href="#valins" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="mobile-nav-link block px-3 py-2.5 text-sm font-semibold text-slate-700 hover:text-[#bc0007] border-l-2 border-transparent hover:border-[#bc0007] active:scale-[0.98] transition-all duration-200">
-                Integrasi VALINS
-            </a>
-            <a href="#bantuan" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="mobile-nav-link block px-3 py-2.5 text-sm font-semibold text-slate-700 hover:text-[#bc0007] border-l-2 border-transparent hover:border-[#bc0007] active:scale-[0.98] transition-all duration-200">
-                Bantuan &amp; NOC Sukabumi
-            </a>
-        </div>
-    </header>
+    </div>
 
     <!-- ================= MAIN HERO SECTION ================= -->
     <main class="flex-grow">
-        <section class="relative w-full pt-8 pb-16 sm:pt-10 sm:pb-20 lg:pt-14 lg:pb-24 overflow-hidden">
-            <!-- Decorative Ambient Glows -->
-            <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-red-100/50 blur-3xl pointer-events-none"></div>
-            <div class="absolute top-1/3 -right-24 w-96 h-96 rounded-full bg-sky-100/60 blur-3xl pointer-events-none"></div>
-            <div class="absolute -bottom-20 left-1/3 w-80 h-80 rounded-full bg-indigo-50/50 blur-3xl pointer-events-none"></div>
+        <section class="relative w-full pt-10 pb-12 sm:pt-14 sm:pb-16 lg:pt-18 lg:pb-22 bg-white border-b border-slate-200/80 overflow-hidden">
+            
+            <!-- 1. Area Atas: Tipografi Terpusat di Atas Latar Putih Bersih (Centered Editorial Header) -->
+            <div class="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center relative z-20 animate-hero-fade">
+                
+                <!-- Lencana Kategori Atas -->
 
-            <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 xl:gap-14 items-center">
-                    
-                    <!-- Left Column: Pill Badge, Main Headline, Description, & CTA Actions -->
-                    <div class="lg:col-span-7 flex flex-col items-start">
-                        
-                        <!-- Top Pill Badge (Sistem Komando Terpadu) -->
-                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100/90 border border-slate-200/90 text-slate-700 text-xs font-semibold shadow-2xs mb-4 sm:mb-5">
-                            <span class="material-symbols-outlined text-[#bc0007] text-[16px] sm:text-[17px] leading-none shrink-0 select-none">public</span>
-                            <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-700">SISTEM MONITORING TERPADU &bull; WITEL SUKABUMI</span>
-                        </div>
+                <!-- Judul Utama (2-3 Baris Seimbang & Terpusat) -->
+                <h1 class="font-headline text-2xl sm:text-4xl md:text-5xl lg:text-[52px] xl:text-[56px] font-extrabold tracking-tight text-slate-900 leading-[1.2] sm:leading-[1.12] max-w-4xl mx-auto">
+                    Transformasi Digital Monitoring Jaringan <span class="text-[#bc0007]">GPON &amp; Validasi Data Valins</span> Terpadu
+                </h1>
 
-                        <!-- Main Headline -->
-                        <h1 class="font-headline text-3xl sm:text-4xl lg:text-[42px] xl:text-5xl font-extrabold tracking-tight text-[#0b1c30] leading-[1.18] sm:leading-[1.15]">
-                            Transformasi Digital Monitoring Jaringan 
-                            <span class="text-[#bc0007]">GPON</span> 
-                            &amp; Validasi Data 
-                            <span class="text-[#00628d]">VALINS</span> Terpadu
-                        </h1>
+                <!-- Sub-Judul Deskripsi (Lebar Bacaan Nyaman) -->
+                <p class="mt-4 sm:mt-5 text-sm sm:text-base lg:text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
+                    Platform monitoring operasional otomatisasi audit fisik ODP/ODC, monitoring telemetri redaman optik OLT GPON real-time, sinkronisasi spasial GIS rute feeder, dan rekonsiliasi inventori UIM PT Telkom Akses Sukabumi.
+                </p>
 
-                        <!-- Description -->
-                        <p class="mt-4 sm:mt-5 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
-                            Platform komando operasional otomatisasi audit fisik ODP/ODC, monitoring telemetri redaman optik OLT GPON real-time, sinkronisasi spasial GIS rute feeder, dan rekonsiliasi inventori UIM PT Telkom Akses Sukabumi.
-                        </p>
+            </div>
 
-                        <!-- Action CTA Buttons -->
-                    </div>
-
-                    <!-- Right Column: NOC Room Visual Showcase & Overlaid Live Telemetry Cards -->
-                    <div class="lg:col-span-5 relative w-full max-w-lg lg:max-w-none mx-auto pt-2 pb-16 sm:pb-20 lg:pb-12">
-                        
-                        <!-- Main Visual Showcase Frame: Kantor Telkom Akses Witel Sukabumi -->
-                        <div class="relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl border border-slate-200/80 bg-slate-900 group">
-                            <!-- Location Identifier Badge -->
-                            <img src="{{ asset('images/landing/telkom-sukabumi-office.jpg') }}" 
-                                 alt="Kantor PT Telkom Indonesia Witel Sukabumi - Jl. R. E. Martadinata No.24" 
-                                 width="768"
-                                 height="1024"
-                                 class="w-full h-[290px] sm:h-[340px] md:h-[370px] lg:h-[400px] xl:h-[420px] object-cover object-[center_30%] transition-transform duration-700 group-hover:scale-105"
-                                 onerror="this.onerror=null; this.src='{{ asset('images/landing/noc-monitoring-room.jpg') }}'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-950/15 to-transparent pointer-events-none"></div>
-                        </div>
-
-                        <!-- Floating Card 1: Audit & Validasi VALINS Fisik (QR Code) -->
-                        <div class="relative mt-4 sm:mt-0 sm:absolute sm:bottom-6 sm:-left-6 lg:bottom-8 lg:-left-6 xl:-left-8 bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 shadow-2xl border border-slate-200/90 w-full sm:w-auto sm:min-w-[320px] sm:max-w-[360px] z-20 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
-                            <div class="flex items-center justify-between gap-3 mb-2.5">
-                                <div class="flex items-center gap-2.5">
-                                    <div class="w-9 h-9 rounded-xl bg-sky-50 text-[#00628d] border border-sky-100/90 flex items-center justify-center shrink-0 shadow-2xs">
-                                        <span class="material-symbols-outlined text-[20px]">qr_code_scanner</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-[#00628d] block leading-none mb-1">VALIDASI ASET FISIK</span>
-                                        <h4 class="text-xs sm:text-[13px] font-bold text-slate-900 leading-tight">Audit &amp; Validasi Data Valins Fisik</h4>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <p class="text-[11px] sm:text-[11.5px] text-slate-600 leading-relaxed my-2.5">
-                                Sinkronisasi data QR Code ODP lapangan dengan sistem UIM &amp; pembaruan kondisi data perangkat.
-                            </p>
-
-                            <div class="pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-600">
-                                <span class="material-symbols-outlined text-emerald-600 text-[17px]">check_circle</span>
-                            </div>
-                        </div>
-
-                        <!-- Floating Card 2: Petugas Verifikator Aktif -->
-                        <div class="relative mt-3 sm:mt-0 sm:absolute sm:-bottom-8 sm:right-2 lg:-bottom-8 lg:right-0 xl:-right-4 bg-white/95 backdrop-blur-md rounded-2xl p-3 sm:p-3.5 shadow-2xl border border-slate-200/90 flex items-center gap-3 sm:gap-3.5 w-full sm:w-auto sm:max-w-[340px] z-20 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
-                            <img src="{{ asset('images/landing/technician-avatar.jpg') }}" 
-                                 alt="Petugas Verifikator Aktif" 
-                                 class="w-12 h-12 rounded-xl object-cover border border-slate-200 shadow-2xs shrink-0"
-                                 onerror="this.src='https://ui-avatars.com/api/?name=Budi+Setiawan&background=bc0007&color=fff'">
-                            <div class="min-w-0 flex-1">
-                                <h4 class="text-xs sm:text-[13px] font-bold text-slate-900 leading-tight truncate">Petugas Verifikator Aktif</h4>
-                                <p class="text-[11px] text-slate-500 font-medium leading-tight mt-0.5 truncate">Regu Daman SMI-Kota &bull; Unit Patroli 03</p>
-                                <div class="flex items-center gap-1.5 text-[11px] text-slate-600 font-mono mt-1">
-                                    <span class="material-symbols-outlined text-[13px] text-[#bc0007]">qr_code_scanner</span>
-                                    <span class="truncate">Audit & <strong class="text-slate-800 font-semibold">Validasi Valins</strong> <span class="text-slate-400 text-[10px]">Fisik</span></span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
+            <!-- 2. Area Transisi Tengah: Wadah Kapsul Tombol Aksi Utama (Floating Action Dock pada Desktop, In-Flow Side-by-Side pada Mobile) -->
+            <div class="relative z-30 mb-4 sm:-mb-7 lg:-mb-8 mt-5 sm:mt-9 w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 flex justify-center animate-hero-slide-up hero-delay-1">
+                <div class="w-full sm:w-auto p-1.5 sm:p-2 bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-full border border-slate-200/90 shadow-lg sm:shadow-xl shadow-slate-300/40 grid grid-cols-2 gap-2 sm:flex sm:items-center sm:gap-2.5">
+                    <!-- Tombol Utama: Mulai Monitoring -->
+                    @auth
+                        <a href="{{ route('dashboard') }}" 
+                            class="order-2 sm:order-1 w-full sm:w-auto inline-flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-7 py-2.5 sm:py-3.5 rounded-xl sm:rounded-full bg-[#bc0007] hover:bg-[#960005] active:scale-95 text-white font-bold text-xs sm:text-sm shadow-md shadow-red-600/20 hover:shadow-lg hover:shadow-red-600/30 transition-all duration-200 whitespace-nowrap">
+                            <span class="material-symbols-outlined text-[16px] sm:text-[20px] shrink-0">dashboard</span>
+                            <span class="truncate">Mulai Monitoring</span>
+                            <span class="material-symbols-outlined text-[14px] sm:text-[18px] shrink-0">arrow_forward</span>
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}" 
+                            class="order-2 sm:order-1 w-full sm:w-auto inline-flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-7 py-2.5 sm:py-3.5 rounded-xl sm:rounded-full bg-[#bc0007] hover:bg-[#960005] active:scale-95 text-white font-bold text-xs sm:text-sm shadow-md shadow-red-600/20 hover:shadow-lg hover:shadow-red-600/30 transition-all duration-200 whitespace-nowrap">
+                            <span class="material-symbols-outlined text-[16px] sm:text-[20px] shrink-0">play_circle</span>
+                            <span class="truncate">Mulai Monitoring</span>
+                            <span class="material-symbols-outlined text-[14px] sm:text-[18px] shrink-0">arrow_forward</span>
+                        </a>
+                    @endauth
+                    <!-- Tombol Sekunder: Unduh Panduan SOP Lapangan (PDF) -->
+                    <a href="#arsitektur" 
+                        class="order-1 sm:order-2 w-full sm:w-auto inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-6 py-2.5 sm:py-3.5 rounded-xl sm:rounded-full bg-slate-100 hover:bg-slate-200/80 active:scale-95 text-slate-700 font-semibold text-xs sm:text-sm border border-slate-200/80 transition-all duration-200 whitespace-nowrap">
+                        <span class="material-symbols-outlined text-[16px] sm:text-[18px] text-[#bc0007] shrink-0">description</span>
+                        <span class="sm:hidden truncate">Panduan SOP</span>
+                        <span class="hidden sm:inline">Unduh Panduan SOP Lapangan (PDF)</span>
+                    </a>
                 </div>
             </div>
+
+            <!-- 3. Area Bawah: Visual Panorama Gedung Witel Sukabumi -->
+            <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 animate-hero-slide-up hero-delay-2">
+                <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-slate-200/90 bg-slate-950 group">
+                    <!-- Foto Gedung Membentang Lebar Secara Horisontal (Panoramik) -->
+                    <div class="relative w-full h-64 sm:h-80 md:h-[400px] lg:h-[480px] xl:h-[520px] overflow-hidden">
+                        <img src="{{ asset('images/landing/telkom-sukabumi-office.jpg') }}" 
+                             alt="Kantor PT Telkom Indonesia Witel Sukabumi - Jl. R. E. Martadinata No.24" 
+                             width="1920"
+                             height="1080"
+                             class="w-full h-full object-cover object-[center_34%] transition-transform duration-1000 group-hover:scale-105"
+                             onerror="this.onerror=null; this.src='{{ asset('images/landing/noc-monitoring-room.jpg') }}'">
+
+                        <!-- Top-Edge Gradient Fade (Lapisan pudar putih halus di bagian tepi atas foto gedung - Khusus Desktop/Tablet) -->
+                        <div class="hidden sm:block absolute inset-x-0 top-0 h-24 sm:h-32 lg:h-40 bg-gradient-to-b from-white via-white/50 to-transparent pointer-events-none z-10"></div>
+
+                        <!-- Lapisan Vignette Halus Bawah untuk Keterbacaan Foto -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent pointer-events-none z-10"></div>
+                    </div>
+                </div>
+            </div>
+
         </section>
 
         <!-- ================= LIVE TELEMETRY STATS STRIP ================= -->
@@ -636,7 +940,7 @@
             <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto relative z-10">
                 
                 <!-- Section Header (Telemetri & Kapasitas Fisik) -->
-                <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-8 sm:mb-10">
+                <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-8 sm:mb-10 reveal-item">
                     <div>
                         <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#bc0007] block mb-1">Telemetri &amp; Kapasitas Fisik</span>
                         <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-[#0b1c30] tracking-tight">
@@ -648,118 +952,118 @@
                     </p>
                 </div>
 
-                <!-- 4 Modular Telemetry Cards Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+                <!-- 4 Modular Telemetry Cards Grid (2x2 Compact Grid on Mobile, 4-Cols on Desktop) -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-6">
                     
                     <!-- Card 1: Titik ODP Termonitor -->
-                    <div class="stat-counter-card group relative bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 hover:border-red-200 shadow-2xs hover:shadow-xl hover:shadow-red-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                    <div class="stat-counter-card group relative bg-white rounded-xl sm:rounded-2xl p-3.5 sm:p-5 lg:p-6 border border-slate-200/90 hover:border-red-200 shadow-2xs hover:shadow-xl hover:shadow-red-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between reveal-item stagger-1">
                         <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="text-[13px] font-semibold text-slate-600">Titik ODP Termonitor</span>
-                                <div class="w-8 h-8 rounded-lg bg-sky-50 text-[#bc0007] border border-sky-100/80 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#bc0007] group-hover:text-white transition-all duration-300">
-                                    <span class="material-symbols-outlined text-[18px]">alt_route</span>
+                            <div class="flex items-center justify-between mb-2 sm:mb-3 gap-1">
+                                <span class="text-xs sm:text-[13px] font-semibold text-slate-700 truncate">Titik ODP Termonitor</span>
+                                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-red-50 text-[#bc0007] border border-red-100/80 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-[#bc0007] group-hover:text-white transition-all duration-300">
+                                    <span class="material-symbols-outlined text-[16px] sm:text-[18px]">alt_route</span>
                                 </div>
                             </div>
-                            <div class="my-2.5 flex items-baseline">
-                                <span class="font-telemetry text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight stat-count-value"
+                            <div class="my-1.5 sm:my-2.5 flex items-baseline">
+                                <span class="font-telemetry text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight stat-count-value"
                                       data-target="8420"
                                       data-format="integer">8,420</span>
                             </div>
-                            <p class="text-xs text-slate-500 font-medium leading-relaxed">Cakupan 23 Sektor Kecamatan Sukabumi</p>
+                            <p class="text-[11px] sm:text-xs text-slate-500 font-medium leading-tight truncate">Cakupan 23 Sektor Sukabumi</p>
                         </div>
                         
                         <!-- Segmented Progress Bar (5 Blocks) -->
-                        <div class="grid grid-cols-5 gap-1.5 mt-5 pt-1">
-                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
-                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
-                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
-                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
-                            <div class="h-2 rounded-xs bg-[#bc0007]"></div>
+                        <div class="grid grid-cols-5 gap-1 sm:gap-1.5 mt-3 sm:mt-5 pt-1">
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-red-100"></div>
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-red-100"></div>
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-red-100"></div>
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-red-100"></div>
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-[#bc0007]"></div>
                         </div>
                     </div>
 
                     <!-- Card 2: Active PON Ports -->
-                    <div class="stat-counter-card group relative bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 hover:border-sky-200 shadow-2xs hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                    <div class="stat-counter-card group relative bg-white rounded-xl sm:rounded-2xl p-3.5 sm:p-5 lg:p-6 border border-slate-200/90 hover:border-sky-200 shadow-2xs hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between reveal-item stagger-2">
                         <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="text-[13px] font-semibold text-slate-600">Active PON Ports</span>
-                                <div class="w-8 h-8 rounded-lg bg-sky-50 text-[#00628d] border border-sky-100/80 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#00628d] group-hover:text-white transition-all duration-300">
-                                    <span class="material-symbols-outlined text-[18px]">router</span>
+                            <div class="flex items-center justify-between mb-2 sm:mb-3 gap-1">
+                                <span class="text-xs sm:text-[13px] font-semibold text-slate-700 truncate">Active PON Ports</span>
+                                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-sky-50 text-[#00628d] border border-sky-100/80 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-[#00628d] group-hover:text-white transition-all duration-300">
+                                    <span class="material-symbols-outlined text-[16px] sm:text-[18px]">router</span>
                                 </div>
                             </div>
-                            <div class="my-2.5 flex items-baseline gap-1.5">
-                                <span class="font-telemetry text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight stat-count-value"
+                            <div class="my-1.5 sm:my-2.5 flex items-baseline gap-1">
+                                <span class="font-telemetry text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight stat-count-value"
                                       data-target="384"
                                       data-format="integer">384</span>
                                 <span class="font-sans text-xs sm:text-sm font-semibold text-slate-500">Port</span>
                             </div>
-                            <p class="text-xs text-slate-500 font-medium leading-relaxed">24 Chassis OLT MA5800 &amp; C300</p>
+                            <p class="text-[11px] sm:text-xs text-slate-500 font-medium leading-tight truncate">24 Chassis OLT MA5800</p>
                         </div>
 
                         <!-- Segmented Progress Bar (5 Blocks) -->
-                        <div class="grid grid-cols-5 gap-1.5 mt-5 pt-1">
-                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
-                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
-                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
-                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
-                            <div class="h-2 rounded-xs bg-[#00628d]"></div>
+                        <div class="grid grid-cols-5 gap-1 sm:gap-1.5 mt-3 sm:mt-5 pt-1">
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-sky-100"></div>
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-sky-100"></div>
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-sky-100"></div>
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-sky-100"></div>
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-[#00628d]"></div>
                         </div>
                     </div>
 
                     <!-- Card 3: SLA Ketersediaan Optik -->
-                    <div class="stat-counter-card group relative bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 hover:border-emerald-200 shadow-2xs hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                    <div class="stat-counter-card group relative bg-white rounded-xl sm:rounded-2xl p-3.5 sm:p-5 lg:p-6 border border-slate-200/90 hover:border-emerald-200 shadow-2xs hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between reveal-item stagger-3">
                         <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="text-[13px] font-semibold text-slate-600">SLA Ketersediaan Optik</span>
-                                <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100/80 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300">
-                                    <span class="material-symbols-outlined text-[18px]">verified</span>
+                            <div class="flex items-center justify-between mb-2 sm:mb-3 gap-1">
+                                <span class="text-xs sm:text-[13px] font-semibold text-slate-700 truncate">SLA Optik</span>
+                                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100/80 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300">
+                                    <span class="material-symbols-outlined text-[16px] sm:text-[18px]">verified</span>
                                 </div>
                             </div>
-                            <div class="my-2.5 flex items-baseline">
-                                <span class="font-telemetry text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight stat-count-value"
+                            <div class="my-1.5 sm:my-2.5 flex items-baseline">
+                                <span class="font-telemetry text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight stat-count-value"
                                       data-target="99.98"
                                       data-decimals="2"
-                                      data-format="decimal">99.98</span><span class="font-telemetry text-2xl sm:text-3xl font-extrabold text-slate-900 ml-0.5">%</span>
+                                      data-format="decimal">99.98</span><span class="font-telemetry text-lg sm:text-2xl font-extrabold text-slate-900 ml-0.5">%</span>
                             </div>
-                            <p class="text-xs font-semibold text-emerald-600 leading-relaxed">Diatas Target Regional (99.85%)</p>
+                            <p class="text-[11px] sm:text-xs font-semibold text-emerald-600 leading-tight truncate">Target: 99.85%</p>
                         </div>
 
                         <!-- Segmented Progress Bar (5 Blocks) -->
-                        <div class="grid grid-cols-5 gap-1.5 mt-5 pt-1">
-                            <div class="h-2 rounded-xs bg-emerald-200/80"></div>
-                            <div class="h-2 rounded-xs bg-emerald-200/80"></div>
-                            <div class="h-2 rounded-xs bg-emerald-200/80"></div>
-                            <div class="h-2 rounded-xs bg-emerald-200/80"></div>
-                            <div class="h-2 rounded-xs bg-emerald-600"></div>
+                        <div class="grid grid-cols-5 gap-1 sm:gap-1.5 mt-3 sm:mt-5 pt-1">
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-emerald-100"></div>
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-emerald-100"></div>
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-emerald-100"></div>
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-emerald-100"></div>
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-emerald-600"></div>
                         </div>
                     </div>
 
                     <!-- Card 4: Mean Time to Repair -->
-                    <div class="stat-counter-card group relative bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 hover:border-rose-200 shadow-2xs hover:shadow-xl hover:shadow-rose-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                    <div class="stat-counter-card group relative bg-white rounded-xl sm:rounded-2xl p-3.5 sm:p-5 lg:p-6 border border-slate-200/90 hover:border-rose-200 shadow-2xs hover:shadow-xl hover:shadow-rose-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between reveal-item stagger-4">
                         <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="text-[13px] font-semibold text-slate-600">Mean Time to Repair</span>
-                                <div class="w-8 h-8 rounded-lg bg-red-50 text-[#bc0007] border border-red-100/80 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#bc0007] group-hover:text-white transition-all duration-300">
-                                    <span class="material-symbols-outlined text-[18px]">fmd_good</span>
+                            <div class="flex items-center justify-between mb-2 sm:mb-3 gap-1">
+                                <span class="text-xs sm:text-[13px] font-semibold text-slate-700 truncate">MTTR Restorasi</span>
+                                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-red-50 text-[#bc0007] border border-red-100/80 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-[#bc0007] group-hover:text-white transition-all duration-300">
+                                    <span class="material-symbols-outlined text-[16px] sm:text-[18px]">fmd_good</span>
                                 </div>
                             </div>
-                            <div class="my-2.5 flex items-baseline gap-1.5">
-                                <span class="font-telemetry text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight stat-count-value"
+                            <div class="my-1.5 sm:my-2.5 flex items-baseline gap-1">
+                                <span class="font-telemetry text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight stat-count-value"
                                       data-target="1.74"
                                       data-decimals="2"
                                       data-format="decimal">1.74</span>
                                 <span class="font-sans text-xs sm:text-sm font-semibold text-slate-500">Jam</span>
                             </div>
-                            <p class="text-xs text-slate-500 font-medium leading-relaxed">Restorasi Kabel Putus / Macrobend</p>
+                            <p class="text-[11px] sm:text-xs text-slate-500 font-medium leading-tight truncate">Restorasi Kabel Optik</p>
                         </div>
 
                         <!-- Segmented Progress Bar (5 Blocks) -->
-                        <div class="grid grid-cols-5 gap-1.5 mt-5 pt-1">
-                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
-                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
-                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
-                            <div class="h-2 rounded-xs bg-blue-100/80"></div>
-                            <div class="h-2 rounded-xs bg-[#bc0007]"></div>
+                        <div class="grid grid-cols-5 gap-1 sm:gap-1.5 mt-3 sm:mt-5 pt-1">
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-red-100"></div>
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-red-100"></div>
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-red-100"></div>
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-red-100"></div>
+                            <div class="h-1.5 sm:h-2 rounded-xs bg-[#bc0007]"></div>
                         </div>
                     </div>
 
@@ -771,7 +1075,7 @@
         <section class="w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 lg:py-24 bg-[#f8f9ff]" id="fitur">
             <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto flex flex-col gap-12">
                 
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 reveal-item">
                     <div>
                         <div class="flex items-center gap-2 mb-2">
                             <span class="w-8 h-1 bg-[#bc0007] rounded-full"></span>
@@ -786,88 +1090,81 @@
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Mobile Swipe Indicator (Hidden on Desktop) -->
+                <div class="flex items-center justify-between lg:hidden -mb-4">
+                    <span class="text-[11px] font-semibold text-slate-500 flex items-center gap-1.5 font-mono">
+                        <span class="material-symbols-outlined text-sm text-[#bc0007]">swipe</span>
+                        <span>Geser untuk modul lainnya</span>
+                    </span>
+                    <span class="text-[11px] font-mono text-slate-400 font-semibold">1 - 4 Pilar</span>
+                </div>
+
+                <!-- 4 Cards: Horizontal Scroll Snap on Mobile (< lg), 4-col Grid on Desktop (lg+) -->
+                <div class="flex overflow-x-auto snap-x snap-mandatory pb-4 pt-1 gap-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 lg:overflow-visible lg:grid lg:grid-cols-4 lg:gap-6 no-scrollbar">
                     
                     <!-- Pilar 1 -->
-                    <div class="bg-white p-6 sm:p-7 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="flex flex-col gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center text-[#bc0007] group-hover:scale-110 transition-transform">
+                    <div class="w-[82vw] max-w-[320px] sm:w-[340px] lg:w-auto shrink-0 snap-center lg:shrink bg-white p-5 sm:p-7 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-300 group reveal-item stagger-1">
+                        <div class="flex flex-col gap-3.5 sm:gap-4">
+                            <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-red-100 flex items-center justify-center text-[#bc0007] group-hover:scale-110 transition-transform">
                                 <span class="material-symbols-outlined text-2xl">signal_cellular_alt</span>
                             </div>
                             <span class="text-[11px] font-bold uppercase tracking-wider text-[#bc0007]">Telemetri Real-Time</span>
-                            <h3 class="font-headline text-lg font-bold text-slate-900 group-hover:text-[#bc0007] transition-colors">
-                                Monitoring GPON & Redaman OLT
+                            <h3 class="font-headline text-base sm:text-lg font-bold text-slate-900 group-hover:text-[#bc0007] transition-colors">
+                                Monitoring GPON &amp; Redaman OLT
                             </h3>
                             <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
                                 Monitoring daya pancar/terima optik Tx/Rx per slot PON secara kontinu. Deteksi dini potensi degradasi kualitas, macrobending kabel, dan peringatan instan kabel fiber putus.
                             </p>
                         </div>
-                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
-                            <span>Loss Threshold: -24 dBm</span>
-                            <span class="material-symbols-outlined text-[#00628d] text-base">check_circle</span>
-                        </div>
                     </div>
 
                     <!-- Pilar 2 -->
-                    <div class="bg-white p-6 sm:p-7 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="flex flex-col gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center text-[#00628d] group-hover:scale-110 transition-transform">
+                    <div class="w-[82vw] max-w-[320px] sm:w-[340px] lg:w-auto shrink-0 snap-center lg:shrink bg-white p-5 sm:p-7 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-300 group reveal-item stagger-2">
+                        <div class="flex flex-col gap-3.5 sm:gap-4">
+                            <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-sky-100 flex items-center justify-center text-[#00628d] group-hover:scale-110 transition-transform">
                                 <span class="material-symbols-outlined text-2xl">qr_code_scanner</span>
                             </div>
                             <span class="text-[11px] font-bold uppercase tracking-wider text-[#00628d]">Validasi Aset Fisik</span>
-                            <h3 class="font-headline text-lg font-bold text-slate-900 group-hover:text-[#00628d] transition-colors">
-                                Audit & Validasi Data Valins Fisik
+                            <h3 class="font-headline text-base sm:text-lg font-bold text-slate-900 group-hover:text-[#00628d] transition-colors">
+                                Audit &amp; Validasi Data Valins Fisik
                             </h3>
                             <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
                                 Sinkronisasi data QR Code ODP lapangan dengan sistem database UIM. Identifikasi otomatis port ODP bodong, dropcore tidak terdaftar, dan pembaruan visual kondisi perangkat.
                             </p>
                         </div>
-                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
-                            <span>Kesesuaian: 98.6% Valid</span>
-                            <span class="material-symbols-outlined text-[#00628d] text-base">check_circle</span>
-                        </div>
                     </div>
 
                     <!-- Pilar 3 -->
-                    <div class="bg-white p-6 sm:p-7 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="flex flex-col gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-700 group-hover:scale-110 transition-transform">
+                    <div class="w-[82vw] max-w-[320px] sm:w-[340px] lg:w-auto shrink-0 snap-center lg:shrink bg-white p-5 sm:p-7 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-300 group reveal-item stagger-3">
+                        <div class="flex flex-col gap-3.5 sm:gap-4">
+                            <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-700 group-hover:scale-110 transition-transform">
                                 <span class="material-symbols-outlined text-2xl">map</span>
                             </div>
                             <span class="text-[11px] font-bold uppercase tracking-wider text-indigo-700">Geospasial Presisi</span>
-                            <h3 class="font-headline text-lg font-bold text-slate-900 group-hover:text-indigo-700 transition-colors">
+                            <h3 class="font-headline text-base sm:text-lg font-bold text-slate-900 group-hover:text-indigo-700 transition-colors">
                                 Peta Topologi GIS Spasial Fiber
                             </h3>
                             <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
                                 Visualisasi rute kabel Feeder, Distribution, dan Closure FDT/ODC berbasis titik koordinat GPS presisi tinggi Sukabumi untuk navigasi cepat regu perbaikan darurat.
                             </p>
                         </div>
-                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
-                            <span>Akurasi GPS &lt; 2.5m</span>
-                            <span class="material-symbols-outlined text-[#00628d] text-base">check_circle</span>
-                        </div>
                     </div>
 
                     <!-- Pilar 4 -->
-                    <div class="bg-white p-6 sm:p-7 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="flex flex-col gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center text-[#bc0007] group-hover:scale-110 transition-transform">
+                    <div class="w-[82vw] max-w-[320px] sm:w-[340px] lg:w-auto shrink-0 snap-center lg:shrink bg-white p-5 sm:p-7 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-300 group reveal-item stagger-4">
+                        <div class="flex flex-col gap-3.5 sm:gap-4">
+                            <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-red-100 flex items-center justify-center text-[#bc0007] group-hover:scale-110 transition-transform">
                                 <span class="material-symbols-outlined text-2xl">troubleshoot</span>
                             </div>
                             <span class="text-[11px] font-bold uppercase tracking-wider text-[#bc0007]">Automasi Korektif</span>
-                            <h3 class="font-headline text-lg font-bold text-slate-900 group-hover:text-[#bc0007] transition-colors">
-                                Analisis OTDR & Notifikasi Bot
+                            <h3 class="font-headline text-base sm:text-lg font-bold text-slate-900 group-hover:text-[#bc0007] transition-colors">
+                                Analisis OTDR &amp; Notifikasi Bot
                             </h3>
                             <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
                                 Analisis kurva trace OTDR cerdas untuk pinpoint jarak putus serat optik. Penerbitan Surat Perintah Kerja (SPK) otomatis ke grup Telegram regu patroli Sukabumi.
                             </p>
                         </div>
-                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
-                            <span>Eskalasi Bot: &lt; 30 Detik</span>
-                            <span class="material-symbols-outlined text-[#00628d] text-base">check_circle</span>
-                        </div>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -876,7 +1173,7 @@
         <section class="w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 lg:py-24 bg-white border-y border-slate-200/80" id="telemetri">
             <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto flex flex-col gap-10">
                 
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 reveal-item">
                     <div>
                         <div class="flex items-center gap-2 mb-1.5">
                             <svg class="w-4 h-4 text-[#bc0007] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -885,7 +1182,7 @@
                             <span class="text-xs font-bold uppercase tracking-wider text-slate-600">INTEGRITAS &amp; SINKRONISASI DATA JARINGAN</span>
                         </div>
                         <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-[#0b1c30] tracking-tight">
-                            Status Validasi Data VALINS & Audit Lapangan Telkom Akses Witel Sukabumi
+                            Status Validasi Data Valins & Audit Lapangan Telkom Akses Witel Sukabumi
                         </h2>
                         <p class="text-xs sm:text-sm text-slate-500 mt-1.5 flex items-center gap-1.5 font-medium">
                             <svg class="w-3.5 h-3.5 text-[#bc0007] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -895,25 +1192,30 @@
                             <span>Kantor Witel Sukabumi: Jl. R. E. Martadinata No.24, Gunungparang, Kec. Cikole, Kota Sukabumi</span>
                         </p>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <span class="px-3.5 py-1.5 bg-slate-50 rounded-xl text-slate-700 font-mono text-xs border border-slate-200 flex items-center gap-2 shadow-2xs">
-                            <svg class="w-3.5 h-3.5 text-[#bc0007] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                            </svg>
-                            <span>Refreshed: Realtime (5s)</span>
-                        </span>
-                        <a href="{{ route('login') }}" 
-                           class="px-4 py-2 rounded-xl bg-[#bc0007] hover:bg-[#960005] text-white text-xs font-bold uppercase tracking-wider shadow-sm flex items-center gap-1.5 transition-all">
-                            <span class="material-symbols-outlined text-base">refresh</span>
-                            <span>Buka Konsol Penuh</span>
-                        </a>
-                    </div>
+                </div>
+
+                <!-- Mobile Tab Switcher (Segmented Control, Hidden on Desktop >= lg) -->
+                <div class="flex lg:hidden items-center p-1 bg-slate-100 rounded-xl border border-slate-200/90 w-full max-w-sm mx-auto shadow-2xs -mb-2">
+                    <button type="button" 
+                            id="btn-tab-telemetri-table" 
+                            onclick="switchTelemetriTab('table')"
+                            class="flex-1 py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 bg-white text-slate-900 shadow-xs border border-slate-200/80">
+                        <span class="material-symbols-outlined text-[16px] text-[#bc0007]">table_chart</span>
+                        <span>Tabel Rekonsiliasi</span>
+                    </button>
+                    <button type="button" 
+                            id="btn-tab-telemetri-map" 
+                            onclick="switchTelemetriTab('map')"
+                            class="flex-1 py-2 px-3 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all flex items-center justify-center gap-1.5">
+                        <span class="material-symbols-outlined text-[16px] text-slate-500">map</span>
+                        <span>Peta Lokasi</span>
+                    </button>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
                     
-                    <!-- Table Section (2 Cols) -->
-                    <div class="lg:col-span-2 bg-[#f8f9ff] rounded-2xl shadow-sm overflow-hidden flex flex-col border border-slate-200">
+                    <!-- Table Section (2 Cols on Desktop, Tab Pane 1 on Mobile) -->
+                    <div id="telemetri-table-wrapper" class="lg:col-span-2 bg-[#f8f9ff] rounded-2xl shadow-sm overflow-hidden flex flex-col border border-slate-200 block reveal-item stagger-1">
                         
                         <!-- Table Sub-header -->
                         <div class="px-5 py-3.5 bg-white border-b border-slate-200 flex items-center justify-between">
@@ -921,7 +1223,7 @@
                                 <svg class="w-4 h-4 text-[#bc0007] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                                     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
                                 </svg>
-                                <h3 class="text-sm font-bold text-slate-900 tracking-tight">Daftar Rekonsiliasi VALINS & Status Layanan (ODP Tidak Sama)</h3>
+                                <h3 class="text-sm font-bold text-slate-900 tracking-tight">Daftar Rekonsiliasi Valins & Status Layanan (ODP Tidak Sama)</h3>
                             </div>
                         </div>
 
@@ -999,8 +1301,8 @@
                         </div>
                     </div>
 
-                    <!-- Right Side Card: Audit Lapangan ODP Preview with Interactive Map -->
-                    <div class="bg-[#f8f9ff] p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between gap-5">
+                    <!-- Right Side Card: Audit Lapangan ODP Preview with Interactive Map (1 Col on Desktop, Tab Pane 2 on Mobile) -->
+                    <div id="telemetri-map-wrapper" class="lg:col-span-1 bg-[#f8f9ff] p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between gap-5 hidden lg:flex reveal-item stagger-2">
                         <div class="flex flex-col gap-4">
                             <!-- Card Header -->
                             <div class="flex items-center justify-between">
@@ -1051,25 +1353,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Validator Info -->
-                        <div class="border border-slate-100 rounded-xl p-3 bg-slate-50/50 flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <img src="{{ asset('images/landing/technician-avatar.jpg') }}" 
-                                     alt="Lead Field Validator Lapangan" 
-                                     class="w-10 h-10 rounded-full object-cover border border-slate-200 shrink-0"
-                                     onerror="this.src='https://ui-avatars.com/api/?name=Tim+Daman&background=bc0007&color=fff'">
-                                <div>
-                                    <span class="text-xs font-bold text-slate-900 block leading-tight">Tim Daman Sukabumi</span>
-                                    <span class="text-[11px] text-slate-500 font-mono">Lead Field Validator</span>
-                                </div>
-                            </div>
-                            <span class="text-[11px] text-slate-500 font-medium bg-white px-2.5 py-1 rounded-md border border-slate-200 shadow-2xs">
-                                25m lalu
-                            </span>
-                        </div>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -1078,21 +1362,30 @@
         <section class="w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-16 lg:py-24 bg-[#f8f9ff]" id="arsitektur">
             <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto flex flex-col gap-12">
                 
-                <div class="text-center max-w-2xl mx-auto flex flex-col gap-3">
+                <div class="text-center max-w-2xl mx-auto flex flex-col gap-3 reveal-item">
                     <span class="text-xs uppercase tracking-wider text-[#bc0007] font-bold">Arsitektur Jalur Optik GPON</span>
                     <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0b1c30]">
                         Dari Sentral Telepon Otomat (STO) Hingga Rumah Pelanggan
                     </h2>
                     <p class="text-sm text-slate-600 leading-relaxed">
-                        Peta transmisi optik fisik standar Telkom Akses dengan titik kendali validasi VALINS serta toleransi redaman per segmen.
+                        Peta transmisi optik fisik standar Telkom Akses dengan titik kendali validasi Valins serta toleransi redaman per segmen.
                     </p>
                 </div>
 
-                <!-- 4 Stages Process Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Mobile Swipe Indicator (Hidden on Desktop) -->
+                <div class="flex items-center justify-between lg:hidden -mb-4">
+                    <span class="text-[11px] font-semibold text-slate-500 flex items-center gap-1.5 font-mono">
+                        <span class="material-symbols-outlined text-sm text-[#bc0007]">swipe</span>
+                        <span>Geser alur transmisi (01 - 04)</span>
+                    </span>
+                    <span class="text-[11px] font-mono text-slate-400 font-semibold">4 Tahapan</span>
+                </div>
+
+                <!-- 4 Stages Process Cards: Horizontal Scroll Snap on Mobile (< lg), 4-Cols on Desktop (lg+) -->
+                <div class="flex overflow-x-auto snap-x snap-mandatory pb-4 pt-1 gap-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 lg:overflow-visible lg:grid lg:grid-cols-4 lg:gap-6 no-scrollbar">
                     
                     <!-- Stage 1 -->
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 relative flex flex-col justify-between hover:shadow-md transition-shadow">
+                    <div class="w-[82vw] max-w-[320px] sm:w-[340px] lg:w-auto shrink-0 snap-center lg:shrink bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200/80 relative flex flex-col justify-between hover:shadow-md transition-shadow reveal-item stagger-1">
                         <div class="flex flex-col gap-3">
                             <div class="flex items-center justify-between">
                                 <span class="w-9 h-9 rounded-xl bg-[#bc0007] text-white flex items-center justify-center font-mono text-sm font-bold shadow-xs">
@@ -1100,16 +1393,16 @@
                                 </span>
                             </div>
                             <h4 class="font-headline text-base font-bold text-slate-900 mt-2">
-                                STO & Optical Line Terminal (OLT)
+                                STO &amp; Optical Line Terminal (OLT)
                             </h4>
                             <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                                Perangkat aktif utama OLT ZTE C300 & Huawei MA5800. Titik awal injeksi daya optik laser 1490nm (Downstream) dan 1310nm (Upstream).
+                                Perangkat aktif utama OLT ZTE C300 &amp; Huawei MA5800. Titik awal injeksi daya optik laser 1490nm (Downstream) dan 1310nm (Upstream).
                             </p>
                         </div>
                     </div>
 
                     <!-- Stage 2 -->
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 relative flex flex-col justify-between hover:shadow-md transition-shadow">
+                    <div class="w-[82vw] max-w-[320px] sm:w-[340px] lg:w-auto shrink-0 snap-center lg:shrink bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200/80 relative flex flex-col justify-between hover:shadow-md transition-shadow reveal-item stagger-2">
                         <div class="flex flex-col gap-3">
                             <div class="flex items-center justify-between">
                                 <span class="w-9 h-9 rounded-xl bg-[#00628d] text-white flex items-center justify-center font-mono text-sm font-bold shadow-xs">
@@ -1126,7 +1419,7 @@
                     </div>
 
                     <!-- Stage 3 -->
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 relative flex flex-col justify-between hover:shadow-md transition-shadow">
+                    <div class="w-[82vw] max-w-[320px] sm:w-[340px] lg:w-auto shrink-0 snap-center lg:shrink bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200/80 relative flex flex-col justify-between hover:shadow-md transition-shadow reveal-item stagger-3">
                         <div class="flex flex-col gap-3">
                             <div class="flex items-center justify-between">
                                 <span class="w-9 h-9 rounded-xl bg-slate-800 text-white flex items-center justify-center font-mono text-sm font-bold shadow-xs">
@@ -1137,13 +1430,13 @@
                                 Optical Distribution Point (ODP)
                             </h4>
                             <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                                Kotak distribusi tiang atau pedestal (Splitter 1:8 / 1:16). Titik fokus audit tag QR Code VALINS untuk validasi fisik dan port availability.
+                                Kotak distribusi tiang atau pedestal (Splitter 1:8 / 1:16). Titik fokus audit tag QR Code Valins untuk validasi fisik dan port availability.
                             </p>
                         </div>
                     </div>
 
                     <!-- Stage 4 -->
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 relative flex flex-col justify-between hover:shadow-md transition-shadow">
+                    <div class="w-[82vw] max-w-[320px] sm:w-[340px] lg:w-auto shrink-0 snap-center lg:shrink bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200/80 relative flex flex-col justify-between hover:shadow-md transition-shadow reveal-item stagger-4">
                         <div class="flex flex-col gap-3">
                             <div class="flex items-center justify-between">
                                 <span class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-mono text-sm font-bold shadow-xs">
@@ -1158,7 +1451,6 @@
                             </p>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -1168,7 +1460,7 @@
             <div class="w-full max-w-[1536px] 2xl:max-w-[1680px] mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
                 
                 <!-- Left Content -->
-                <div class="flex-1 flex flex-col gap-6">
+                <div class="flex-1 flex flex-col gap-6 reveal-item stagger-1">
                     <div>
                         <div class="flex items-center gap-2 mb-2">
                             <span class="w-8 h-1 bg-[#bc0007] rounded-full"></span>
@@ -1234,21 +1526,24 @@
                 </div>
 
                 <!-- Right Visual: Field Technician -->
-                <div class="w-full lg:w-5/12 flex flex-col gap-4">
-                    <div class="relative rounded-2xl overflow-hidden shadow-xl bg-slate-900 border border-slate-200/50">
-                        <img src="{{ asset('images/landing/technician-field-odp.jpg') }}" 
-                             alt="Teknisi Telkom Akses Validasi ODP Lapangan Sukabumi" 
-                             class="w-full h-84 object-cover opacity-90 transition-transform duration-500 hover:scale-105"
-                             onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuC3DQrSSxGuGfzIMGigebrPyVZcrELgDg-M9xovm9e1vgt0q4x5w-I6WCAIPPWsBcZ-5elNDM0eUc3aUpOkc9uFspUwVvsOe_DEicwcQMpStYoNyMEuB7DuXwhAly4HSUyu-qIFBU8M72Enx4CJ-5p5XARcFQuYDe3R8jAm5ahnIkLKdFeCNkBoP5Ri3dbUTb1CNoPOjRRQvgB2fD479KkVo4z6Y9aHzqZ-oT62cIza2WWVKjhj0Eni'">
+                <div class="w-full lg:w-5/12 flex flex-col gap-4 reveal-item stagger-2">
+                    <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl bg-slate-950 border border-slate-200/80 group">
+                        <img src="{{ asset('images/landing/technician-field-odc.jpg') }}" 
+                             alt="Teknisi Telkom Akses Pemeliharaan ODC dan Validasi ODP Lapangan Sukabumi" 
+                             class="w-full h-84 sm:h-96 lg:h-[400px] object-cover object-[center_25%] transition-transform duration-700 group-hover:scale-105"
+                             onerror="this.onerror=null; this.src='{{ asset('images/landing/technician-field-odp.jpg') }}'">
                         
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent pointer-events-none"></div>
                         
-                        <div class="absolute bottom-4 left-4 right-4 bg-slate-900/85 backdrop-blur-md p-3.5 rounded-xl text-white border border-white/10">
+                        <div class="absolute bottom-4 left-4 right-4 bg-slate-900/85 backdrop-blur-md p-3.5 sm:p-4 rounded-xl sm:rounded-2xl text-white border border-white/10 shadow-lg">
                             <div class="flex items-center justify-between text-xs mb-1">
-                                <span class="text-red-300 font-bold">Regu Teknisi Lapangan</span>
+                                <span class="text-red-300 font-bold flex items-center gap-1.5">
+                                    <span>Regu Teknisi Lapangan</span>
+                                </span>
+                                <span class="text-[10px] text-slate-400 font-mono">Witel Sukabumi</span>
                             </div>
-                            <p class="text-xs text-slate-300">
-                                Audit berkala fisik ODP di kawasan Cikole, Baros, Citamiang, dan Jalur Lingkar Selatan Sukabumi.
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Audit berkala fisik ODP &amp; ODC di kawasan Cikole, Baros, Citamiang, dan Jalur Lingkar Selatan Sukabumi.
                             </p>
                         </div>
                     </div>
@@ -1271,7 +1566,7 @@
 
         <!-- ================= FULL-WIDTH CTA BANNER (MORDANT RED 19) ================= -->
         <section class="w-full bg-[#AE0C00] rounded-none shadow-none mb-0" id="konsol">
-            <div class="max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-16">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-16 reveal-item">
                 <!-- Split 2 Kolom Layout (Kiri Informasi, Kanan Tombol Aksi) -->
                 <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
                     <!-- Kolom Kiri (Judul & Deskripsi) -->
@@ -1280,7 +1575,7 @@
                             Tingkatkan Integritas Data Jaringan Fiber Optik Sukabumi Sekarang
                         </h2>
                         <p class="text-white/90 text-sm md:text-base mt-3 leading-relaxed">
-                            Akses konsol monitoring diperuntukkan bagi Network Engineer, Validator Data VALINS, Asisten Manager Pemeliharaan, dan Teknisi Lapangan PT Telkom Akses Witel Sukabumi.
+                            Akses konsol monitoring diperuntukkan bagi Network Engineer, Validator Data Valins, Asisten Manager Pemeliharaan, dan Teknisi Lapangan PT Telkom Akses Witel Sukabumi.
                         </p>
                     </div>
 
@@ -1321,7 +1616,7 @@
                                  onerror="this.src='{{ asset('images/telkom-akses-official-clean.png') }}'">
                         </div>
                         <p class="text-xs text-slate-600 leading-relaxed max-w-md">
-                            Sistem Informasi Manajemen Data VALINS & Monitoring GPON OLT Terpadu Kawasan Sukabumi. Platform resmi operasional jaringan optik dan integrasi topologi ODC/ODP regional.
+                            Sistem Informasi Manajemen Data Valins & Monitoring GPON OLT Terpadu Kawasan Sukabumi. Platform resmi operasional jaringan optik dan integrasi topologi ODC/ODP regional.
                         </p>
                         <div class="flex flex-wrap items-center gap-2.5 mt-4">
                             <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 text-sky-800 text-[11px] font-semibold border border-slate-200">
@@ -1425,7 +1720,7 @@
                     </div>
                     <ul class="flex flex-col gap-3 text-xs text-slate-600">
                         <li>
-                           <a href="{{ route('privacy.policy') }}" class="group flex items-center gap-2 text-slate-600 hover:text-[#bc0007] transition-colors duration-200">
+                           <a href="{{ route('about.us') }}" class="group flex items-center gap-2 text-slate-600 hover:text-[#bc0007] transition-colors duration-200">
                                 <span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-[#bc0007] group-hover:translate-x-1 transition-all duration-200 shrink-0">arrow_forward</span>
                                 <span class="font-medium group-hover:translate-x-0.5 transition-transform duration-200">Tentang Kami</span>
                             </a>
@@ -1482,130 +1777,149 @@
 
             </div>
 
-            <!-- Single Clean Divider -->
-            <div class="border-t border-slate-200/80 my-6 sm:my-7"></div>
+            <!-- Garis Pembatas Horisontal Tunggal yang Presisi -->
+            <div class="border-t border-slate-200/80 mt-8 mb-6 sm:mt-9 sm:mb-6"></div>
 
-            <!-- Footer Bottom Area: 2 Dedicated Distinct Rows -->
-            <div class="flex flex-col gap-5 sm:gap-5.5">
-                
-                <!-- Row 1: Logo Mitra Kerja (Lembaga Pendukung - Berlatar Transparan, Tanpa Bingkai Kotak) -->
-                <div class="flex flex-col items-center gap-3 sm:gap-3.5">
-                    <!-- Label: Supported By -->
-                    <div class="flex items-center justify-center gap-3">
-                        <div class="h-px w-8 sm:w-14 bg-gradient-to-r from-transparent to-slate-300/80"></div>
-                        <span class="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400 select-none">
-                            Supported By
-                        </span>
-                        <div class="h-px w-8 sm:w-14 bg-gradient-to-l from-transparent to-slate-300/80"></div>
-                    </div>
+            <!-- Bilah Hak Cipta & Media Sosial (Bottom Bar) -->
+            <div class="flex flex-col-reverse sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+                <!-- Sisi Kiri: Teks Hak Cipta & Otoritas Regional -->
+                <p class="text-center sm:text-left leading-relaxed text-slate-500">
+                    <span class="font-medium text-slate-700">© {{ date('Y') }} PT Telkom Akses Witel Sukabumi.</span>
+                    <span class="text-slate-300 hidden sm:inline">•</span>
+                    <span class="text-slate-500">Sub-Direktorat Operasi Jaringan Regional Jawa Barat</span>
+                </p>
 
-                    <!-- Logos Container -->
-                    <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-9 md:gap-12 py-2.5 sm:py-3 overflow-visible">
-                        <!-- 1. Kementerian BUMN / Garuda Pancasila -->
-                        <a href="https://www.bumn.go.id/" target="_blank" rel="noopener noreferrer" 
-                           class="partner-logo-item focus:outline-none" 
-                           title="Kementerian Badan Usaha Milik Negara (BUMN) Republik Indonesia">
-                            <img src="{{ asset('images/partners/bumn.png') }}" 
-                                 alt="Logo Kementerian BUMN" 
-                                 class="h-7 sm:h-8 md:h-8.5 w-auto object-contain">
-                        </a>
+                <!-- Sisi Kanan: Deretan Ikon Media Sosial (Lingkaran Abu-abu Tipis Membulat, Hover State Merah Korporat) -->
+                <div class="flex items-center gap-2">
+                    <!-- 1. Instagram -->
+                    <a href="https://www.instagram.com/telkomaksesindonesia/" target="_blank" rel="noopener noreferrer" 
+                       class="w-9 h-9 rounded-full bg-slate-50 hover:bg-[#bc0007] text-slate-600 hover:text-white border border-slate-200/90 hover:border-[#bc0007] flex items-center justify-center transition-all duration-200 shadow-2xs hover:shadow-sm active:scale-95" 
+                       title="Instagram Resmi Telkom Akses (@telkomaksesindonesia)">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
 
-                        <!-- 2. PT Telkom Indonesia (Persero) Tbk -->
-                        <a href="https://www.telkom.co.id/" target="_blank" rel="noopener noreferrer" 
-                           class="partner-logo-item focus:outline-none" 
-                           title="PT Telkom Indonesia (Persero) Tbk - the world in your hand">
-                            <img src="{{ asset('images/partners/telkom-indonesia.png') }}" 
-                                 alt="Logo Telkom Indonesia" 
-                                 class="h-6 sm:h-7 md:h-7.5 w-auto object-contain">
-                        </a>
+                    <!-- 2. YouTube -->
+                    <a href="https://www.youtube.com/@TelkomAksesOfficial/streams" target="_blank" rel="noopener noreferrer" 
+                       class="w-9 h-9 rounded-full bg-slate-50 hover:bg-[#bc0007] text-slate-600 hover:text-white border border-slate-200/90 hover:border-[#bc0007] flex items-center justify-center transition-all duration-200 shadow-2xs hover:shadow-sm active:scale-95" 
+                       title="YouTube Channel Telkom Akses">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                    </a>
 
-                        <!-- 3. Kementerian Komunikasi dan Digital RI (KOMDIGI) -->
-                        <a href="https://www.komdigi.go.id/" target="_blank" rel="noopener noreferrer" 
-                           class="partner-logo-item focus:outline-none" 
-                           title="Kementerian Komunikasi dan Digital Republik Indonesia (KOMDIGI)">
-                            <img src="{{ asset('images/partners/komdigi.png') }}" 
-                                 alt="Logo KOMDIGI" 
-                                 class="h-8 sm:h-9 md:h-10 w-auto object-contain">
-                        </a>
+                    <!-- 3. TikTok -->
+                    <a href="https://www.tiktok.com/@telkomaksesindonesia" target="_blank" rel="noopener noreferrer" 
+                       class="w-9 h-9 rounded-full bg-slate-50 hover:bg-[#bc0007] text-slate-600 hover:text-white border border-slate-200/90 hover:border-[#bc0007] flex items-center justify-center transition-all duration-200 shadow-2xs hover:shadow-sm active:scale-95" 
+                       title="TikTok Telkom Akses (@telkomaksesindonesia)">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-1.01-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                        </svg>
+                    </a>
 
-                        <!-- 4. PT Bank Syariah Indonesia Tbk (BSI) -->
-                        <a href="https://www.bankbsi.co.id/" target="_blank" rel="noopener noreferrer" 
-                           class="partner-logo-item focus:outline-none" 
-                           title="PT Bank Syariah Indonesia Tbk (BSI)">
-                            <img src="{{ asset('images/partners/bsi.png') }}" 
-                                 alt="Logo Bank Syariah Indonesia" 
-                                 class="h-6 sm:h-7 md:h-7.5 w-auto object-contain">
-                        </a>
-
-                        <!-- 5. Telkom University -->
-                        <a href="https://telkomuniversity.ac.id/" target="_blank" rel="noopener noreferrer" 
-                           class="partner-logo-item focus:outline-none" 
-                           title="Telkom University (Tel-U)">
-                            <img src="{{ asset('images/partners/telkom-university.png') }}" 
-                                 alt="Logo Telkom University" 
-                                 class="h-6 sm:h-7 md:h-7.5 w-auto object-contain">
-                        </a>
-                    </div>
+                    <!-- 4. Facebook -->
+                    <a href="https://www.facebook.com/telkomaksesofficial/" target="_blank" rel="noopener noreferrer" 
+                       class="w-9 h-9 rounded-full bg-slate-50 hover:bg-[#bc0007] text-slate-600 hover:text-white border border-slate-200/90 hover:border-[#bc0007] flex items-center justify-center transition-all duration-200 shadow-2xs hover:shadow-sm active:scale-95" 
+                       title="Facebook Telkom Akses">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
                 </div>
-
-                <!-- Row 2: Copyright & Social Media Icons (Social Media di atas Copyright pada Mobile) -->
-                <div class="flex flex-col-reverse sm:flex-row items-center justify-between gap-3.5 sm:gap-4 text-[11px] text-slate-500 pt-3.5 sm:pt-4 border-t border-slate-100/80">
-                    
-                    <!-- Left: Copyright & Regional Authority -->
-                    <p class="text-center sm:text-left leading-relaxed">
-                        <span class="font-medium text-slate-700">© {{ date('Y') }} PT Telkom Akses Witel Sukabumi.</span>
-                        <span class="text-slate-300 hidden sm:inline">•</span>
-                        <span class="text-slate-500">Sub-Direktorat Operasi Jaringan Regional Jawa Barat</span>
-                    </p>
-
-                    <!-- Right: Official Social Media Icons -->
-                    <div class="flex items-center gap-2">
-                        <!-- 1. INSTAGRAM -->
-                        <a href="https://www.instagram.com/telkomaksesindonesia/" target="_blank" rel="noopener noreferrer" 
-                           class="btn-instagram relative overflow-hidden w-9 h-9 rounded-xl bg-slate-50 text-slate-600 hover:text-white border border-slate-200/80 hover:border-transparent flex items-center justify-center transition-all duration-300 shadow-2xs hover:-translate-y-1 active:scale-95 group" 
-                           title="Instagram Resmi Telkom Akses (@telkomaksesindonesia)">
-                            <span class="btn-instagram-bg absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></span>
-                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 relative z-10" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                            </svg>
-                        </a>
-
-                        <!-- 2. YOUTUBE -->
-                        <a href="https://www.youtube.com/@TelkomAksesOfficial/streams" target="_blank" rel="noopener noreferrer" 
-                           class="w-9 h-9 rounded-xl bg-slate-50 hover:bg-[#FF0000] text-slate-600 hover:text-white border border-slate-200/80 hover:border-[#FF0000] flex items-center justify-center transition-all duration-300 shadow-2xs hover:shadow-md hover:shadow-red-500/25 hover:-translate-y-1 active:scale-95 group" 
-                           title="YouTube Channel Telkom Akses">
-                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                            </svg>
-                        </a>
-
-                        <!-- 3. TIKTOK -->
-                        <a href="https://www.tiktok.com/@telkomaksesindonesia" target="_blank" rel="noopener noreferrer" 
-                           class="w-9 h-9 rounded-xl bg-slate-50 hover:bg-black text-slate-600 hover:text-white border border-slate-200/80 hover:border-black flex items-center justify-center transition-all duration-300 shadow-2xs hover:shadow-md hover:shadow-slate-900/30 hover:-translate-y-1 active:scale-95 group" 
-                           title="TikTok Telkom Akses (@telkomaksesindonesia)">
-                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-1.01-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
-                            </svg>
-                        </a>
-
-                        <!-- 4. FACEBOOK -->
-                        <a href="https://www.facebook.com/telkomaksesofficial/" target="_blank" rel="noopener noreferrer" 
-                           class="w-9 h-9 rounded-xl bg-slate-50 hover:bg-[#1877F2] text-slate-600 hover:text-white border border-slate-200/80 hover:border-[#1877F2] flex items-center justify-center transition-all duration-300 shadow-2xs hover:shadow-md hover:shadow-blue-500/25 hover:-translate-y-1 active:scale-95 group" 
-                           title="Facebook Telkom Akses">
-                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                        </a>
-                    </div>
-
-                </div>
-
             </div>
         </div>
     </footer>
 
     <!-- Header Navigation Interactive & Stable Scroll Controller -->
     <script>
+        // Telemetri Section Tab Switcher for Mobile Devices
+        function switchTelemetriTab(tab) {
+            const tableWrapper = document.getElementById('telemetri-table-wrapper');
+            const mapWrapper = document.getElementById('telemetri-map-wrapper');
+            const btnTable = document.getElementById('btn-tab-telemetri-table');
+            const btnMap = document.getElementById('btn-tab-telemetri-map');
+
+            if (!tableWrapper || !mapWrapper || !btnTable || !btnMap) return;
+
+            if (tab === 'table') {
+                tableWrapper.classList.remove('hidden');
+                tableWrapper.classList.add('block');
+                mapWrapper.classList.add('hidden');
+                mapWrapper.classList.remove('flex');
+
+                btnTable.className = 'flex-1 py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 bg-white text-slate-900 shadow-xs border border-slate-200/80';
+                btnMap.className = 'flex-1 py-2 px-3 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all flex items-center justify-center gap-1.5';
+            } else if (tab === 'map') {
+                tableWrapper.classList.add('hidden');
+                tableWrapper.classList.remove('block');
+                mapWrapper.classList.remove('hidden');
+                mapWrapper.classList.add('flex');
+
+                btnMap.className = 'flex-1 py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 bg-white text-slate-900 shadow-xs border border-slate-200/80';
+                btnTable.className = 'flex-1 py-2 px-3 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all flex items-center justify-center gap-1.5';
+
+                if (window.auditMap) {
+                    setTimeout(() => {
+                        window.auditMap.invalidateSize();
+                    }, 50);
+                }
+            }
+        }
+
+        // ================= MOBILE OVERLAY SIDEBAR DRAWER CONTROLLER =================
+        function toggleMobileDrawer(open) {
+            const drawer = document.getElementById('mobile-overlay-drawer');
+            const backdrop = document.getElementById('mobile-drawer-backdrop');
+            const panel = document.getElementById('mobile-drawer-panel');
+            const openBtn = document.getElementById('btn-open-mobile-drawer');
+
+            if (!drawer || !backdrop || !panel) return;
+
+            if (open) {
+                drawer.classList.remove('invisible');
+                requestAnimationFrame(() => {
+                    backdrop.classList.remove('opacity-0');
+                    backdrop.classList.add('opacity-100');
+                    panel.classList.remove('translate-x-full');
+                    panel.classList.add('translate-x-0');
+                });
+                document.body.classList.add('overflow-hidden');
+                if (openBtn) openBtn.setAttribute('aria-expanded', 'true');
+            } else {
+                backdrop.classList.remove('opacity-100');
+                backdrop.classList.add('opacity-0');
+                panel.classList.remove('translate-x-0');
+                panel.classList.add('translate-x-full');
+                document.body.classList.remove('overflow-hidden');
+                if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
+
+                setTimeout(() => {
+                    if (panel.classList.contains('translate-x-full')) {
+                        drawer.classList.add('invisible');
+                    }
+                }, 300);
+            }
+        }
+
+        function handleMobileNavClick(el) {
+            document.querySelectorAll('.mobile-drawer-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            el.classList.add('active');
+            toggleMobileDrawer(false);
+        }
+
+        // Close drawer on Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                const drawer = document.getElementById('mobile-overlay-drawer');
+                if (drawer && !drawer.classList.contains('invisible')) {
+                    toggleMobileDrawer(false);
+                }
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', function () {
             const navLinks = document.querySelectorAll('.nav-link-item');
             const sections = [];
@@ -1664,6 +1978,16 @@
                             link.classList.add('active');
                         } else {
                             link.classList.remove('active');
+                        }
+                    });
+
+                    // Synchronize active highlight with mobile drawer links
+                    const activeHref = currentSection.link.getAttribute('href');
+                    document.querySelectorAll('.mobile-drawer-link').forEach(mLink => {
+                        if (mLink.getAttribute('href') === activeHref) {
+                            mLink.classList.add('active');
+                        } else {
+                            mLink.classList.remove('active');
                         }
                     });
                 }
@@ -1772,6 +2096,7 @@
                         scrollWheelZoom: false, // Prevents unintended scroll hijack
                         attributionControl: false
                     });
+                    window.auditMap = auditMap;
 
                     // Add high-clarity OpenStreetMap tiles
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -1845,6 +2170,38 @@
                     }
                 } catch (err) {
                     console.error('Interactive map init error:', err);
+                }
+            }
+
+            // ================= UNIFIED SCROLL REVEAL (AOS) ENGINE =================
+            const revealItems = document.querySelectorAll('.reveal-item');
+            if (revealItems.length > 0) {
+                if (!('IntersectionObserver' in window)) {
+                    revealItems.forEach(el => el.classList.add('reveal-visible'));
+                } else {
+                    const scrollRevealObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('reveal-visible');
+                                scrollRevealObserver.unobserve(entry.target);
+                            }
+                        });
+                    }, {
+                        threshold: 0.12,
+                        rootMargin: '0px 0px -40px 0px'
+                    });
+
+                    revealItems.forEach(el => scrollRevealObserver.observe(el));
+
+                    // Failsafe: After 1.4s, make sure any elements in viewport are visible
+                    setTimeout(() => {
+                        revealItems.forEach(el => {
+                            const rect = el.getBoundingClientRect();
+                            if (rect.top < window.innerHeight + 100) {
+                                el.classList.add('reveal-visible');
+                            }
+                        });
+                    }, 1400);
                 }
             }
         });
